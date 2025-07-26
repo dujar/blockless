@@ -8,6 +8,10 @@ interface SwapParams {
   targetAddress?: string;
 }
 
+interface MultiStepSwapProps {
+  swapParams: SwapParams;
+}
+
 interface Token {
   symbol: string;
   name: string;
@@ -15,7 +19,7 @@ interface Token {
   iconUrl?: string;
 }
 
-const MultiStepSwap = ({ swapParams }: { swapParams: SwapParams }) => {
+const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
   const [step, setStep] = useState(1);
   const { isConnected } = useAccount();
   const { connect } = useConnect();
@@ -93,6 +97,12 @@ const MultiStepSwap = ({ swapParams }: { swapParams: SwapParams }) => {
             className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition"
           >
             Connect Wallet
+          </button>
+          <button
+            onClick={() => window.location.href = window.location.origin + window.location.pathname}
+            className="mt-4 text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"
+          >
+            ← Back to Create Swap Order
           </button>
         </div>
       )}
