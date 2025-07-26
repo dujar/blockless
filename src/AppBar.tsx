@@ -19,8 +19,10 @@ export default function AppBar() {
   }, [])
 
   const toggleTheme = () => {
-    setDarkMode(!darkMode)
-    if (!darkMode) {
+    const newDarkMode = !darkMode
+    setDarkMode(newDarkMode)
+    
+    if (newDarkMode) {
       document.documentElement.classList.add('dark')
       localStorage.setItem('theme', 'dark')
     } else {

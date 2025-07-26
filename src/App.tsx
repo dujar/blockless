@@ -73,7 +73,11 @@ function App() {
             </div>
             
             <div className="flex justify-center">
-              <SwapLimitCard />
+              <SwapLimitCard 
+                prefilledAmount={swapParams.amount}
+                prefilledBlockchain={swapParams.blockchain}
+                prefilledTargetAddress={swapParams.targetAddress}
+              />
             </div>
           </div>
           

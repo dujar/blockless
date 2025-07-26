@@ -1,5 +1,5 @@
 // SwapLimitCard.tsx
-import { useState, type ChangeEvent, type FC } from 'react';
+import { useState, useEffect, type ChangeEvent, type FC } from 'react';
 
 interface Token {
   symbol: string;
@@ -8,22 +8,44 @@ interface Token {
   iconUrl?: string;
 }
 
-const SwapLimitCard: FC = () => {
+interface SwapLimitCardProps {
+  prefilledAmount?: string;
+  prefilledBlockchain?: string;
+  prefilledTargetAddress?: string;
+}
+
+const SwapLimitCard: FC<SwapLimitCardProps> = ({ prefilledAmount, prefilledBlockchain, prefilledTargetAddress }) => {
   /* ----------------- STATE ----------------- */
   const [youPay, setYouPay] = useState<string>('0.004');
   const [youReceive, setYouReceive] = useState<string>('0');
-  const [payToken] = useState<Token>({
+  const [payToken, setPayToken] = useState<Token>({
     symbol: 'ETH',
     name: 'Ether',
     chain: 'Ethereum',
     iconUrl: '/eth.svg',
   });
-  const [receiveToken] = useState<Token>({
+  const [receiveToken, setReceiveToken] = useState<Token>({
     symbol: 'ETH',
     name: 'Ethereum Token',
     chain: 'BNB Chain',
     iconUrl: '/eth-bnb.svg',
   });
+
+  // Use prefilled values when they change
+  useEffect(() => {
+    if (prefilledAmount) {
+      setYouPay(prefilledAmount);
+      setYouReceive(prefilledAmount); // For the 1:1 conversion in this demo
+    }
+    
+    if (prefilledBlockchain) {
+      // Update token based on blockchain
+      setPayToken(prev => ({
+        ...prev,
+        chain: prefilledBlockchain
+      }));
+    }
+  }, [prefilledAmount, prefilledBlockchain]);
 
   /* ------------- DERIVED VALUES ------------ */
   const payAmount = parseFloat(youPay) || 0;
@@ -51,6 +73,12 @@ const SwapLimitCard: FC = () => {
   };
 
   const insufficientBalance = payAmount > 0.004;
+
+  const handleSwap = () => {
+    // In a real implementation, this would call the swap function with the target address
+    console.log('Swapping', payAmount, 'to', receiveToken, 'for target address:', prefilledTargetAddress || 'user wallet');
+    alert(`Swapping ${payAmount} ${payToken.symbol} to ${receiveToken.symbol} ${(prefilledTargetAddress ? `to ${prefilledTargetAddress}` : 'to your wallet')}`);
+  };
 
   /* ------------- RENDER -------------------- */
   return (
@@ -112,6 +140,18 @@ const SwapLimitCard: FC = () => {
         </div>
       </div>
 
+      {/* Target Address */}
+      {prefilledTargetAddress && (
+        <div>
+          <div className="flex justify-between text-sm mb-1">
+            <span className="text-gray-300">Target Address</span>
+          </div>
+          <div className="bg-gray-800 rounded-lg p-3">
+            <div className="text-sm break-all">{prefilledTargetAddress}</div>
+          </div>
+        </div>
+      )}
+
       {/* Rate */}
       <div className="text-sm text-gray-400">
         1 {payToken.symbol} = 1 {receiveToken.symbol} ≈${ethPriceUsd.toFixed(2)}
@@ -137,6 +177,7 @@ const SwapLimitCard: FC = () => {
 
       {/* Action */}
       <button
+        onClick={handleSwap}
         disabled={insufficientBalance}
         className={`w-full py-3 rounded-lg font-semibold transition
           ${insufficientBalance
