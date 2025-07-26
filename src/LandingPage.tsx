@@ -10,6 +10,7 @@ const LandingPage = () => {
   
   const [formData, setFormData] = useState({
     blockchain: '',
+    token: '',
     amount: '',
     targetAddress: ''
   });
@@ -18,7 +19,7 @@ const LandingPage = () => {
   
   // Available chains from blockchain data
   const availableChains = blockchainData.map(chain => ({
-    id: chain.chainId,
+    id: chain.id,
     name: chain.name
   }));
   
@@ -39,14 +40,26 @@ const LandingPage = () => {
       setFormData(prev => ({
         ...prev,
         blockchain: chain.name,
+        token: 'ETH', // Default token for auto-fill
         targetAddress: address
       }));
     }
   };
   
+  const isFormValid = () => {
+    return (
+      formData.blockchain && formData.blockchain.trim() !== '' &&
+      formData.token && formData.token.trim() !== '' &&
+      formData.amount && formData.amount.trim() !== '' &&
+      parseFloat(formData.amount) > 0 &&
+      formData.targetAddress && formData.targetAddress.trim() !== ''
+    );
+  };
+  
   const generateQRCodeURL = () => {
     const params = new URLSearchParams();
     if (formData.blockchain) params.append('blockchain', formData.blockchain);
+    if (formData.token) params.append('token', formData.token);
     if (formData.amount) params.append('amount', formData.amount);
     if (formData.targetAddress) params.append('targetAddress', formData.targetAddress);
     
@@ -113,6 +126,21 @@ const LandingPage = () => {
                   </button>
                 )}
               </div>
+            </div>
+            
+            {/* Token Input */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Token Symbol
+              </label>
+              <input
+                type="text"
+                name="token"
+                value={formData.token}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="e.g. ETH, USDC, BTC"
+              />
             </div>
             
             {/* Amount Input */}
@@ -209,14 +237,14 @@ const LandingPage = () => {
               </button>
               <button
                 onClick={handleGenerateQR}
-                disabled={!formData.blockchain || !formData.amount || !formData.targetAddress}
+                disabled={!isFormValid()}
                 className={`flex-1 px-4 py-3 rounded-lg font-medium transition ${
-                  !formData.blockchain || !formData.amount || !formData.targetAddress
+                  !isFormValid()
                     ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
                     : 'bg-blue-500 hover:bg-blue-600 text-white'
                 }`}
               >
-                Generate QR Details
+                Generate QR Code
               </button>
             </div>
           </div>
@@ -230,57 +258,65 @@ const LandingPage = () => {
           
           {showQRCode ? (
             <div className="flex flex-col items-center">
-              <div className="mb-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+              <div className="mb-6 p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg w-full max-w-md">
                 <div className="flex justify-center mb-4">
-                  <img src={blocklessLogo} alt="Blockless" className="h-16 w-16" />
-                </div>
-                <div className="text-center text-sm text-gray-600 dark:text-gray-300">
-                  Scan QR Code with Mobile Wallet
-                </div>
-              </div>
-              
-              <div className="w-full space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Swap URL
-                  </label>
-                  <div className="text-sm bg-gray-100 dark:bg-gray-700 p-3 rounded-lg break-all text-gray-800 dark:text-gray-200">
-                    {generateQRCodeURL()}
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Blockchain
-                    </label>
-                    <div className="text-sm bg-gray-100 dark:bg-gray-700 p-3 rounded-lg text-gray-800 dark:text-gray-200">
-                      {formData.blockchain}
+                  <div className="relative">
+                    <div className="border-4 border-blue-500 rounded-lg p-2">
+                      <div className="bg-gray-200 border-2 border-dashed rounded-xl w-48 h-48 flex items-center justify-center">
+                        <div className="text-center">
+                          <img src={blocklessLogo} alt="Blockless" className="h-12 w-12 mx-auto mb-2" />
+                          <div className="text-xs text-gray-600 dark:text-gray-300">QR Code</div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Amount
-                    </label>
-                    <div className="text-sm bg-gray-100 dark:bg-gray-700 p-3 rounded-lg text-gray-800 dark:text-gray-200">
-                      {formData.amount}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <img src={blocklessLogo} alt="Blockless" className="h-12 w-12 bg-white rounded-full p-1" />
                     </div>
                   </div>
                 </div>
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Target Address
-                  </label>
-                  <div className="text-sm bg-gray-100 dark:bg-gray-700 p-3 rounded-lg break-all text-gray-800 dark:text-gray-200">
-                    {formData.targetAddress}
+                <div className="text-center mb-6">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Swap Details</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    Scan with your mobile wallet to execute this swap
+                  </p>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Blockchain</span>
+                    <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.blockchain}</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Token</span>
+                    <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.token}</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Amount</span>
+                    <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.amount}</span>
+                  </div>
+                  
+                  <div className="p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
+                    <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Target Address</div>
+                    <div className="text-xs font-mono break-all text-gray-900 dark:text-white">
+                      {formData.targetAddress}
+                    </div>
+                  </div>
+                  
+                  <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <div className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">Shareable Link</div>
+                    <div className="text-xs break-all text-blue-900 dark:text-blue-100">
+                      {generateQRCodeURL()}
+                    </div>
                   </div>
                 </div>
               </div>
               
               <button
                 onClick={() => setShowQRCode(false)}
-                className="mt-6 px-4 py-2 text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"
+                className="mt-4 px-4 py-2 text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"
               >
                 ← Back to Form
               </button>
