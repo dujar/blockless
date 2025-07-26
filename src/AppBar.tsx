@@ -1,5 +1,6 @@
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { useState, useEffect } from 'react'
+import blocklessLogo from './assets/blockless.svg'
 
 export default function AppBar() {
   const { address, isConnected } = useAccount()
@@ -36,7 +37,8 @@ export default function AppBar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center">
-            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Swap DApp</h1>
+            <img src={blocklessLogo} alt="Blockless" className="h-8 w-8 mr-2" />
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Blockless Swap</h1>
           </div>
           <div className="flex items-center space-x-4">
             {/* Theme Toggle */}
