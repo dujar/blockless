@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import SwapLimitCard from './SwapLimitCard'
+import MultiStepSwap from './MultiStepSwap'
 import AppBar from './AppBar'
 
 interface SwapParams {
@@ -36,49 +36,8 @@ function App() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Swap Details
-              </h2>
-              
-              <div className="space-y-6">
-                {swapParams.blockchain && (
-                  <div className="flex flex-col sm:flex-row sm:items-center">
-                    <span className="font-medium text-gray-700 dark:text-gray-300 w-40">Blockchain:</span>
-                    <span className="text-gray-900 dark:text-white mt-1 sm:mt-0">{swapParams.blockchain}</span>
-                  </div>
-                )}
-                {swapParams.amount && (
-                  <div className="flex flex-col sm:flex-row sm:items-center">
-                    <span className="font-medium text-gray-700 dark:text-gray-300 w-40">Amount:</span>
-                    <span className="text-gray-900 dark:text-white mt-1 sm:mt-0">{swapParams.amount}</span>
-                  </div>
-                )}
-                {swapParams.targetAddress && (
-                  <div className="flex flex-col sm:flex-row sm:items-center">
-                    <span className="font-medium text-gray-700 dark:text-gray-300 w-40">Target Address:</span>
-                    <span className="text-gray-900 dark:text-white mt-1 sm:mt-0 break-all">{swapParams.targetAddress}</span>
-                  </div>
-                )}
-                
-                {!swapParams.blockchain && !swapParams.amount && !swapParams.targetAddress && (
-                  <div className="text-center py-8">
-                    <p className="text-gray-500 dark:text-gray-400">
-                      No swap parameters provided. Connect your wallet to get started.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-            
-            <div className="flex justify-center">
-              <SwapLimitCard 
-                prefilledAmount={swapParams.amount}
-                prefilledBlockchain={swapParams.blockchain}
-                prefilledTargetAddress={swapParams.targetAddress}
-              />
-            </div>
+          <div className="flex justify-center">
+            <MultiStepSwap swapParams={swapParams} />
           </div>
           
           <div className="mt-16 text-center">
