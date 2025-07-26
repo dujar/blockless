@@ -1,0 +1,106 @@
+[
+  {
+    "id": "ethereum",
+    "name": "Ethereum",
+    "chainId": 1,
+    "icon": "ethereum",
+    "isEVM": true,
+    "walletFormat": "0x"
+  },
+  {
+    "id": "arbitrum",
+    "name": "Arbitrum",
+    "chainId": 42161,
+    "icon": "arbitrum",
+    "isEVM": true,
+    "walletFormat": "0x"
+  },
+  {
+    "id": "avalanche",
+    "name": "Avalanche",
+    "chainId": 43114,
+    "icon": "avalanche",
+    "isEVM": true,
+    "walletFormat": "0x"
+  },
+  {
+    "id": "bnb",
+    "name": "BNB Chain",
+    "chainId": 56,
+    "icon": "binance",
+    "isEVM": true,
+    "walletFormat": "0x"
+  },
+  {
+    "id": "gnosis",
+    "name": "Gnosis Chain",
+    "chainId": 100,
+    "icon": "gnosis",
+    "isEVM": true,
+    "walletFormat": "0x"
+  },
+  {
+    "id": "solana",
+    "name": "Solana",
+    "chainId": null,
+    "icon": "solana",
+    "isEVM": false,
+    "walletFormat": "base58"
+  },
+  {
+    "id": "sonic",
+    "name": "Sonic",
+    "chainId": null,
+    "icon": "sonic",
+    "isEVM": false,
+    "walletFormat": "unknown"
+  },
+  {
+    "id": "optimism",
+    "name": "Optimism",
+    "chainId": 10,
+    "icon": "optimism",
+    "isEVM": true,
+    "walletFormat": "0x"
+  },
+  {
+    "id": "polygon",
+    "name": "Polygon",
+    "chainId": 137,
+    "icon": "polygon",
+    "isEVM": true,
+    "walletFormat": "0x"
+  },
+  {
+    "id": "zksync",
+    "name": "zkSync Era",
+    "chainId": 324,
+    "icon": "zksync",
+    "isEVM": true,
+    "walletFormat": "0x"
+  },
+  {
+    "id": "base",
+    "name": "Base",
+    "chainId": 8453,
+    "icon": "base",
+    "isEVM": true,
+    "walletFormat": "0x"
+  },
+  {
+    "id": "linea",
+    "name": "Linea",
+    "chainId": 59144,
+    "icon": "linea",
+    "isEVM": true,
+    "walletFormat": "0x"
+  },
+  {
+    "id": "unichain",
+    "name": "Unichain",
+    "chainId": null,
+    "icon": "unichain",
+    "isEVM": false,
+    "walletFormat": "unknown"
+  }
+]

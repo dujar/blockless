@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { config } from './wagmi';
+import blockchainData from './data/blockchains.json';
 
 interface SwapParams {
   blockchain?: string;
@@ -38,8 +39,8 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
     { symbol: 'USDC', name: 'USD Coin', chain: 'Ethereum', iconUrl: '/usdc.svg' },
   ];
   
-  // Available chains
-  const availableChains = config.chains.map(chain => chain.name) || ['Ethereum', 'BNB Chain', 'Polygon', 'Arbitrum'];
+  // Available chains from blockchain data
+  const availableChains = blockchainData.map(chain => chain.name);
 
   // Use prefilled values when they change
   useEffect(() => {

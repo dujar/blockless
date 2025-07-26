@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { config } from './wagmi';
 import blocklessLogo from './assets/blockless.svg';
+import blockchainData from './data/blockchains.json';
 
 const LandingPage = () => {
   const { address, isConnected, chain } = useAccount();
@@ -16,16 +16,11 @@ const LandingPage = () => {
   
   const [showQRCode, setShowQRCode] = useState(false);
   
-  // Available chains from wagmi config
-  const availableChains = config.chains.map(chain => ({
-    id: chain.id,
+  // Available chains from blockchain data
+  const availableChains = blockchainData.map(chain => ({
+    id: chain.chainId,
     name: chain.name
-  })) || [
-    { id: 1, name: 'Ethereum' },
-    { id: 56, name: 'BNB Chain' },
-    { id: 137, name: 'Polygon' },
-    { id: 42161, name: 'Arbitrum' }
-  ];
+  }));
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;

@@ -3,6 +3,7 @@ import MultiStepSwap from './MultiStepSwap'
 import LandingPage from './LandingPage'
 import AppBar from './AppBar'
 import blocklessLogo from './assets/blockless.svg'
+import blockchainData from './data/blockchains.json'
 
 interface SwapParams {
   blockchain?: string
@@ -77,18 +78,11 @@ function App() {
                   Supported Networks
                 </h3>
                 <div className="flex flex-wrap justify-center gap-4">
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow px-6 py-3">
-                    <span className="font-medium text-gray-900 dark:text-white">Ethereum</span>
-                  </div>
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow px-6 py-3">
-                    <span className="font-medium text-gray-900 dark:text-white">BNB Chain</span>
-                  </div>
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow px-6 py-3">
-                    <span className="font-medium text-gray-900 dark:text-white">Polygon</span>
-                  </div>
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow px-6 py-3">
-                    <span className="font-medium text-gray-900 dark:text-white">Arbitrum</span>
-                  </div>
+                  {blockchainData.map((chain) => (
+                    <div key={chain.id} className="bg-white dark:bg-gray-800 rounded-lg shadow px-6 py-3">
+                      <span className="font-medium text-gray-900 dark:text-white">{chain.name}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
