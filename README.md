@@ -26,17 +26,17 @@ http://localhost:5173/?blockchain=ethereum&amount=1.5&targetAddress=0x1234567890
 
 1. Install dependencies:
    ```bash
-   npm install
+   pnpm install
    ```
 
 2. Start the development server:
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
 3. Build for production:
    ```bash
-   npm run build
+   pnpm build
    ```
 
 ## PWA Functionality

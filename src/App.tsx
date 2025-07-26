@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import './App.css'
+import SwapLimitCard from './SwapLimitCard'
 
 interface SwapParams {
   blockchain?: string
@@ -22,36 +22,49 @@ function App() {
   }, [])
 
   return (
-    <div className="swap-app">
-      <header>
-        <h1>Decentralized Swap Interface</h1>
-      </header>
-      
-      <main>
-        <div className="swap-container">
-          <h2>Swap Details</h2>
-          <div className="swap-details">
-            {swapParams.blockchain && (
-              <p><strong>Blockchain:</strong> {swapParams.blockchain}</p>
-            )}
-            {swapParams.amount && (
-              <p><strong>Amount:</strong> {swapParams.amount}</p>
-            )}
-            {swapParams.targetAddress && (
-              <p><strong>Target Address:</strong> {swapParams.targetAddress}</p>
-            )}
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <header className="text-center mb-12">
+          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+            Decentralized Swap Interface
+          </h1>
+        </header>
+        
+        <main>
+          <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+            <h2 className="text-2xl font-semibold text-gray-800 border-b-2 border-gray-100 pb-3 mb-6">
+              Swap Details
+            </h2>
+            
+            <div className="bg-gray-50 rounded-lg p-6 mb-8">
+              <div className="space-y-4">
+                {swapParams.blockchain && (
+                  <div className="flex flex-col sm:flex-row sm:items-center">
+                    <span className="font-medium text-gray-700 w-40">Blockchain:</span>
+                    <span className="text-gray-900 mt-1 sm:mt-0">{swapParams.blockchain}</span>
+                  </div>
+                )}
+                {swapParams.amount && (
+                  <div className="flex flex-col sm:flex-row sm:items-center">
+                    <span className="font-medium text-gray-700 w-40">Amount:</span>
+                    <span className="text-gray-900 mt-1 sm:mt-0">{swapParams.amount}</span>
+                  </div>
+                )}
+                {swapParams.targetAddress && (
+                  <div className="flex flex-col sm:flex-row sm:items-center">
+                    <span className="font-medium text-gray-700 w-40">Target Address:</span>
+                    <span className="text-gray-900 mt-1 sm:mt-0 break-all">{swapParams.targetAddress}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <div className="flex justify-center">
+              <SwapLimitCard />
+            </div>
           </div>
-          
-          <div className="swap-interface">
-            <iframe 
-              src={`https://swap.interface.example.com?blockchain=${swapParams.blockchain || ''}&amount=${swapParams.amount || ''}&targetAddress=${swapParams.targetAddress || ''}`}
-              width="100%"
-              height="600px"
-              title="Swap Interface"
-            />
-          </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   )
 }
