@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { QRCode } from 'react-qrcode-logo';
 import blocklessLogo from './assets/blockless.svg';
 import blockchainData from './data/blockchains.json';
 
@@ -262,15 +263,21 @@ const LandingPage = () => {
                 <div className="flex justify-center mb-4">
                   <div className="relative">
                     <div className="border-4 border-blue-500 rounded-lg p-2">
-                      <div className="bg-gray-200 border-2 border-dashed rounded-xl w-48 h-48 flex items-center justify-center">
-                        <div className="text-center">
-                          <img src={blocklessLogo} alt="Blockless" className="h-12 w-12 mx-auto mb-2" />
-                          <div className="text-xs text-gray-600 dark:text-gray-300">QR Code</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <img src={blocklessLogo} alt="Blockless" className="h-12 w-12 bg-white rounded-full p-1" />
+                      <QRCode 
+                        value={generateQRCodeURL()} 
+                        size={192}
+                        quietZone={10}
+                        bgColor="#ffffff"
+                        fgColor="#000000"
+                        logoImage={blocklessLogo}
+                        logoWidth={48}
+                        logoHeight={48}
+                        logoOpacity={1}
+                        removeQrCodeBehindLogo={true}
+                        logoPadding={2}
+                        logoPaddingStyle="circle"
+                        qrStyle="squares"
+                      />
                     </div>
                   </div>
                 </div>

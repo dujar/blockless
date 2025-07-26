@@ -14,6 +14,7 @@
     "@tanstack/react-query": "^5.83.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-qrcode-logo": "^3.0.0",
     "viem": "^2.33.1",
     "vite-plugin-pwa": "^1.0.2",
     "wagmi": "^2.16.0"
