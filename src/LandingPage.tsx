@@ -17,6 +17,7 @@ const LandingPage = () => {
   });
   
   const [showQRCode, setShowQRCode] = useState(false);
+  const [isFullScreenQR, setIsFullScreenQR] = useState(false);
   
   // Available chains from blockchain data
   const availableChains = blockchainData.map(chain => ({
@@ -93,7 +94,7 @@ const LandingPage = () => {
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Form Section */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+        <div className="lg:order-2 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             Create Swap Order
           </h2>
@@ -252,26 +253,29 @@ const LandingPage = () => {
         </div>
         
         {/* QR Code Section */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+        <div className="lg:order-1 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             {showQRCode ? 'Your Swap Details' : 'How It Works'}
           </h2>
           
           {showQRCode ? (
-            <div className="flex flex-col items-center">
-              <div className="mb-6 p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg w-full max-w-md">
-                <div className="flex justify-center mb-4">
-                  <div className="relative">
-                    <div className="border-4 border-blue-500 rounded-lg p-2">
+            <div className={`flex flex-col ${isFullScreenQR ? 'fixed inset-0 z-50 bg-white dark:bg-gray-900 p-4' : 'items-center'}`}>
+              <div className={`${isFullScreenQR ? 'w-full h-full flex flex-col' : 'mb-6 p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg w-full max-w-md'}`}>
+                <div className={`flex ${isFullScreenQR ? 'h-full flex-col items-center justify-center p-4' : 'justify-center mb-4'}`}>
+                  <div className="relative w-full flex justify-center">
+                    <div 
+                      className="border-4 border-blue-500 rounded-lg p-2 cursor-pointer"
+                      onClick={() => setIsFullScreenQR(!isFullScreenQR)}
+                    >
                       <QRCode 
                         value={generateQRCodeURL()} 
-                        size={192}
+                        size={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) : 192}
                         quietZone={10}
                         bgColor="#ffffff"
                         fgColor="#000000"
                         logoImage={blocklessLogo}
-                        logoWidth={48}
-                        logoHeight={48}
+                        logoWidth={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
+                        logoHeight={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
                         logoOpacity={1}
                         removeQrCodeBehindLogo={true}
                         logoPadding={2}
@@ -282,51 +286,65 @@ const LandingPage = () => {
                   </div>
                 </div>
                 
-                <div className="text-center mb-6">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Swap Details</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    Scan with your mobile wallet to execute this swap
-                  </p>
-                </div>
-                
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Blockchain</span>
-                    <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.blockchain}</span>
-                  </div>
-                  
-                  <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Token</span>
-                    <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.token}</span>
-                  </div>
-                  
-                  <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Amount</span>
-                    <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.amount}</span>
-                  </div>
-                  
-                  <div className="p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
-                    <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Target Address</div>
-                    <div className="text-xs font-mono break-all text-gray-900 dark:text-white">
-                      {formData.targetAddress}
+                {!isFullScreenQR && (
+                  <>
+                    <div className="text-center mb-6">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Swap Details</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                        Scan with your mobile wallet to execute this swap
+                      </p>
                     </div>
-                  </div>
-                  
-                  <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                    <div className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">Shareable Link</div>
-                    <div className="text-xs break-all text-blue-900 dark:text-blue-100">
-                      {generateQRCodeURL()}
+                    
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Blockchain</span>
+                        <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.blockchain}</span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Token</span>
+                        <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.token}</span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Amount</span>
+                        <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.amount}</span>
+                      </div>
+                      
+                      <div className="p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
+                        <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Target Address</div>
+                        <div className="text-xs font-mono break-all text-gray-900 dark:text-white">
+                          {formData.targetAddress}
+                        </div>
+                      </div>
+                      
+                      <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                        <div className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">Shareable Link</div>
+                        <div className="text-xs break-all text-blue-900 dark:text-blue-100">
+                          {generateQRCodeURL()}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </>
+                )}
               </div>
               
-              <button
-                onClick={() => setShowQRCode(false)}
-                className="mt-4 px-4 py-2 text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"
-              >
-                ← Back to Form
-              </button>
+              <div className={`flex ${isFullScreenQR ? 'fixed bottom-4 left-0 right-0 justify-center' : 'mt-4 justify-center'}`}>
+                <button
+                  onClick={() => isFullScreenQR ? setIsFullScreenQR(false) : setShowQRCode(false)}
+                  className="px-4 py-2 text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"
+                >
+                  {isFullScreenQR ? 'Exit Full Screen' : '← Back to Form'}
+                </button>
+                {!isFullScreenQR && (
+                  <button
+                    onClick={() => setIsFullScreenQR(true)}
+                    className="ml-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  >
+                    Full Screen
+                  </button>
+                )}
+              </div>
             </div>
           ) : (
             <div className="space-y-6">
