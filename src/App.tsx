@@ -5,12 +5,21 @@ import AppBar from './AppBar'
 import blockchainData from './data/blockchains.json'
 import { parseSwapParamsSafe } from './SwapParamSafe'
 import type { SwapParams } from './SwapParamSafe'
+import SplashScreen from './SplashScreen'
 
 function App() {
   const [swapParams, setSwapParams] = useState<SwapParams | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 3000)
+  }, [])
   
   useEffect(() => {
+    if (loading) return
     const urlParams = new URLSearchParams(window.location.search)
     
     if (urlParams.toString() === '') {
@@ -30,13 +39,13 @@ function App() {
         window.history.replaceState({}, '', newUrl)
       }
     } else {
-      setError(result.error || 'Invalid swap parameters')
+      setError(`${result.error || 'Invalid swap parameters'}. URL provided: ${window.location.href}`)
       setSwapParams(null)
       window.history.replaceState({}, '', '/')
     }
-  }, [])
+  }, [loading])
 
-  return (
+  return loading ? <SplashScreen /> : (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <AppBar />
       <div className="py-12 px-4 sm:px-6 lg:px-8">

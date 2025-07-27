@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { QRCode } from 'react-qrcode-logo';
 import blocklessLogo from './assets/blockless.svg';
@@ -33,8 +33,19 @@ const LandingPage = () => {
     name: chain.name
   }));
   
+  const [isAddressValid, setIsAddressValid] = useState<boolean | null>(null);
+
+  const validateAddress = (address: string) => {
+    const isValid = /^0x[a-fA-F0-9]{40}$/.test(address);
+    setIsAddressValid(isValid);
+    return isValid;
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    if (name === 'targetAddress') {
+      validateAddress(value);
+    }
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -45,16 +56,15 @@ const LandingPage = () => {
     connect({ connector: connectors[0] });
   };
   
-  const handleAutoFill = () => {
-    if (isConnected && address && chain) {
+  useEffect(() => {
+    if (isConnected && address) {
       setFormData(prev => ({
         ...prev,
-        blockchain: chain.name,
-        token: 'ETH', // Default token for auto-fill
         targetAddress: address
       }));
+      validateAddress(address);
     }
-  };
+  }, [isConnected, address]);
   
   const isFormValid = () => {
     return (
@@ -127,14 +137,6 @@ const LandingPage = () => {
                     </option>
                   ))}
                 </select>
-                {isConnected && chain && (
-                  <button
-                    onClick={handleAutoFill}
-                    className="px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition text-sm"
-                  >
-                    my-wallet!
-                  </button>
-                )}
               </div>
             </div>
             
@@ -165,6 +167,7 @@ const LandingPage = () => {
                 onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 placeholder="0.0"
+                step="any"
               />
             </div>
             
@@ -173,21 +176,28 @@ const LandingPage = () => {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Target Address
               </label>
-              <div className="flex space-x-2">
+              <div className="flex items-center space-x-2">
                 <input
                   type="text"
                   name="targetAddress"
-                  value={formData.targetAddress}
+                  value={formData.targetAddress ? `${formData.targetAddress.slice(0, 6)}...${formData.targetAddress.slice(-4)}` : ''}
                   onChange={handleInputChange}
                   className="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   placeholder="0x..."
+                  readOnly={isConnected}
                 />
-                {isConnected && address && (
+                {isAddressValid === true && (
+                  <span className="text-green-500">✓</span>
+                )}
+                {isAddressValid === false && (
+                  <span className="text-red-500">✗</span>
+                )}
+                {isConnected && (
                   <button
-                    onClick={handleAutoFill}
+                    onClick={() => navigator.clipboard.writeText(formData.targetAddress)}
                     className="px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition text-sm"
                   >
-                    Auto-fill
+                    Copy
                   </button>
                 )}
               </div>
@@ -268,8 +278,13 @@ const LandingPage = () => {
           
           {showQRCode ? (
             <div className={`flex flex-col ${isFullScreenQR ? 'fixed inset-0 z-50 bg-white dark:bg-gray-900 p-4' : 'items-center'}`}>
-              <div className={`${isFullScreenQR ? 'w-full h-full flex flex-col' : 'mb-6 p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg w-full max-w-md'}`}>
-                <div className={`flex ${isFullScreenQR ? 'h-full flex-col items-center justify-center p-4' : 'justify-center mb-4'}`}>
+              <div className={`${isFullScreenQR ? 'w-full h-full flex flex-col justify-between' : 'mb-6 p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg w-full max-w-md'}`}>
+                {isFullScreenQR && (
+                  <div className="text-left text-gray-900 dark:text-white text-xl font-bold mb-4">
+                    Blockchain: {formData.blockchain}
+                  </div>
+                )}
+                <div className={`flex ${isFullScreenQR ? 'flex-col items-center justify-center p-4' : 'justify-center mb-4'}`}>
                   <div className="relative w-full flex justify-center">
                     <div 
                       className="border-4 border-blue-500 rounded-lg p-2 cursor-pointer"
@@ -294,6 +309,13 @@ const LandingPage = () => {
                   </div>
                 </div>
                 
+                {isFullScreenQR && (
+                  <div className="mt-4 text-center text-gray-900 dark:text-white">
+                    <p className="text-2xl font-bold mb-2">Amount: {formData.amount} {formData.token}</p>
+                    <p className="text-lg font-mono break-all">Recipient: {formData.targetAddress}</p>
+                  </div>
+                )}
+
                 {!isFullScreenQR && (
                   <>
                     <div className="text-center mb-6">
@@ -362,10 +384,10 @@ const LandingPage = () => {
               
               <div className={`flex ${isFullScreenQR ? 'fixed bottom-4 left-0 right-0 justify-center' : 'mt-4 justify-center'}`}>
                 <button
-                  onClick={() => isFullScreenQR ? setIsFullScreenQR(false) : setShowQRCode(false)}
+                  onClick={() => setShowQRCode(false)}
                   className="px-4 py-2 text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"
                 >
-                  {isFullScreenQR ? 'Exit Full Screen' : '← Back to Form'}
+                  ← Back to Form
                 </button>
                 {!isFullScreenQR && (
                   <button
