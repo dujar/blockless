@@ -5,6 +5,7 @@ import blockchainData from './data/blockchains.json';
 
 interface SwapParams {
   blockchain?: string;
+  token?: string;
   amount?: string;
   targetAddress?: string;
 }
@@ -49,6 +50,13 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
     }
     if (swapParams.amount) {
       setAmount(swapParams.amount);
+    }
+    if (swapParams.token) {
+      // Find the token in available tokens
+      const token = availableTokens.find(t => t.symbol === swapParams.token);
+      if (token) {
+        setSelectedToken(token);
+      }
     }
   }, [swapParams]);
 
