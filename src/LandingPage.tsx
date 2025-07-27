@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { QRCode } from 'react-qrcode-logo';
 import blocklessLogo from './assets/blockless.svg';
@@ -83,6 +83,7 @@ const LandingPage = () => {
   const handleReset = () => {
     setFormData({
       blockchain: '',
+      token: '',
       amount: '',
       targetAddress: ''
     });

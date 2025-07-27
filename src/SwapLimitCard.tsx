@@ -24,7 +24,7 @@ const SwapLimitCard: FC<SwapLimitCardProps> = ({ prefilledAmount, prefilledBlock
     chain: 'Ethereum',
     iconUrl: '/eth.svg',
   });
-  const [receiveToken, setReceiveToken] = useState<Token>({
+  const [receiveToken] = useState<Token>({
     symbol: 'ETH',
     name: 'Ethereum Token',
     chain: 'BNB Chain',

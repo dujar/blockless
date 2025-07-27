@@ -14,15 +14,25 @@ export default defineConfig({
         enabled: true
       },
       manifest: {
-        name: 'Decentralized Swap Interface',
+        name: 'Blockless Swap',
         short_name: 'Swap DApp',
-        description: 'A decentralized application for swapping tokens',
-        theme_color: '#000000',
+        description: 'A decentralized application for swapping tokens across chains',
+        theme_color: '#3b82f6',
         icons: [
           {
-            src: 'vite.svg',
+            src: 'blockless.svg',
             sizes: 'any',
             type: 'image/svg+xml'
+          },
+          {
+            src: 'blockless-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: 'blockless-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
           }
         ]
       }
