@@ -1,11 +1,10 @@
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { useAccount, useConnect } from 'wagmi'
 import { useState, useEffect } from 'react'
 import blocklessLogo from './assets/blockless.svg'
 
 export default function AppBar() {
   const { address, isConnected } = useAccount()
   const { connect, connectors } = useConnect()
-  const { disconnect } = useDisconnect()
   const [darkMode, setDarkMode] = useState(false)
 
   // Check system preference and stored preference
@@ -60,17 +59,9 @@ export default function AppBar() {
             
             {/* Wallet Connection */}
             {isConnected ? (
-              <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-700 dark:text-gray-300">
-                  {address?.slice(0, 6)}...{address?.slice(-4)}
-                </span>
-                <button
-                  onClick={() => disconnect()}
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition"
-                >
-                  Disconnect
-                </button>
-              </div>
+              <span className="text-sm text-gray-700 dark:text-gray-300">
+                {address?.slice(0, 6)}...{address?.slice(-4)}
+              </span>
             ) : (
               <button
                 onClick={() => connect({ connector: connectors[0] })}

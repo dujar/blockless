@@ -1,4 +1,3 @@
-import React from 'react';
 import blocklessLogo from './assets/blockless.svg';
 import './SplashScreen.css';
 

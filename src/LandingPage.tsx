@@ -176,28 +176,41 @@ const LandingPage = () => {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Target Address
               </label>
-              <div className="flex items-center space-x-2">
+              <div className="relative flex items-center">
                 <input
                   type="text"
                   name="targetAddress"
                   value={formData.targetAddress ? `${formData.targetAddress.slice(0, 6)}...${formData.targetAddress.slice(-4)}` : ''}
                   onChange={handleInputChange}
-                  className="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className="w-full p-3 pr-16 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   placeholder="0x..."
                   readOnly={isConnected}
                 />
                 {isAddressValid === true && (
-                  <span className="text-green-500">✓</span>
+                  <span className="absolute right-10 text-green-500">✓</span>
                 )}
                 {isAddressValid === false && (
-                  <span className="text-red-500">✗</span>
+                  <span className="absolute right-10 text-red-500">✗</span>
                 )}
                 {isConnected && (
                   <button
-                    onClick={() => navigator.clipboard.writeText(formData.targetAddress)}
-                    className="px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition text-sm"
+                    onClick={() => {
+                      navigator.clipboard.writeText(formData.targetAddress);
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2000);
+                    }}
+                    className="absolute right-2 p-1 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
                   >
-                    Copy
+                    {copied ? (
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    ) : (
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                      </svg>
+                    )}
                   </button>
                 )}
               </div>
@@ -277,8 +290,8 @@ const LandingPage = () => {
           </h2>
           
           {showQRCode ? (
-            <div className={`flex flex-col ${isFullScreenQR ? 'fixed inset-0 z-50 bg-white dark:bg-gray-900 p-4' : 'items-center'}`}>
-              <div className={`${isFullScreenQR ? 'w-full h-full flex flex-col justify-between' : 'mb-6 p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg w-full max-w-md'}`}>
+            <div className={`flex flex-col ${isFullScreenQR ? 'fixed inset-0 z-50 bg-white dark:bg-gray-900 p-4' : 'items-center'}`} onClick={() => setIsFullScreenQR(false)}>
+              <div className={`${isFullScreenQR ? 'w-full h-full flex flex-col justify-between' : 'mb-6 p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg w-full max-w-md'}`} onClick={(e) => e.stopPropagation()}>
                 {isFullScreenQR && (
                   <div className="text-left text-gray-900 dark:text-white text-xl font-bold mb-4">
                     Blockchain: {formData.blockchain}
@@ -288,7 +301,7 @@ const LandingPage = () => {
                   <div className="relative w-full flex justify-center">
                     <div 
                       className="border-4 border-blue-500 rounded-lg p-2 cursor-pointer"
-                      onClick={() => setIsFullScreenQR(!isFullScreenQR)}
+                      onClick={() => setIsFullScreenQR(true)}
                     >
                       <QRCode 
                         value={generateQRCodeURL()} 
@@ -389,14 +402,6 @@ const LandingPage = () => {
                 >
                   ← Back to Form
                 </button>
-                {!isFullScreenQR && (
-                  <button
-                    onClick={() => setIsFullScreenQR(true)}
-                    className="ml-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                  >
-                    Full Screen
-                  </button>
-                )}
               </div>
             </div>
           ) : (
