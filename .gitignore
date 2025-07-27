@@ -24,3 +24,18 @@ dist-ssr
 *.sw?
 
 dev-dist
+# Agent files
+*.agent
+*.agentignore
+*.claude
+*.claudeignore
+*.gemini
+*.geminiignore
+*.kiro
+*.kiroignore
+
+# Specific agent-related Markdown files
+GEMINI.md
+CLAUDE.md
+KIRO.md
+AGENT.md

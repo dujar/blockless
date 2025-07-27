@@ -3,139 +3,36 @@ import MultiStepSwap from './MultiStepSwap'
 import LandingPage from './LandingPage'
 import AppBar from './AppBar'
 import blockchainData from './data/blockchains.json'
-
-interface SwapParams {
-  blockchain?: string
-  token?: string
-  amount?: string
-  targetAddress?: string
-}
+import { parseSwapParamsSafe } from './SwapParamSafe'
+import type { SwapParams } from './SwapParamSafe'
 
 function App() {
-  const [swapParams, setSwapParams] = useState<SwapParams>({})
+  const [swapParams, setSwapParams] = useState<SwapParams | null>(null)
   const [error, setError] = useState<string | null>(null)
   
   useEffect(() => {
-    // Parse URL parameters
     const urlParams = new URLSearchParams(window.location.search)
     
-    // Check if there are any parameters
     if (urlParams.toString() === '') {
-      // No parameters, show landing page
-      setSwapParams({})
+      setSwapParams(null)
       return
     }
-    
-    let params: SwapParams = {}
-    
-    // Check for new cross-chain swap parameters (src, dst, target)
-    const src = urlParams.get('src')
-    const dst = urlParams.get('dst')
-    const target = urlParams.get('target')
-    
-    if (src || dst || target) {
-      // Parse src parameter (format: chainId:token)
-      if (src) {
-        const [chainId, tokenSymbol] = src.split(':')
-        // Map chainId to chain name (simplified for demo)
-        const chainMap: Record<string, string> = {
-          '1': 'Ethereum',
-          '56': 'BNB Chain',
-          '137': 'Polygon',
-          '42161': 'Arbitrum'
-        }
-        params.blockchain = chainMap[chainId] || `Chain ${chainId}`
-        params.token = tokenSymbol
-      }
-      
-      // Use target as targetAddress
-      if (target) {
-        params.targetAddress = target
-      }
-      
-      // For amount, we would parse from src or dst if they contain amount info
-      // For simplicity, we're not parsing amount from the new format in this example
-    } else {
-      // Fallback to old parameter format
-      params = {
-        blockchain: urlParams.get('blockchain') || undefined,
-        token: urlParams.get('token') || undefined,
-        amount: urlParams.get('amount') || undefined,
-        targetAddress: urlParams.get('targetAddress') || undefined
-      }
-    }
-    
-    // Validate parameters
-    const validBlockchains = blockchainData.map(chain => chain.name)
-    
-    // Check if we have parameters but they're incomplete/invalid
-    if (params.blockchain || params.token || params.amount || params.targetAddress) {
-      // Validate blockchain
-      if (!params.blockchain) {
-        setError('Missing blockchain parameter')
-        setSwapParams({})
-        // Update URL to show error
-        window.history.replaceState({}, '', '/')
-        return
-      }
-      
-      if (!validBlockchains.includes(params.blockchain)) {
-        setError(`Invalid blockchain: ${params.blockchain}. Supported blockchains: ${validBlockchains.join(', ')}`)
-        setSwapParams({})
-        // Update URL to show error
-        window.history.replaceState({}, '', '/')
-        return
-      }
-      
-      // Validate token
-      if (!params.token) {
-        setError('Missing token parameter')
-        setSwapParams({})
-        // Update URL to show error
-        window.history.replaceState({}, '', '/')
-        return
-      }
-      
-      // Validate amount
-      if (!params.amount) {
-        setError('Missing amount parameter')
-        setSwapParams({})
-        // Update URL to show error
-        window.history.replaceState({}, '', '/')
-        return
-      }
-      
-      const amount = parseFloat(params.amount)
-      if (isNaN(amount) || amount <= 0) {
-        setError('Invalid amount. Amount must be a positive number')
-        setSwapParams({})
-        // Update URL to show error
-        window.history.replaceState({}, '', '/')
-        return
-      }
-      
-      // Validate targetAddress
-      if (!params.targetAddress) {
-        setError('Missing target address parameter')
-        setSwapParams({})
-        // Update URL to show error
-        window.history.replaceState({}, '', '/')
-        return
-      }
-      
-      // Clear any previous error and set valid parameters
+
+    const result = parseSwapParamsSafe(urlParams)
+
+    if (result.success && result.data) {
       setError(null)
-      setSwapParams(params)
+      setSwapParams(result.data)
       
-      // Update URL to show /swap with validated parameters
       const currentPath = window.location.pathname
       if (!currentPath.includes('/swap')) {
         const newUrl = '/swap' + window.location.search
         window.history.replaceState({}, '', newUrl)
       }
     } else {
-      // No relevant parameters, show landing page
-      setSwapParams({})
+      setError(result.error || 'Invalid swap parameters')
+      setSwapParams(null)
+      window.history.replaceState({}, '', '/')
     }
   }, [])
 
@@ -163,9 +60,7 @@ function App() {
           )}
           
           {/* Show LandingPage if no parameters, if there's an error, or if not on /swap path with valid params, otherwise show MultiStepSwap */}
-          {(!swapParams.blockchain && !swapParams.token && !swapParams.amount && !swapParams.targetAddress) || 
-           error || 
-           !window.location.pathname.includes('/swap') ? (
+          {!swapParams || error ? (
             <LandingPage />
           ) : (
             <div className="max-w-4xl mx-auto">

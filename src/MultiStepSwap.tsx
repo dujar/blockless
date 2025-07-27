@@ -2,13 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { config } from './wagmi';
 import blockchainData from './data/blockchains.json';
-
-interface SwapParams {
-  blockchain?: string;
-  token?: string;
-  amount?: string;
-  targetAddress?: string;
-}
+import type { SwapParams } from './SwapParamSafe';
 
 interface MultiStepSwapProps {
   swapParams: SwapParams;
@@ -30,7 +24,7 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
   // Token selection state
   const [selectedToken, setSelectedToken] = useState<Token | null>(null);
   const [selectedChain, setSelectedChain] = useState<string | null>(null);
-  const [amount, setAmount] = useState(swapParams.amount || '');
+  const [amount, setAmount] = useState(swapParams.dst.amount || '');
   
   // Available tokens (mock data)
   const availableTokens: Token[] = [
@@ -45,15 +39,15 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
 
   // Use prefilled values when they change
   useEffect(() => {
-    if (swapParams.blockchain) {
-      setSelectedChain(swapParams.blockchain);
+    if (swapParams.dst.blockchain) {
+      setSelectedChain(swapParams.dst.blockchain);
     }
-    if (swapParams.amount) {
-      setAmount(swapParams.amount);
+    if (swapParams.dst.amount) {
+      setAmount(swapParams.dst.amount);
     }
-    if (swapParams.token) {
+    if (swapParams.dst.token.symbol) {
       // Find the token in available tokens
-      const token = availableTokens.find(t => t.symbol === swapParams.token);
+      const token = availableTokens.find(t => t.symbol === swapParams.dst.token.symbol);
       if (token) {
         setSelectedToken(token);
       }
@@ -68,8 +62,8 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
 
   const handleSwap = () => {
     // In a real implementation, this would call the swap function
-    console.log('Swapping', amount, selectedToken, 'to target address:', swapParams.targetAddress || 'user wallet');
-    alert(`Swapping ${amount} ${selectedToken?.symbol} on ${selectedChain} ${(swapParams.targetAddress ? `to ${swapParams.targetAddress}` : 'to your wallet')}`);
+    console.log('Swapping', amount, selectedToken, 'to target address:', swapParams.dst.destinationAddress || 'user wallet');
+    alert(`Swapping ${amount} ${selectedToken?.symbol} on ${selectedChain} ${(swapParams.dst.destinationAddress ? `to ${swapParams.dst.destinationAddress}` : 'to your wallet')}`);
   };
 
   return (
@@ -216,14 +210,14 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
           </div>
           
           {/* Target Address (if provided) */}
-          {swapParams.targetAddress && (
+          {swapParams.dst.destinationAddress && (
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Target Address
               </label>
               <div className="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
                 <div className="text-sm break-all text-gray-900 dark:text-white">
-                  {swapParams.targetAddress}
+                  {swapParams.dst.destinationAddress}
                 </div>
               </div>
             </div>

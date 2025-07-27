@@ -67,13 +67,12 @@ const LandingPage = () => {
   };
   
   const generateQRCodeURL = () => {
+    const dst = `${formData.blockchain}:${formData.amount}:${formData.token}:${formData.targetAddress}`;
     const params = new URLSearchParams();
-    if (formData.blockchain) params.append('blockchain', formData.blockchain);
-    if (formData.token) params.append('token', formData.token);
-    if (formData.amount) params.append('amount', formData.amount);
-    if (formData.targetAddress) params.append('targetAddress', formData.targetAddress);
-    
-    return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+    params.append('dst', dst);
+    // Add src parameter if you have it in your form
+    // params.append('src', src);
+    return `${window.location.origin}/swap?${params.toString()}`;
   };
   
   const handleGenerateQR = () => {
@@ -133,7 +132,7 @@ const LandingPage = () => {
                     onClick={handleAutoFill}
                     className="px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition text-sm"
                   >
-                    Auto-fill
+                    my-wallet!
                   </button>
                 )}
               </div>
