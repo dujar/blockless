@@ -258,6 +258,13 @@ const LandingPage = () => {
                   </div>
                 </div>
               )}
+              {!isConnected && (
+                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    You don't have a wallet connected. You can still fill out a swap order and generate a QR code, but you won't be able to execute the swap yourself.
+                  </p>
+                </div>
+              )}
             </div>
             
             {/* Action Buttons */}
