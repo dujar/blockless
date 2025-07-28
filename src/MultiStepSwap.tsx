@@ -3,7 +3,7 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { config } from './wagmi';
 import {blockchainData} from './data/blockchains';
 import type { SwapParams } from './SwapParamSafe';
-import WalletDeeplinkQRs from './WalletDeeplinkQRs';
+import WalletDeeplinkQRs from './features/wallet-deeplink/WalletDeeplinkQRs';
 
 interface MultiStepSwapProps {
   swapParams: SwapParams;
