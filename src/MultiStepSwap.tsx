@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { config } from './wagmi';
-import blockchainData from './data/blockchains.json';
+import {blockchainData} from './data/blockchains';
 import type { SwapParams } from './SwapParamSafe';
 
 interface MultiStepSwapProps {

@@ -12,6 +12,7 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "outDir": "dist",
 
     /* Linting */
     "strict": true,
@@ -22,7 +23,7 @@
     "noUncheckedSideEffectImports": true
   },
   "include": [
-    "api/*",
+    "api/*.ts",
     "vite.config.ts"
   ]
 }

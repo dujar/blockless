@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { QRCode } from 'react-qrcode-logo';
 import blocklessLogo from './assets/blockless.svg';
-import blockchainData from './data/blockchains.json';
+import { blockchainData } from './data/blockchains';
+import { SupportedChains } from '@1inch/cross-chain-sdk';
 
 const LandingPage = () => {
   const { address, isConnected, chain } = useAccount();
@@ -28,8 +29,8 @@ const LandingPage = () => {
   };
   
   // Available chains from blockchain data
-  const availableChains = blockchainData.map(chain => ({
-    id: chain.id,
+  const availableChains = blockchainData.filter(chain => SupportedChains.includes(chain.networkId as any )).map(chain => ({
+    id: chain.networkId,
     name: chain.name
   }));
   
@@ -256,6 +257,13 @@ const LandingPage = () => {
                       Not connected
                     </span>
                   </div>
+                </div>
+              )}
+              {!isConnected && (
+                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    You don't have a wallet connected. You can still fill out a swap order and generate a QR code, but you won't be able to execute the swap yourself.
+                  </p>
                 </div>
               )}
               {!isConnected && (
