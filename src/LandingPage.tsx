@@ -3,6 +3,7 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { QRCode } from 'react-qrcode-logo';
 import blocklessLogo from './assets/blockless.svg';
 import { blockchainData } from './data/blockchains';
+import WalletDeeplinkQRs from './WalletDeeplinkQRs';
 
 const LandingPage = () => {
   const { address, isConnected, chain } = useAccount();
@@ -19,6 +20,7 @@ const LandingPage = () => {
   const [showQRCode, setShowQRCode] = useState(false);
   const [isFullScreenQR, setIsFullScreenQR] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [qrMode, setQrMode] = useState<'link' | 'wallets'>('link');
   
   const copyToClipboard = () => {
     navigator.clipboard.writeText(generateQRCodeURL()).then(() => {
@@ -72,7 +74,8 @@ const LandingPage = () => {
       formData.token && formData.token.trim() !== '' &&
       formData.amount && formData.amount.trim() !== '' &&
       parseFloat(formData.amount) > 0 &&
-      formData.targetAddress && formData.targetAddress.trim() !== ''
+      formData.targetAddress && formData.targetAddress.trim() !== '' &&
+      isAddressValid
     );
   };
   
@@ -97,6 +100,7 @@ const LandingPage = () => {
       targetAddress: ''
     });
     setShowQRCode(false);
+    setIsAddressValid(null);
   };
 
   return (
@@ -171,47 +175,25 @@ const LandingPage = () => {
               />
             </div>
             
-            {/* Target Address */}
+            {/* Recipient Address */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Target Address
+                Recipient Address
               </label>
               <div className="relative flex items-center">
                 <input
                   type="text"
                   name="targetAddress"
-                  value={formData.targetAddress ? `${formData.targetAddress.slice(0, 6)}...${formData.targetAddress.slice(-4)}` : ''}
+                  value={formData.targetAddress}
                   onChange={handleInputChange}
-                  className="w-full p-3 pr-16 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className="w-full p-3 pr-10 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   placeholder="0x..."
-                  readOnly={isConnected}
                 />
                 {isAddressValid === true && (
-                  <span className="absolute right-10 text-green-500">✓</span>
+                  <span className="absolute right-3 text-green-500">✓</span>
                 )}
-                {isAddressValid === false && (
-                  <span className="absolute right-10 text-red-500">✗</span>
-                )}
-                {isConnected && (
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText(formData.targetAddress);
-                      setCopied(true);
-                      setTimeout(() => setCopied(false), 2000);
-                    }}
-                    className="absolute right-2 p-1 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
-                  >
-                    {copied ? (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    ) : (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-                      </svg>
-                    )}
-                  </button>
+                {isAddressValid === false && formData.targetAddress.length > 0 && (
+                  <span className="absolute right-3 text-red-500">✗</span>
                 )}
               </div>
             </div>
@@ -261,14 +243,7 @@ const LandingPage = () => {
               {!isConnected && (
                 <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
                   <p className="text-sm text-blue-700 dark:text-blue-300">
-                    You don't have a wallet connected. You can still fill out a swap order and generate a QR code, but you won't be able to execute the swap yourself.
-                  </p>
-                </div>
-              )}
-              {!isConnected && (
-                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                  <p className="text-sm text-blue-700 dark:text-blue-300">
-                    You don't have a wallet connected. You can still fill out a swap order and generate a QR code, but you won't be able to execute the swap yourself.
+                    You can connect your wallet to auto-fill your recipient address.
                   </p>
                 </div>
               )}
@@ -291,7 +266,7 @@ const LandingPage = () => {
                     : 'bg-blue-500 hover:bg-blue-600 text-white'
                 }`}
               >
-                Generate QR Code
+                Generate
               </button>
             </div>
           </div>
@@ -300,115 +275,145 @@ const LandingPage = () => {
         {/* QR Code Section */}
         <div className="lg:order-1 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-            {showQRCode ? 'Your Swap Details' : 'How It Works'}
+            {showQRCode ? 'Your Order' : 'How It Works'}
           </h2>
           
           {showQRCode ? (
-            <div className={`flex flex-col ${isFullScreenQR ? 'fixed inset-0 z-50 bg-white dark:bg-gray-900 p-4' : 'items-center'}`} onClick={() => setIsFullScreenQR(false)}>
-              <div className={`${isFullScreenQR ? 'w-full h-full flex flex-col justify-between' : 'mb-6 p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg w-full max-w-md'}`} onClick={(e) => e.stopPropagation()}>
-                {isFullScreenQR && (
-                  <div className="text-left text-gray-900 dark:text-white text-xl font-bold mb-4">
-                    Blockchain: {formData.blockchain}
-                  </div>
-                )}
-                <div className={`flex ${isFullScreenQR ? 'flex-col items-center justify-center p-4' : 'justify-center mb-4'}`}>
-                  <div className="relative w-full flex justify-center">
-                    <div 
-                      className="border-4 border-blue-500 rounded-lg p-2 cursor-pointer"
-                      onClick={() => setIsFullScreenQR(true)}
-                    >
-                      <QRCode 
-                        value={generateQRCodeURL()} 
-                        size={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) : 192}
-                        quietZone={10}
-                        bgColor="#ffffff"
-                        fgColor="#000000"
-                        logoImage={blocklessLogo}
-                        logoWidth={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
-                        logoHeight={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
-                        logoOpacity={1}
-                        removeQrCodeBehindLogo={true}
-                        logoPadding={2}
-                        logoPaddingStyle="circle"
-                        qrStyle="squares"
-                      />
-                    </div>
-                  </div>
-                </div>
-                
-                {isFullScreenQR && (
-                  <div className="mt-4 text-center text-gray-900 dark:text-white">
-                    <p className="text-2xl font-bold mb-2">Amount: {formData.amount} {formData.token}</p>
-                    <p className="text-lg font-mono break-all">Recipient: {formData.targetAddress}</p>
-                  </div>
-                )}
+            <div>
+              <div className="border-b border-gray-200 dark:border-gray-700 mb-4">
+                <nav className="flex space-x-4" aria-label="Tabs">
+                  <button
+                    onClick={() => setQrMode('link')}
+                    className={`px-3 py-2 font-medium text-sm rounded-t-lg ${qrMode === 'link' ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
+                  >
+                    Swap Link
+                  </button>
+                  <button
+                    onClick={() => setQrMode('wallets')}
+                    className={`px-3 py-2 font-medium text-sm rounded-t-lg ${qrMode === 'wallets' ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
+                  >
+                    Wallet Deeplinks
+                  </button>
+                </nav>
+              </div>
 
-                {!isFullScreenQR && (
-                  <>
-                    <div className="text-center mb-6">
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Swap Details</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
-                        Scan with your mobile wallet to execute this swap
-                      </p>
+              {qrMode === 'link' && (
+                <div className={`flex flex-col ${isFullScreenQR ? 'fixed inset-0 z-50 bg-white dark:bg-gray-900 p-4' : 'items-center'}`} onClick={() => isFullScreenQR && setIsFullScreenQR(false)}>
+                  <div className={`${isFullScreenQR ? 'w-full h-full flex flex-col justify-between' : 'mb-6 p-6 bg-gray-100 dark:bg-gray-700/50 rounded-xl shadow-inner w-full max-w-md'}`} onClick={(e) => e.stopPropagation()}>
+                    {isFullScreenQR && (
+                      <div className="text-left text-gray-900 dark:text-white text-xl font-bold mb-4">
+                        Blockchain: {formData.blockchain}
+                      </div>
+                    )}
+                    <div className={`flex ${isFullScreenQR ? 'flex-col items-center justify-center p-4' : 'justify-center mb-4'}`}>
+                      <div className="relative w-full flex justify-center">
+                        <div 
+                          className="border-4 border-blue-500 rounded-lg p-2 cursor-pointer bg-white"
+                          onClick={() => setIsFullScreenQR(true)}
+                        >
+                          <QRCode 
+                            value={generateQRCodeURL()} 
+                            size={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) : 192}
+                            quietZone={10}
+                            bgColor="#ffffff"
+                            fgColor="#000000"
+                            logoImage={blocklessLogo}
+                            logoWidth={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
+                            logoHeight={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
+                            logoOpacity={1}
+                            removeQrCodeBehindLogo={true}
+                            logoPadding={2}
+                            logoPaddingStyle="circle"
+                            qrStyle="squares"
+                          />
+                        </div>
+                      </div>
                     </div>
                     
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Blockchain</span>
-                        <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.blockchain}</span>
+                    {isFullScreenQR && (
+                      <div className="mt-4 text-center text-gray-900 dark:text-white">
+                        <p className="text-2xl font-bold mb-2">Amount: {formData.amount} {formData.token}</p>
+                        <p className="text-lg font-mono break-all">Recipient: {formData.targetAddress}</p>
                       </div>
-                      
-                      <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Token</span>
-                        <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.token}</span>
-                      </div>
-                      
-                      <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Amount</span>
-                        <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.amount}</span>
-                      </div>
-                      
-                      <div className="p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
-                        <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Target Address</div>
-                        <div className="text-xs font-mono break-all text-gray-900 dark:text-white">
-                          {formData.targetAddress}
+                    )}
+
+                    {!isFullScreenQR && (
+                      <>
+                        <div className="text-center mb-6">
+                          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Swap Link Details</h3>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">
+                            Scan with a generic QR reader to open swap link.
+                          </p>
                         </div>
-                      </div>
-                      
-                      <div 
-                        className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors group"
-                        onClick={copyToClipboard}
-                      >
-                        <div className="flex justify-between items-start">
-                          <div className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">Shareable Link</div>
-                          <div className="flex items-center">
-                            {copied ? (
-                              <span className="text-xs text-green-600 dark:text-green-400 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                </svg>
-                                Copied!
-                              </span>
-                            ) : (
-                              <span className="text-xs text-blue-600 dark:text-blue-400 flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                  <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                                  <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-                                </svg>
-                                Copy
-                              </span>
-                            )}
+                        
+                        <div className="space-y-4">
+                          <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
+                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Blockchain</span>
+                            <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.blockchain}</span>
+                          </div>
+                          
+                          <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
+                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Token</span>
+                            <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.token}</span>
+                          </div>
+                          
+                          <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
+                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Amount</span>
+                            <span className="text-sm font-bold text-gray-900 dark:text-white">{formData.amount}</span>
+                          </div>
+                          
+                          <div className="p-3 bg-gray-50 dark:bg-gray-600 rounded-lg">
+                            <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Recipient Address</div>
+                            <div className="text-xs font-mono break-all text-gray-900 dark:text-white">
+                              {formData.targetAddress}
+                            </div>
+                          </div>
+                          
+                          <div 
+                            className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors group"
+                            onClick={copyToClipboard}
+                          >
+                            <div className="flex justify-between items-start">
+                              <div className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">Shareable Link</div>
+                              <div className="flex items-center">
+                                {copied ? (
+                                  <span className="text-xs text-green-600 dark:text-green-400 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                    Copied!
+                                  </span>
+                                ) : (
+                                  <span className="text-xs text-blue-600 dark:text-blue-400 flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                      <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                                      <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                                    </svg>
+                                    Copy
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            <div className="text-xs font-mono break-all text-blue-900 dark:text-blue-100 bg-blue-100 dark:bg-blue-900/30 p-2 rounded">
+                              {generateQRCodeURL()}
+                            </div>
                           </div>
                         </div>
-                        <div className="text-xs font-mono break-all text-blue-900 dark:text-blue-100 bg-blue-100 dark:bg-blue-900/30 p-2 rounded">
-                          {generateQRCodeURL()}
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
               
+              {qrMode === 'wallets' && (
+                <WalletDeeplinkQRs 
+                  blockchainName={formData.blockchain}
+                  tokenSymbol={formData.token}
+                  amount={formData.amount}
+                  recipientAddress={formData.targetAddress}
+                />
+              )}
+
               <div className={`flex ${isFullScreenQR ? 'fixed bottom-4 left-0 right-0 justify-center' : 'mt-4 justify-center'}`}>
                 <button
                   onClick={() => setShowQRCode(false)}
@@ -426,10 +431,10 @@ const LandingPage = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-1">
-                    Fill Swap Details
+                    Fill Order Details
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400">
-                    Enter the blockchain, amount, and target address for your swap
+                    Enter the blockchain, token, amount, and recipient for your order.
                   </p>
                 </div>
               </div>
@@ -440,10 +445,10 @@ const LandingPage = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-1">
-                    Generate Swap Details
+                    Generate Order
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400">
-                    Create a shareable link with your swap details
+                    Create a shareable swap link or wallet-specific QR codes.
                   </p>
                 </div>
               </div>
@@ -457,7 +462,7 @@ const LandingPage = () => {
                     Share & Execute
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400">
-                    Share the link with others who can access your pre-filled order
+                    Share the link for a swap, or the QR codes for direct wallet payments.
                   </p>
                 </div>
               </div>
