@@ -54,7 +54,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       "authorization",
       "user-agent"
     ];
-    for (let [key, value] of Object.entries(req.headers)) {
+    for (const [key, value] of Object.entries(req.headers)) {
       if (
         key.toLowerCase() !== "host" &&
         allowedHeaders.includes(key.toLowerCase())
@@ -85,11 +85,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     let data;
     try {
       data = JSON.parse(text);
-    } catch (jsonErr) {
+        } catch (jsonErr: unknown) {
+      void jsonErr;
       return res.status(500).json({ error: "Invalid JSON from upstream", raw: text });
     }
     return res.status(response.status).json(data);
-  } catch (error) {
+  } catch (error: unknown) {
+    void error;
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }

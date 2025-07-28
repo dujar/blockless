@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { config } from './wagmi';
 import {blockchainData} from './data/blockchains';
@@ -27,12 +27,12 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
   const [amount, setAmount] = useState(swapParams.dst.amount || '');
   
   // Available tokens (mock data)
-  const availableTokens: Token[] = [
+  const availableTokens: Token[] = useMemo(() => [
     { symbol: 'ETH', name: 'Ether', chain: 'Ethereum', iconUrl: '/eth.svg' },
     { symbol: 'BNB', name: 'BNB', chain: 'BNB Chain', iconUrl: '/bnb.svg' },
     { symbol: 'MATIC', name: 'Polygon', chain: 'Polygon', iconUrl: '/matic.svg' },
     { symbol: 'USDC', name: 'USD Coin', chain: 'Ethereum', iconUrl: '/usdc.svg' },
-  ];
+  ], []);
   
   // Available chains from blockchain data
   const availableChains = blockchainData.map(chain => chain.name);
@@ -52,7 +52,7 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
         setSelectedToken(token);
       }
     }
-  }, [swapParams]);
+  }, [swapParams, availableTokens]);
 
   const handleConnectWallet = () => {
     connect({ connector: config.connectors[0] });

@@ -1,11 +1,11 @@
-import { NetworkEnum } from "@1inch/cross-chain-sdk";
+// import { NetworkEnum } from "@1inch/cross-chain-sdk";
 
 export const blockchainData = [
   {
     "id": "ethereum",
     "name": "Ethereum",
     "chainId": 1,
-    "networkId": NetworkEnum.ETHEREUM,
+    "networkId": 1, // NetworkEnum.ETHEREUM,
     "icon": "ethereum",
     "isEVM": true,
     "walletFormat": "0x"
@@ -14,7 +14,7 @@ export const blockchainData = [
     "id": "arbitrum",
     "name": "Arbitrum",
     "chainId": 42161,
-    "networkId": NetworkEnum.ARBITRUM,
+    "networkId": 42161, // NetworkEnum.ARBITRUM,
     "icon": "arbitrum",
     "isEVM": true,
     "walletFormat": "0x"
@@ -23,7 +23,7 @@ export const blockchainData = [
     "id": "avalanche",
     "name": "Avalanche",
     "chainId": 43114,
-    "networkId": NetworkEnum.AVALANCHE,
+    "networkId": 43114, // NetworkEnum.AVALANCHE,
     "icon": "avalanche",
     "isEVM": true,
     "walletFormat": "0x"
@@ -32,7 +32,7 @@ export const blockchainData = [
     "id": "bnb",
     "name": "BNB Chain",
     "chainId": 56,
-    "networkId": NetworkEnum.BINANCE,
+    "networkId": 56, // NetworkEnum.BINANCE,
     "icon": "binance",
     "isEVM": true,
     "walletFormat": "0x"
@@ -41,7 +41,7 @@ export const blockchainData = [
     "id": "gnosis",
     "name": "Gnosis Chain",
     "chainId": 100,
-    "networkId": NetworkEnum.GNOSIS,
+    "networkId": 100, // NetworkEnum.GNOSIS,
     "icon": "gnosis",
     "isEVM": true,
     "walletFormat": "0x"
@@ -50,7 +50,7 @@ export const blockchainData = [
     "id": "solana",
     "name": "Solana",
     "chainId": null,
-    "networkId": NetworkEnum.SOLANA,
+    "networkId": 13998, // NetworkEnum.SOLANA, (Placeholder, actual value might differ)
     "icon": "solana",
     "isEVM": false,
     "walletFormat": "base58"
@@ -59,7 +59,7 @@ export const blockchainData = [
     "id": "sonic",
     "name": "Sonic",
     "chainId": null,
-    "networkId": NetworkEnum.SONIC,
+    "networkId": 200000, // NetworkEnum.SONIC, (Placeholder, actual value might differ)
     "icon": "sonic",
     "isEVM": false,
     "walletFormat": "unknown"
@@ -68,7 +68,7 @@ export const blockchainData = [
     "id": "optimism",
     "name": "Optimism",
     "chainId": 10,
-    "networkId": NetworkEnum.OPTIMISM,
+    "networkId": 10, // NetworkEnum.OPTIMISM,
     "icon": "optimism",
     "isEVM": true,
     "walletFormat": "0x"
@@ -77,7 +77,7 @@ export const blockchainData = [
     "id": "polygon",
     "name": "Polygon",
     "chainId": 137,
-    "networkId": NetworkEnum.POLYGON,
+    "networkId": 137, // NetworkEnum.POLYGON,
     "icon": "polygon",
     "isEVM": true,
     "walletFormat": "0x"
@@ -86,7 +86,7 @@ export const blockchainData = [
     "id": "zksync",
     "name": "zkSync Era",
     "chainId": 324,
-    "networkId": NetworkEnum.ZKSYNC,
+    "networkId": 324, // NetworkEnum.ZKSYNC,
     "icon": "zksync",
     "isEVM": true,
     "walletFormat": "0x"
@@ -95,7 +95,7 @@ export const blockchainData = [
     "id": "base",
     "name": "Base",
     "chainId": 8453,
-    "networkId": NetworkEnum.COINBASE,
+    "networkId": 8453, // NetworkEnum.COINBASE,
     "icon": "base",
     "isEVM": true,
     "walletFormat": "0x"
@@ -104,7 +104,7 @@ export const blockchainData = [
     "id": "linea",
     "name": "Linea",
     "chainId": 59144,
-    "networkId": NetworkEnum.LINEA,
+    "networkId": 59144, // NetworkEnum.LINEA,
     "icon": "linea",
     "isEVM": true,
     "walletFormat": "0x"
@@ -113,7 +113,7 @@ export const blockchainData = [
     "id": "unichain",
     "name": "Unichain",
     "chainId": null,
-    "networkId": NetworkEnum.UNICHAIN,
+    "networkId": 100000, // NetworkEnum.UNICHAIN, (Placeholder, actual value might differ)
     "icon": "unichain",
     "isEVM": false,
     "walletFormat": "unknown"

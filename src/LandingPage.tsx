@@ -3,7 +3,6 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { QRCode } from 'react-qrcode-logo';
 import blocklessLogo from './assets/blockless.svg';
 import { blockchainData } from './data/blockchains';
-import { SupportedChains } from '@1inch/cross-chain-sdk';
 
 const LandingPage = () => {
   const { address, isConnected, chain } = useAccount();
@@ -29,7 +28,7 @@ const LandingPage = () => {
   };
   
   // Available chains from blockchain data
-  const availableChains = blockchainData.filter(chain => SupportedChains.includes(chain.networkId as any )).map(chain => ({
+  const availableChains = blockchainData.map(chain => ({
     id: chain.networkId,
     name: chain.name
   }));

@@ -25,5 +25,5 @@
   "include": [
     "api/*.ts",
     "vite.config.ts"
-  ]
+, "api/proxy/proxy.ts"  ]
 }
