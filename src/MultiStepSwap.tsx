@@ -3,6 +3,7 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { config } from './wagmi';
 import {blockchainData} from './data/blockchains';
 import type { SwapParams } from './SwapParamSafe';
+import WalletDeeplinkQRs from './WalletDeeplinkQRs';
 
 interface MultiStepSwapProps {
   swapParams: SwapParams;
@@ -60,11 +61,11 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
   };
 
 
-  const handleSwap = () => {
-    // In a real implementation, this would call the swap function
-    console.log('Swapping', amount, selectedToken, 'to target address:', swapParams.dst.destinationAddress || 'user wallet');
-    alert(`Swapping ${amount} ${selectedToken?.symbol} on ${selectedChain} ${(swapParams.dst.destinationAddress ? `to ${swapParams.dst.destinationAddress}` : 'to your wallet')}`);
-  };
+  // const _handleSwap = () => {
+  //   // In a real implementation, this would call the swap function
+  //   console.log('Swapping', amount, selectedToken, 'to target address:', swapParams.dst.destinationAddress || 'user wallet');
+  //   alert(`Swapping ${amount} ${selectedToken?.symbol} on ${selectedChain} ${(swapParams.dst.destinationAddress ? `to ${swapParams.dst.destinationAddress}` : 'to your wallet')}`);
+  // };
 
   return (
     <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
@@ -231,17 +232,12 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
             >
               Back
             </button>
-            <button
-              onClick={handleSwap}
-              disabled={!selectedToken || !amount || parseFloat(amount) <= 0}
-              className={`px-6 py-2 rounded-lg font-medium transition ${
-                !selectedToken || !amount || parseFloat(amount) <= 0
-                  ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-                  : 'bg-blue-500 hover:bg-blue-600 text-white'
-              }`}
-            >
-              Swap
-            </button>
+            <WalletDeeplinkQRs 
+              blockchainName={selectedChain} 
+              tokenSymbol={selectedToken?.symbol || ''} 
+              amount={amount} 
+              recipientAddress={swapParams.dst.destinationAddress || ''} 
+            />
           </div>
         </div>
       )}
