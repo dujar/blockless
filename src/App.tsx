@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import MultiStepSwap from './MultiStepSwap'
-import LandingPage from './features/landing/LandingPage'
+import SwapOrder from './features/swap-order/SwapOrder'
 import AppBar from './AppBar'
 import { parseSwapParamsSafe } from './SwapParamSafe'
 import type { SwapParams } from './SwapParamSafe'
@@ -70,7 +70,7 @@ function App() {
           
           {/* Show LandingPage if no parameters, if there's an error, or if not on /swap path with valid params, otherwise show MultiStepSwap */}
           {!swapParams || error ? (
-            <LandingPage />
+            <SwapOrder/>
           ) : (
             <div className="max-w-4xl mx-auto">
               <div className="flex justify-center">

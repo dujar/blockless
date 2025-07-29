@@ -5,7 +5,7 @@ import CreateSwapOrderForm from './sections/CreateSwapOrderForm';
 import OrderDisplay from './sections/OrderDisplay';
 import SupportedNetworks from '../../components/SupportedNetworks';
 
-const LandingPage = () => {
+const  SwapOrder= () => {
   const [showQRCode, setShowQRCode] = useState(false);
   
   const handleFormReset = () => {
@@ -49,4 +49,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default SwapOrder;
