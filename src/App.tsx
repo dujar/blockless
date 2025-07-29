@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import AppBar from './AppBar'
+
+const AlphaBanner = () => (
+  <div className="bg-gray-700 text-gray-300 text-center p-2 text-sm font-mono flex items-center justify-center">
+    <span className="mr-2">💻</span> This application is currently in Alpha mode. Expect bugs and rapid changes.
+  </div>
+);
 import LandingPage from './pages/LandingPage'
 import RegisterPage from './pages/RegisterPage'
 import CreateOrderPage from './pages/CreateOrderPage'
@@ -24,6 +30,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <AppBar />
+      <AlphaBanner />
       <main className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <Routes>
