@@ -9,7 +9,7 @@ export class TokenService extends BaseApiService {
      * Creates an instance of TokenService.
      * @param baseURL The base URL for the API. Defaults to `/api` which is proxied.
      */
-    constructor(baseURL: string = '/api') {
+    constructor(baseURL: string = '') {
         super(`${baseURL}/token`);
     }
 
@@ -74,7 +74,7 @@ export class TokenService extends BaseApiService {
      * Get all supported chain ids.
      * @returns A list of supported chain IDs.
      */
-    async getSupportedChains(): Promise<any> {
+    async getSupportedChains(): Promise<Array<number>> {
         return this.http.get(`/v1.3/multi-chain/supported-chains`).then(res => res.data);
     }
 

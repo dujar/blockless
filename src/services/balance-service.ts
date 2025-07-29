@@ -9,7 +9,7 @@ export class BalanceService extends BaseApiService {
      * Creates an instance of BalanceService.
      * @param baseURL The base URL for the API. Defaults to `/api` which is proxied.
      */
-    constructor(baseURL: string = '/api') {
+    constructor(baseURL: string = '') {
         super(`${baseURL}/balance/v1.2`);
     }
 

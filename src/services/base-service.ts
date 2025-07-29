@@ -1,8 +1,10 @@
 
 import axios, { AxiosError } from 'axios';
 
-import type { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
+import type { AxiosInstance, AxiosRequestConfig, CreateAxiosDefaults, InternalAxiosRequestConfig } from 'axios';
 const isDevelopment = import.meta.env.DEV;
+
+
 
 export interface ServiceOptions {
     retries?: number;
@@ -20,14 +22,29 @@ export class BaseApiService {
     protected http: AxiosInstance;
 
     constructor(baseURL: string = "", private options: ServiceOptions = {}) {
-        if(!baseURL){
-            if(isDevelopment){
-                baseURL="https://api.1inch.dev/"
+        // if(!baseURL.match(/http/)){
+        //     if(isDevelopment){
+        //         baseURL="https://api.1inch.dev"+baseURL;
+        //     } else {
+        //         baseURL="/api"+baseURL;
+        //     }
+        // }
+        baseURL="/api"+baseURL;
+
+        let config:CreateAxiosDefaults = {
+            baseURL,
+        };
+        if(isDevelopment){
+            config.headers = {
+                // Authorization: `Bearer ${AUTH_ONE_INCH}`,
+                "Access-Control-Allow-Origin": "",
+                'Access-Control-Allow-Credentials': 'true',
+                'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type,Authorization',
+                "accept": "application/json"
             }
         }
-        this.http = axios.create({
-            baseURL,
-        });
+        this.http = axios.create(config);
 
         this.http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
             if (isDevelopment) {

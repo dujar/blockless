@@ -30,7 +30,7 @@ import type {
  * Service for interacting with the 1inch Fusion+ Quoter API.
  */
 export class QuoterService extends BaseApiService {
-    constructor(baseURL: string = '/api') {
+    constructor(baseURL: string = '') {
         super(`${baseURL}/quoter/v1.0`);
     }
 
