@@ -1,5 +1,6 @@
 import type { UseRegistrationFormReturn } from '../hooks/useRegistrationForm';
 import { ChainConfigCard } from './ChainConfigCard';
+import { ChainSelector } from './ChainSelector';
 
 interface ChainConfigurationProps {
   form: UseRegistrationFormReturn;
@@ -16,6 +17,14 @@ export const ChainConfiguration = ({ form }: ChainConfigurationProps) => {
     wallet,
   } = form;
   
+  const configuredChainNames = chains.map(c => c.name);
+  // Pass all supported chains and configured chains.
+  // ChainSelector will filter what's eligible for *adding* based on configuredChainNames.
+
+  const handleAddChains = (chainNames: string[]) => {
+    chainNames.forEach(name => handleChainChange(name, true));
+  };
+  
   return (
     <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg">
       <h2 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">2. Configure Blockchains & Wallets</h2>
@@ -28,20 +37,30 @@ export const ChainConfiguration = ({ form }: ChainConfigurationProps) => {
         </div>
       )}
       <div className="space-y-6">
-        {supportedChains.map(chainInfo => (
-            <ChainConfigCard 
-                key={chainInfo.id}
-                chainInfo={chainInfo}
-                currentChainConfig={chains.find(c => c.name === chainInfo.name)}
-                addressValidity={addressValidity[chainInfo.name]}
-                onChainChange={handleChainChange}
-                onAddressChange={handleAddressChange}
-                onTokenChange={handleTokenChange}
-                onUseWallet={wallet.handleUseWallet}
-                wallet={wallet}
-            />
-        ))}
+        {chains.map(chainConfig => {
+            const chainInfo = supportedChains.find(c => c.name === chainConfig.name);
+            if (!chainInfo) return null;
+            return (
+                <ChainConfigCard 
+                    key={chainInfo.id}
+                    chainInfo={chainInfo}
+                    currentChainConfig={chainConfig}
+                    addressValidity={addressValidity[chainInfo.name]}
+                    onChainChange={handleChainChange}
+                    onAddressChange={handleAddressChange}
+                    onTokenChange={handleTokenChange}
+                    onUseWallet={wallet.handleUseWallet}
+                    wallet={wallet}
+                />
+            )
+        })}
       </div>
+      
+      <ChainSelector 
+        supportedChains={supportedChains} 
+        configuredChainNames={configuredChainNames} 
+        onAddChains={handleAddChains} 
+      />
     </div>
   );
 };

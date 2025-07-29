@@ -1,0 +1,82 @@
+[
+  {
+    "blockchain": "chainlink",
+    "tokenName": "Chainlink",
+    "tokenSymbol": "LINK",
+    "description": "Chainlink is a framework for building Decentralized Oracle Networks (DONs) that bring real-world data onto blockchain networks, enabling the creation of hybrid smart contracts. These DONs provide dece...",
+    "logo": "https://coin-images.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+    "tokenId": "chainlink"
+  },
+  {
+    "blockchain": "cardano",
+    "tokenName": "Cardano",
+    "tokenSymbol": "ADA",
+    "description": "Cardano is a proof-of-stake blockchain platform designed to support decentralized applications (dApps), featuring a multi-asset ledger and smart contract functionality. Unlike many other blockchains, ...",
+    "logo": "https://coin-images.coingecko.com/coins/images/975/large/cardano.png?1696502090",
+    "tokenId": "cardano"
+  },
+  {
+    "blockchain": "solana",
+    "tokenName": "Solana",
+    "tokenSymbol": "SOL",
+    "description": "Solana is a highly functional open source project that banks on blockchain technology’s permissionless nature to provide decentralized finance (DeFi) solutions. It is a layer 1 network that offers fas...",
+    "logo": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+    "tokenId": "solana"
+  },
+  {
+    "blockchain": "polygon",
+    "tokenName": "Polygon",
+    "tokenSymbol": "MATIC",
+    "description": "Polygon (Previously Matic Network) is the first well-structured, easy-to-use platform for Ethereum scaling and infrastructure development. Its core component is Polygon SDK, a modular, flexible framew...",
+    "logo": "https://coin-images.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
+    "tokenId": "matic-network"
+  },
+  {
+    "blockchain": "binancecoin",
+    "tokenName": "BNB",
+    "tokenSymbol": "BNB",
+    "description": "Binance Coin is the cryptocurrency of the Binance platform. It is a trading platform exclusively for cryptocurrencies. The name \"Binance\" is a combination of binary and finance.\r\n\r\nThus, the startup n...",
+    "logo": "https://coin-images.coingecko.com/coins/images/825/large/bnb-icon2_2x.png?1696501970",
+    "tokenId": "binancecoin"
+  },
+  {
+    "blockchain": "bitcoin",
+    "tokenName": "Bitcoin",
+    "tokenSymbol": "BTC",
+    "description": "Bitcoin is the first successful internet money based on peer-to-peer technology; whereby no central bank or authority is involved in the transaction and production of the Bitcoin currency. It was crea...",
+    "logo": "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
+    "tokenId": "bitcoin"
+  },
+  {
+    "blockchain": "ethereum",
+    "tokenName": "Ethereum",
+    "tokenSymbol": "ETH",
+    "description": "Ethereum is a global, open-source platform for decentralized applications. In other words, the vision is to create a world computer that anyone can build applications in a decentralized manner; while ...",
+    "logo": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+    "tokenId": "ethereum"
+  },
+  {
+    "blockchain": "litecoin",
+    "tokenName": "Litecoin",
+    "tokenSymbol": "LTC",
+    "description": "Litecoin is a peer-to-peer cryptocurrency created by Charlie Lee. It was created based on the Bitcoin protocol but differs in terms of the hashing algorithm used. Litecoin uses the memory intensive Sc...",
+    "logo": "https://coin-images.coingecko.com/coins/images/2/large/litecoin.png?1696501400",
+    "tokenId": "litecoin"
+  },
+  {
+    "blockchain": "avalanche",
+    "tokenName": "Avalanche",
+    "tokenSymbol": "AVAX",
+    "description": "Avalanche is a high throughput smart contract blockchain platform. Validators secure the network through a proof-of-stake consensus protocol. It is said to be fast, low cost, and environmental friendl...",
+    "logo": "https://coin-images.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png?1696512369",
+    "tokenId": "avalanche-2"
+  },
+  {
+    "blockchain": "polkadot",
+    "tokenName": "Polkadot",
+    "tokenSymbol": "DOT",
+    "description": "Polkadot is a platform that allows diverse blockchains to transfer messages, including value, in a trust-free fashion; sharing their unique features while pooling their security. In brief, Polkadot is...",
+    "logo": "https://coin-images.coingecko.com/coins/images/12171/large/polkadot.png?1696512008",
+    "tokenId": "polkadot"
+  }
+]

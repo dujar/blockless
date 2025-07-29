@@ -86,6 +86,36 @@ export interface WhitelistedTokensParams {
 
 // #endregion
 
+// #region Token Details API Types
+
+export interface TokenRisk {
+    name: string;
+    value: string;
+    level: string;
+}
+
+export interface TokenRiskResponse {
+    risks: TokenRisk[];
+}
+
+export interface TokenLogoResponse {
+    logo: string;
+}
+
+export interface TokenNameResponse {
+    name: string;
+}
+
+export interface TokenSymbolResponse {
+    symbol: string;
+}
+
+export interface TokenDecimalsResponse {
+    decimals: number;
+}
+
+// #endregion
+
 // #region Balance API Types
 
 /**

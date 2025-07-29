@@ -1,6 +1,24 @@
-// import { NetworkEnum } from "@1inch/cross-chain-sdk";
+export interface BlockchainTheme {
+  bg: string;
+  border: string;
+  text: string;
+  label: string;
+  button: string;
+  secondaryButton: string;
+}
 
-export const defaultTheme = {
+export interface BlockchainData {
+  id: string;
+  name: string;
+  chainId: number | null;
+  networkId: number;
+  icon: string;
+  isEVM: boolean;
+  walletFormat: string;
+  theme?: BlockchainTheme;
+}
+
+export const defaultTheme: BlockchainTheme = {
   bg: "bg-gray-50 dark:bg-gray-800/20",
   border: "border-gray-200 dark:border-gray-700",
   text: "text-gray-800 dark:text-gray-200",
@@ -9,7 +27,7 @@ export const defaultTheme = {
   secondaryButton: "bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200",
 };
 
-export const blockchainData = [
+export const blockchainData: BlockchainData[] = [
   {
     "id": "ethereum",
     "name": "Ethereum",
