@@ -156,14 +156,21 @@ const CreateOrderPage = () => {
                 activeTab === chain.name && (
                     <div key={chain.name}>
                         <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Pay with Wallet on {chain.name}</h3>
-                        <WalletDeeplinkQRs 
-                            blockchainName={chain.name} 
-                            // This component only supports one token. A real implementation would need a picker.
-                            // For demo, we'll use the first token.
-                            tokenSymbol={chain.tokens[0].symbol} 
-                            amount={chain.tokens[0].amount}
-                            recipientAddress={chain.address}
-                        />
+                        <div className="space-y-6">
+                          {chain.tokens.map((token: { symbol: string, amount: string }) => (
+                            <div key={token.symbol} className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                              <h4 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+                                Pay {token.amount} {token.symbol}
+                              </h4>
+                              <WalletDeeplinkQRs 
+                                  blockchainName={chain.name} 
+                                  tokenSymbol={token.symbol} 
+                                  amount={token.amount}
+                                  recipientAddress={chain.address}
+                              />
+                            </div>
+                          ))}
+                        </div>
                     </div>
                 )
             )}
