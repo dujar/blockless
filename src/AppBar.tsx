@@ -1,5 +1,6 @@
 import { useAccount, useConnect } from 'wagmi'
 import { useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
 import blocklessLogo from './assets/blockless.svg'
 
 export default function AppBar() {
@@ -31,13 +32,30 @@ export default function AppBar() {
     }
   }
 
+  const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
+    `px-3 py-2 rounded-md text-sm font-medium ${
+      isActive
+        ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
+        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+    }`
+
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center">
-            <img src={blocklessLogo} alt="Blockless" className="h-8 w-8 mr-2" />
-            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Blockless Swap</h1>
+            <NavLink to="/" className="flex items-center">
+              <img src={blocklessLogo} alt="Blockless" className="h-8 w-8 mr-2" />
+              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Blockless Swap</h1>
+            </NavLink>
+            <nav className="hidden md:flex items-baseline space-x-4 ml-10">
+              <NavLink to="/register" className={navLinkClasses}>
+                Register
+              </NavLink>
+              <NavLink to="/create-order" className={navLinkClasses}>
+                Create Order
+              </NavLink>
+            </nav>
           </div>
           <div className="flex items-center space-x-4">
             {/* Theme Toggle */}

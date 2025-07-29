@@ -4,7 +4,7 @@
   justify-content: center;
   height: 100vh;
   background-color: #000;
-  animation: fadeOut 3s forwards;
+  animation: fadeOut 1.5s forwards;
 }
 
 .splash-logo {

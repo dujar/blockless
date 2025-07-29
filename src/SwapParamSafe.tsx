@@ -24,7 +24,7 @@ export type SwapInfo = {
 
 // Main swap parameters interface
 export interface SwapParams {
-  dst: SwapInfo;
+  dst: SwapInfo[];
   src?: SwapInfo;
 }
 
@@ -42,7 +42,7 @@ const isValidAmount = (amount: string): amount is SwapAmount => {
 };
 
 const isValidBlockchain = (chain: string): chain is BlockchainName => {
-  return typeof chain === 'string' && /^[a-zA-Z0-9_-]{1,30}$/.test(chain);
+  return typeof chain === 'string' && /^[a-zA-Z0-9 _-]{1,30}$/.test(chain);
 };
 
 // Helper functions to create validated types
@@ -118,14 +118,14 @@ const parseSwapInfo = (swapString: string): SwapInfo => {
 
 // Main function to parse URL query parameters
 const parseSwapParams = (queryParams: URLSearchParams): SwapParams => {
-  const dstParam = queryParams.get('dst');
+  const dstParams = queryParams.getAll('dst');
   
-  if (!dstParam) {
+  if (dstParams.length === 0) {
     throw new Error('Missing required parameter: dst');
   }
   
   try {
-    const dst = parseSwapInfo(dstParam);
+    const dst = dstParams.map(parseSwapInfo);
     const srcParam = queryParams.get('src');
     const src = srcParam ? parseSwapInfo(srcParam) : undefined;
     
@@ -151,30 +151,6 @@ const parseSwapParamsSafe = (queryParams: URLSearchParams): {
     return { success: false, error: (error as Error).message };
   }
 };
-
-// Usage examples:
-/*
-// Example URL: ?dst=ethereum:1.5:ETH:0x1234567890123456789012345678901234567890&src=polygon:100:0xabcdef123456789012345678901234567890abcd:0x9876543210987654321098765432109876543210
-
-const url = new URL('http://example.com?dst=ethereum:1.5:ETH:0x1234567890123456789012345678901234567890&src=polygon:100:0xabcdef123456789012345678901234567890abcd:0x9876543210987654321098765432109876543210');
-const queryParams = url.searchParams;
-
-// Using throwing version
-try {
-  const swapParams = parseSwapParams(queryParams);
-  console.log('Parsed swap params:', swapParams);
-} catch (error) {
-  console.error('Validation error:', error.message);
-}
-
-// Using safe version
-const result = parseSwapParamsSafe(queryParams);
-if (result.success) {
-  console.log('Parsed swap params:', result.data);
-} else {
-  console.error('Validation error:', result.error);
-}
-*/
 
 export {
   parseSwapParams,

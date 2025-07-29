@@ -25,7 +25,7 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
   // Token selection state
   const [selectedToken, setSelectedToken] = useState<Token | null>(null);
   const [selectedChain, setSelectedChain] = useState<string | null>(null);
-  const [amount, setAmount] = useState(swapParams.dst.amount || '');
+  const [amount, setAmount] = useState(swapParams.dst[0]?.amount || '');
   
   // Available tokens (mock data)
   const availableTokens: Token[] = useMemo(() => [
@@ -40,15 +40,15 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
 
   // Use prefilled values when they change
   useEffect(() => {
-    if (swapParams.dst.blockchain) {
-      setSelectedChain(swapParams.dst.blockchain);
+    if (swapParams.dst[0]?.blockchain) {
+      setSelectedChain(swapParams.dst[0].blockchain);
     }
-    if (swapParams.dst.amount) {
-      setAmount(swapParams.dst.amount);
+    if (swapParams.dst[0]?.amount) {
+      setAmount(swapParams.dst[0].amount);
     }
-    if (swapParams.dst.token.symbol) {
+    if (swapParams.dst[0]?.token.symbol) {
       // Find the token in available tokens
-      const token = availableTokens.find(t => t.symbol === swapParams.dst.token.symbol);
+      const token = availableTokens.find(t => t.symbol === swapParams.dst[0].token.symbol);
       if (token) {
         setSelectedToken(token);
       }
@@ -211,14 +211,14 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
           </div>
           
           {/* Target Address (if provided) */}
-          {swapParams.dst.destinationAddress && (
+          {swapParams.dst[0]?.destinationAddress && (
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Target Address
               </label>
               <div className="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
                 <div className="text-sm break-all text-gray-900 dark:text-white">
-                  {swapParams.dst.destinationAddress}
+                  {swapParams.dst[0].destinationAddress}
                 </div>
               </div>
             </div>
@@ -236,7 +236,7 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
               blockchainName={selectedChain} 
               tokenSymbol={selectedToken?.symbol || ''} 
               amount={amount} 
-              recipientAddress={swapParams.dst.destinationAddress || ''} 
+              recipientAddress={swapParams.dst[0]?.destinationAddress || ''} 
             />
           </div>
         </div>
