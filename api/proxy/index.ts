@@ -1,7 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-
   // Allow only http://localhost:* or a single user-defined origin
   const origin = req.headers.origin || '';
   const isLocalhost = /^https?:\/\/localhost(:\d+)?$/i.test(origin);
@@ -12,6 +11,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
   }
+
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
 
@@ -21,7 +21,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const { API_AUTH_TOKEN } = process.env;
-
   if (!API_AUTH_TOKEN) {
     return res.status(500).json({ error: "API_AUTH_TOKEN is missing from env" });
   }
@@ -30,13 +29,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Remove the leading "/api/" from req.url
     // e.g. "/api/foo/bar" -> "foo/bar"
     const path = req.url?.replace(/^\/api\//, '');
-
     if (!path || path === "/" || path === "") {
       return res.status(400).json({
-        error:
-          "This is just the root path of the proxy! It doesn't do anything on its own. You need to append the path of the 1inch API you want to talk to",
+        error: "This is just the root path of the proxy! It doesn't do anything on its own. You need to append the path of the 1inch API you want to talk to",
       });
-    }    
+    }
 
     // Build the target URL, removing any leading slash from path to prevent double slashes
     const targetUrl = `https://api.1inch.dev/${path.replace(/^\//, "")}`;
@@ -54,12 +51,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       "authorization",
       "user-agent"
     ];
+
     for (const [key, value] of Object.entries(req.headers)) {
-      if (
-        key.toLowerCase() !== "host" &&
-        allowedHeaders.includes(key.toLowerCase())
-      ) {
-        if( typeof value === "string") {
+      if (key.toLowerCase() !== "host" &&
+        allowedHeaders.includes(key.toLowerCase())) {
+        if (typeof value === "string") {
           headers.set(key, value);
         }
       }
@@ -85,13 +81,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     let data;
     try {
       data = JSON.parse(text);
-        } catch (jsonErr: unknown) {
-      void jsonErr;
+    } catch (jsonErr) {
       return res.status(500).json({ error: "Invalid JSON from upstream", raw: text });
     }
+
     return res.status(response.status).json(data);
-  } catch (error: unknown) {
-    void error;
+  } catch (error) {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }
