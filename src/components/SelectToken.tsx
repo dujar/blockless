@@ -31,7 +31,7 @@ export const SelectToken = ({
       
       {/* Amount Input */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
           Amount
         </label>
         <input
@@ -45,7 +45,7 @@ export const SelectToken = ({
       
       {/* Token Selection */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
           Select Token
         </label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -56,12 +56,12 @@ export const SelectToken = ({
                 onClick={() => onSelect(token)}
                 className={`p-3 rounded-lg border-2 cursor-pointer transition ${
                   selectedToken?.symbol === token.symbol
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                    : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700'
+                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                    : 'border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700'
                 }`}
               >
                 <div className="flex items-center">
-                  <div className="bg-gray-200 dark:bg-gray-700 rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                  <div className="bg-gray-100 dark:bg-gray-700 rounded-full w-8 h-8 flex items-center justify-center mr-3">
                     <span className="font-bold text-gray-700 dark:text-gray-300 text-sm">
                       {token.symbol.charAt(0)}
                     </span>
@@ -79,7 +79,7 @@ export const SelectToken = ({
       {/* Target Address (if provided) */}
       {destinationAddress && (
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
             Target Address
           </label>
           <div className="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
@@ -94,13 +94,13 @@ export const SelectToken = ({
       <div className="flex justify-between">
         <button
           onClick={onBack}
-          className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
+          className="px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
         >
           Back
         </button>
         <button
           onClick={onGenerateQRs}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition"
+          className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium transition"
           disabled={!selectedToken || !amount}
         >
           Generate QR Codes

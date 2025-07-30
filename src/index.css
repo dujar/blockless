@@ -10,3 +10,124 @@ input[type='number'] {
   -moz-appearance: textfield; /* Firefox */
 }
 
+/* Default (light) theme variables - Blue primary */
+:root {
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
+
+  --shadow-dynamic: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); /* shadow-md */
+}
+
+/* Dark mode default (indigo primary) */
+.dark {
+  --color-primary-50: #1e3a8a; /* Keep dark shades for primary-50, etc. for specific uses */
+  --color-primary-100: #3730a3;
+  --color-primary-200: #4f46e5;
+  --color-primary-300: #6366f1;
+  --color-primary-400: #818cf8;
+  --color-primary-500: #6366f1; /* Darker primary for contrast */
+  --color-primary-600: #4f46e5;
+  --color-primary-700: #4338ca;
+  --color-primary-800: #3730a3;
+  --color-primary-900: #312e81;
+  --color-primary-950: #1e1b4b;
+
+  --shadow-dynamic: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-lg */
+}
+
+/* Primary Color Options for merchant customization */
+
+/* Red theme (light mode) */
+.theme-red {
+  --color-primary-50: #fef2f2;
+  --color-primary-100: #fee2e2;
+  --color-primary-200: #fecaca;
+  --color-primary-300: #fca5a5;
+  --color-primary-400: #f87171;
+  --color-primary-500: #ef4444;
+  --color-primary-600: #dc2626;
+  --color-primary-700: #b91c1c;
+  --color-primary-800: #991b1b;
+  --color-primary-900: #7f1d1d;
+  --color-primary-950: #450a0a;
+}
+/* Red theme (dark mode) */
+.dark.theme-red {
+  --color-primary-50: #450a0a;
+  --color-primary-100: #7f1d1d;
+  --color-primary-200: #991b1b;
+  --color-primary-300: #b91c1c;
+  --color-primary-400: #dc2626;
+  --color-primary-500: #ef4444;
+  --color-primary-600: #f87171;
+  --color-primary-700: #fca5a5;
+  --color-primary-800: #fee2e2;
+  --color-primary-900: #fef2f2;
+  --color-primary-950: #4b0e0e; /* Adjust if needed for better contrast in dark */
+}
+
+/* Green theme (light mode) */
+.theme-green {
+  --color-primary-50: #f0fdf4;
+  --color-primary-100: #dcfce7;
+  --color-primary-200: #bbf7d0;
+  --color-primary-300: #86efac;
+  --color-primary-400: #4ade80;
+  --color-primary-500: #22c55e;
+  --color-primary-600: #16a34a;
+  --color-primary-700: #15803d;
+  --color-primary-800: #166534;
+  --color-primary-900: #14532d;
+  --color-primary-950: #052e16;
+}
+/* Green theme (dark mode) */
+.dark.theme-green {
+  --color-primary-50: #052e16;
+  --color-primary-100: #14532d;
+  --color-primary-200: #166534;
+  --color-primary-300: #15803d;
+  --color-primary-400: #16a34a;
+  --color-primary-500: #22c55e;
+  --color-primary-600: #4ade80;
+  --color-primary-700: #86efac;
+  --color-primary-800: #bbf7d0;
+  --color-primary-900: #dcfce7;
+  --color-primary-950: #0a4d2c; /* Adjust if needed for better contrast in dark */
+}
+
+/* Shadow level variables */
+.shadow-sm-applied {
+    --shadow-dynamic: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+.shadow-md-applied {
+    --shadow-dynamic: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+.shadow-lg-applied {
+    --shadow-dynamic: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+.shadow-xl-applied {
+    --shadow-dynamic: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Dark mode specific shadows for potentially better contrast */
+.dark.shadow-sm-applied {
+    --shadow-dynamic: 0 1px 2px 0 rgb(0 0 0 / 0.2);
+}
+.dark.shadow-md-applied {
+    --shadow-dynamic: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+}
+.dark.shadow-lg-applied {
+    --shadow-dynamic: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+}
+.dark.shadow-xl-applied {
+    --shadow-dynamic: 0 20px 25px -5px rgb(0 0 0 / 0.2), 0 8px 10px -6px rgb(0 0 0 / 0.2);
+}

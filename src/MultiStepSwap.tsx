@@ -1,243 +1,115 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { config } from './wagmi';
-import {blockchainData} from './data/blockchains';
+import { Link } from 'react-router-dom'; // Import Link
 import type { SwapParams } from './SwapParamSafe';
 import WalletDeeplinkQRs from './features/wallet-deeplink/WalletDeeplinkQRs';
+import { ConnectWallet } from './components/ConnectWallet'; // Import ConnectWallet
+import { SelectBlockchain } from './components/SelectBlockchain'; // Import SelectBlockchain
+import { SelectToken } from './components/SelectToken'; // Import SelectToken
+import {  type TokenInfo } from './data/tokens'; // Import tokenData
 
 interface MultiStepSwapProps {
   swapParams: SwapParams;
 }
 
-interface Token {
-  symbol: string;
-  name: string;
-  chain: string;
-  iconUrl?: string;
-}
-
 const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
   const [step, setStep] = useState(1);
-  const { isConnected } = useAccount();
-  const { connect } = useConnect();
+  const { isConnected, chain } = useAccount();
+  const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   
-  // Token selection state
-  const [selectedToken, setSelectedToken] = useState<Token | null>(null);
-  const [selectedChain, setSelectedChain] = useState<string | null>(null);
-  const [amount, setAmount] = useState(swapParams.dst[0]?.amount || '');
-  
-  // Available tokens (mock data)
-  const availableTokens: Token[] = useMemo(() => [
-    { symbol: 'ETH', name: 'Ether', chain: 'Ethereum', iconUrl: '/eth.svg' },
-    { symbol: 'BNB', name: 'BNB', chain: 'BNB Chain', iconUrl: '/bnb.svg' },
-    { symbol: 'MATIC', name: 'Polygon', chain: 'Polygon', iconUrl: '/matic.svg' },
-    { symbol: 'USDC', name: 'USD Coin', chain: 'Ethereum', iconUrl: '/usdc.svg' },
-  ], []);
+  // Token selection state for the source of the swap
+  const [sourceChain, setSourceChain] = useState<string | null>(null);
+  const [sourceToken, setSourceToken] = useState<TokenInfo | null>(null);
+  const [sourceAmount, setSourceAmount] = useState('');
+  const [showQRs, setShowQRs] = useState(false);
+
+  // Available tokens (from local data, filtered by selectedChain)
+  // const availableTokens = useMemo(() => {
+  //   const currentChain = blockchainData.find(c => c.name === sourceChain);
+  //   return tokenData.filter(token => token.chainId === currentChain?.chainId);
+  // }, [sourceChain]);
   
   // Available chains from blockchain data
-  const availableChains = blockchainData.map(chain => chain.name);
+  // const availableChains = useMemo(() => blockchainData.map(chain => chain.name), []);
 
-  // Use prefilled values when they change
+  // Use prefilled values from swapParams.dst[0]
+  const destinationInfo = swapParams.dst[0];
+  
+  // Effect to update internal state based on connection status
   useEffect(() => {
-    if (swapParams.dst[0]?.blockchain) {
-      setSelectedChain(swapParams.dst[0].blockchain);
+    if (isConnected) setStep(2);
+    else setStep(1);
+  }, [isConnected]);
+
+  // Effect to set sourceChain if a wallet is connected and its chain is known
+  useEffect(() => {
+    if (isConnected && chain) {
+      setSourceChain(chain.name);
     }
-    if (swapParams.dst[0]?.amount) {
-      setAmount(swapParams.dst[0].amount);
-    }
-    if (swapParams.dst[0]?.token.symbol) {
-      // Find the token in available tokens
-      const token = availableTokens.find(t => t.symbol === swapParams.dst[0].token.symbol);
-      if (token) {
-        setSelectedToken(token);
-      }
-    }
-  }, [swapParams, availableTokens]);
+  }, [isConnected, chain]);
 
   const handleConnectWallet = () => {
-    connect({ connector: config.connectors[0] });
-    setStep(2);
+    connect({ connector: connectors[0] });
   };
 
-  return (
-    <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
-      {/* Step Indicator */}
-      <div className="flex justify-between mb-8">
-        {[1, 2, 3].map((stepNum) => (
-          <div key={stepNum} className="flex flex-col items-center">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-              step >= stepNum 
-                ? 'bg-blue-500 text-white' 
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
-            }`}>
-              {stepNum}
-            </div>
-            <div className="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-              {stepNum === 1 && 'Connect'}
-              {stepNum === 2 && 'Blockchain'}
-              {stepNum === 3 && 'Token'}
-            </div>
-          </div>
-        ))}
+  if (showQRs && sourceChain && sourceToken && destinationInfo) {
+    return (
+      <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-lg shadow-dynamic p-8">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Complete Payment</h2>
+        <WalletDeeplinkQRs
+          blockchainName={sourceChain}
+          tokenSymbol={sourceToken.symbol}
+          amount={sourceAmount}
+          recipientAddress={destinationInfo.destinationAddress}
+          fiatAmount={0} // Fiat amount is not relevant for direct crypto payments via deeplink here
+          fiatCurrency="USD" // Default to USD
+          genericSwapUrl={`${window.location.origin}/swap?dst=${destinationInfo.blockchain}:${destinationInfo.amount}:${destinationInfo.token.symbol || destinationInfo.token.address}:${destinationInfo.destinationAddress}`} // Pass the original swap link
+        />
+        <button onClick={() => setShowQRs(false)} className="mt-4 text-primary-500 hover:underline">← Back</button>
       </div>
+    );
+  }
 
-      {/* Step 1: Connect Wallet */}
-      {step === 1 && (
-        <div className="text-center py-8">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Connect Your Wallet</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-8">
-            Connect your wallet to get started with Blockless Swap
-          </p>
-          <button
-            onClick={handleConnectWallet}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition"
-          >
-            Connect Wallet
-          </button>
-          <button
-            onClick={() => window.location.href = window.location.origin + window.location.pathname}
-            className="mt-4 text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"
-          >
-            ← Back to Create Swap Order
-          </button>
+  return (
+    <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8">
+      {step < 4 && (
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Swap to Pay</h2>
+          {/* Link back to create order page */}
+          <Link to="/create-order" className="text-sm text-primary-500 hover:underline">Cancel</Link>
         </div>
       )}
 
-      {/* Step 2: Select Blockchain */}
+      {step === 1 && <ConnectWallet onConnect={handleConnectWallet} />}
+      
       {step === 2 && isConnected && (
-        <div className="py-4">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Select Blockchain</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {availableChains.map((chain) => (
-              <div
-                key={chain}
-                onClick={() => {
-                  setSelectedChain(chain);
-                  setStep(3);
-                }}
-                className={`p-4 rounded-lg border-2 cursor-pointer transition ${
-                  selectedChain === chain
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                    : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700'
-                }`}
-              >
-                <div className="flex items-center">
-                  <div className="bg-gray-200 dark:bg-gray-700 rounded-full w-10 h-10 flex items-center justify-center mr-3">
-                    <span className="font-bold text-gray-700 dark:text-gray-300">
-                      {chain.charAt(0)}
-                    </span>
-                  </div>
-                  <span className="font-medium text-gray-900 dark:text-white">{chain}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 flex justify-between">
-            <button
-              onClick={() => setStep(1)}
-              className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
-            >
-              Back
-            </button>
-            <button
-              onClick={() => disconnect()}
-              className="px-4 py-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition"
-            >
-              Disconnect
-            </button>
-          </div>
-        </div>
+        <SelectBlockchain
+          selectedChain={sourceChain}
+          onSelect={(chainName) => {
+            setSourceChain(chainName);
+            setStep(3);
+          }}
+          onBack={() => setStep(1)}
+          onDisconnect={disconnect}
+        />
       )}
-
-      {/* Step 3: Select Token and Amount */}
-      {step === 3 && isConnected && selectedChain && (
-        <div className="py-4">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Select Token</h2>
-          
-          {/* Amount Input */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Amount
-            </label>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              placeholder="0.0"
-            />
-          </div>
-          
-          {/* Token Selection */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Select Token
-            </label>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {availableTokens
-                .filter(token => token.chain === selectedChain)
-                .map((token) => (
-                  <div
-                    key={token.symbol}
-                    onClick={() => setSelectedToken(token)}
-                    className={`p-3 rounded-lg border-2 cursor-pointer transition ${
-                      selectedToken?.symbol === token.symbol
-                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                        : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700'
-                    }`}
-                  >
-                    <div className="flex items-center">
-                      <div className="bg-gray-200 dark:bg-gray-700 rounded-full w-8 h-8 flex items-center justify-center mr-3">
-                        <span className="font-bold text-gray-700 dark:text-gray-300 text-sm">
-                          {token.symbol.charAt(0)}
-                        </span>
-                      </div>
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-white">{token.symbol}</div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400">{token.name}</div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
-          
-          {/* Target Address (if provided) */}
-          {swapParams.dst[0]?.destinationAddress && (
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Target Address
-              </label>
-              <div className="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                <div className="text-sm break-all text-gray-900 dark:text-white">
-                  {swapParams.dst[0].destinationAddress}
-                </div>
-              </div>
-            </div>
-          )}
-          
-          {/* Action Button */}
-          <div className="flex justify-between">
-            <button
-              onClick={() => setStep(2)}
-              className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
-            >
-              Back
-            </button>
-            <WalletDeeplinkQRs 
-              blockchainName={selectedChain} 
-              tokenSymbol={selectedToken?.symbol || ''} 
-              amount={amount} 
-              recipientAddress={swapParams.dst[0]?.destinationAddress || ''} 
-              fiatAmount={0} // Dummy value
-              fiatCurrency="USD" // Dummy value
-            />
-          </div>
-        </div>
+      
+      {step === 3 && isConnected && sourceChain && destinationInfo && (
+        <SelectToken
+          selectedChain={sourceChain}
+          selectedToken={sourceToken}
+          onSelect={setSourceToken}
+          amount={sourceAmount}
+          onAmountChange={setSourceAmount}
+          destinationAddress={destinationInfo.destinationAddress}
+          onBack={() => setStep(2)}
+          onGenerateQRs={() => setShowQRs(true)}
+        />
       )}
     </div>
   );
 };
 
 export default MultiStepSwap;
+

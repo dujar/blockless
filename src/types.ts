@@ -7,4 +7,10 @@ export interface MerchantChainConfig {
 export interface MerchantConfig {
   fiatCurrency: string;
   chains: MerchantChainConfig[];
+  themePreferences?: {
+    darkModeEnabled?: boolean;
+    primaryColor?: 'blue' | 'red' | 'green'; // Predefined primary color options
+    shadowLevel?: 'sm' | 'md' | 'lg' | 'xl'; // Predefined shadow level options
+  };
 }
+

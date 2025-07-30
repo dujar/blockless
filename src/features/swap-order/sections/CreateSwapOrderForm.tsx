@@ -30,7 +30,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
     }));
 
     return (
-        <div className="lg:order-2 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+        <div className="lg:order-2 bg-white dark:bg-gray-900 rounded-2xl shadow-lg shadow-dynamic">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                 Create Swap Order
             </h2>
@@ -38,7 +38,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
             <div className="space-y-6">
                 {/* Blockchain Selection */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
                         Blockchain
                     </label>
                     <div className="flex space-x-2">
@@ -60,7 +60,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                 
                 {/* Token Input */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
                         Token Symbol
                     </label>
                     <input
@@ -75,7 +75,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                 
                 {/* Amount Input */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
                         Amount
                     </label>
                     <input
@@ -91,7 +91,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                 
                 {/* Recipient Address */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
                         Recipient Address
                     </label>
                     <div className="relative flex items-center">
@@ -115,7 +115,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                 {/* Wallet Connection */}
                 <div className="pt-4">
                     <div className="flex items-center justify-between mb-4">
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <span className="text-sm font-medium text-gray-800 dark:text-gray-300">
                             Wallet Connection
                         </span>
                         {isConnected ? (
@@ -128,7 +128,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                         ) : (
                             <button
                                 onClick={handleConnectWallet}
-                                className="text-sm text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"
+                                className="text-sm text-primary-500 hover:text-primary-700 dark:hover:text-primary-400"
                             >
                                 Connect Wallet
                             </button>
@@ -155,8 +155,8 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                         </div>
                     )}
                     {!isConnected && (
-                        <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                            <p className="text-sm text-blue-700 dark:text-blue-300">
+                        <div className="mt-4 p-3 bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-lg">
+                            <p className="text-sm text-primary-700 dark:text-primary-300">
                                 You can connect your wallet to auto-fill your recipient address.
                             </p>
                         </div>
@@ -177,7 +177,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                         className={`flex-1 px-4 py-3 rounded-lg font-medium transition ${
                         !isFormValid()
                             ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-                            : 'bg-blue-500 hover:bg-blue-600 text-white'
+                            : 'bg-primary-500 hover:bg-primary-600 text-white'
                         }`}
                     >
                         Generate

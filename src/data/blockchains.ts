@@ -3,19 +3,8 @@ export interface BlockchainTheme {
   border: string;
   text: string;
   label: string;
-  button: string;
-  secondaryButton: string;
-}
-
-export interface BlockchainData {
-  id: string;
-  name: string;
-  chainId: number | null;
-  networkId: number;
-  icon: string;
-  isEVM: boolean;
-  walletFormat: string;
-  theme?: BlockchainTheme;
+  // button: string; // Removed to use global primary color
+  // secondaryButton: string; // Removed to use global primary color
 }
 
 export const defaultTheme: BlockchainTheme = {
@@ -23,9 +12,20 @@ export const defaultTheme: BlockchainTheme = {
   border: "border-gray-200 dark:border-gray-700",
   text: "text-gray-800 dark:text-gray-200",
   label: "text-gray-700 dark:text-gray-300",
-  button: "bg-gray-500 hover:bg-gray-600 text-white",
-  secondaryButton: "bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200",
 };
+
+
+export interface BlockchainData{
+  // please fill
+  id: string; // Unique identifier for the blockchain
+  name: string; // Display name of the blockchain
+  chainId: number | null; // Chain ID, null if not applicable
+  networkId: number; // Network ID, used for identification
+  icon: string; // Icon name or path for the blockchain
+  isEVM: boolean; // Indicates if the blockchain is EVM-compatible
+  walletFormat: string; // Wallet address format (e.g., "0x", "base58", etc.)
+  theme?: BlockchainTheme; // Optional theme for the blockchain, if different
+}
 
 export const blockchainData: BlockchainData[] = [
   {
@@ -41,8 +41,6 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-indigo-200 dark:border-indigo-800",
       "text": "text-indigo-800 dark:text-indigo-200",
       "label": "text-indigo-700 dark:text-indigo-300",
-      "button": "bg-indigo-500 hover:bg-indigo-600 text-white",
-      "secondaryButton": "bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-900/30 dark:hover:bg-indigo-900/50 text-indigo-800 dark:text-indigo-200",
     }
   },
   {
@@ -58,8 +56,6 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-blue-200 dark:border-blue-800",
       "text": "text-blue-800 dark:text-blue-200",
       "label": "text-blue-700 dark:text-blue-300",
-      "button": "bg-blue-500 hover:bg-blue-600 text-white",
-      "secondaryButton": "bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-800 dark:text-blue-200",
     }
   },
   {
@@ -75,8 +71,6 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-red-200 dark:border-red-800",
       "text": "text-red-800 dark:text-red-200",
       "label": "text-red-700 dark:text-red-300",
-      "button": "bg-red-500 hover:bg-red-600 text-white",
-      "secondaryButton": "bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-800 dark:text-red-200",
     }
   },
   {
@@ -92,8 +86,6 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-yellow-200 dark:border-yellow-800",
       "text": "text-yellow-800 dark:text-yellow-200",
       "label": "text-yellow-700 dark:text-yellow-300",
-      "button": "bg-yellow-500 hover:bg-yellow-600 text-black",
-      "secondaryButton": "bg-yellow-100 hover:bg-yellow-200 dark:bg-yellow-900/30 dark:hover:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200",
     }
   },
   {
@@ -109,8 +101,6 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-emerald-200 dark:border-emerald-800",
       "text": "text-emerald-800 dark:text-emerald-200",
       "label": "text-emerald-700 dark:text-emerald-300",
-      "button": "bg-emerald-500 hover:bg-emerald-600 text-white",
-      "secondaryButton": "bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:hover:bg-emerald-900/50 text-emerald-800 dark:text-emerald-200",
     }
   },
   {
@@ -144,8 +134,6 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-red-200 dark:border-red-800",
       "text": "text-red-800 dark:text-red-200",
       "label": "text-red-700 dark:text-red-300",
-      "button": "bg-red-500 hover:bg-red-600 text-white",
-      "secondaryButton": "bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-800 dark:text-red-200",
     }
   },
   {
@@ -161,8 +149,6 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-violet-200 dark:border-violet-800",
       "text": "text-violet-800 dark:text-violet-200",
       "label": "text-violet-700 dark:text-violet-300",
-      "button": "bg-violet-500 hover:bg-violet-600 text-white",
-      "secondaryButton": "bg-violet-100 hover:bg-violet-200 dark:bg-violet-900/30 dark:hover:bg-violet-900/50 text-violet-800 dark:text-violet-200",
     }
   },
   {
@@ -178,8 +164,6 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-gray-300 dark:border-gray-600",
       "text": "text-gray-900 dark:text-gray-100",
       "label": "text-gray-800 dark:text-gray-200",
-      "button": "bg-gray-800 hover:bg-gray-900 text-white dark:bg-gray-200 dark:text-black dark:hover:bg-white",
-      "secondaryButton": "bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200",
     }
   },
   {
@@ -195,8 +179,6 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-blue-200 dark:border-blue-800",
       "text": "text-blue-800 dark:text-blue-200",
       "label": "text-blue-700 dark:text-blue-300",
-      "button": "bg-blue-500 hover:bg-blue-600 text-white",
-      "secondaryButton": "bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-800 dark:text-blue-200",
     }
   },
   {
@@ -212,8 +194,6 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-gray-300 dark:border-gray-600",
       "text": "text-gray-900 dark:text-gray-100",
       "label": "text-gray-800 dark:text-gray-200",
-      "button": "bg-gray-800 hover:bg-gray-900 text-white dark:bg-gray-200 dark:text-black dark:hover:bg-white",
-      "secondaryButton": "bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200",
     }
   },
   {

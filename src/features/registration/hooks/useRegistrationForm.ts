@@ -4,7 +4,7 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { useMerchantConfig } from '../../../hooks/useMerchantConfig';
 import { blockchainData } from '../../../data/blockchains';
 import { TokenService } from '../../../services/token-service';
-import type { MerchantChainConfig } from '../../../types';
+import type { MerchantChainConfig, MerchantConfig } from '../../../types'; // Import MerchantConfig
 import { useDebounce } from '../../../hooks/useDebounce';
 import { countries } from '../../../data/countries';
 import { getCurrencyDataFromCountries } from '../../../utils/token-helpers'; // Import the new helper
@@ -16,16 +16,25 @@ export const useRegistrationForm = () => {
   const { config, saveConfig, isLoaded } = useMerchantConfig();
 
   // Initialize state directly from the loaded config.
-  // If config is null (no saved data), it defaults to 'USD' and an empty array.
   const [fiatCurrency, setFiatCurrency] = useState(config?.fiatCurrency || 'USD');
   const [chains, setChains] = useState<MerchantChainConfig[]>(config?.chains || []);
   
+  // Theme preferences state
+  // Initialize from config, or system preference for dark mode, or default for others
+  const [darkModeEnabled, setDarkModeEnabled] = useState(config?.themePreferences?.darkModeEnabled ?? window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const [primaryColor, setPrimaryColor] = useState<'blue' | 'red' | 'green'>(config?.themePreferences?.primaryColor || 'blue');
+  const [shadowLevel, setShadowLevel] = useState<'sm' | 'md' | 'lg' | 'xl'>(config?.themePreferences?.shadowLevel || 'md');
+
+
   // Recalculate address validity based on the initial loaded chains.
   const [addressValidity, setAddressValidity] = useState<Record<string, boolean | null>>(() => {
     const initialValidity: Record<string, boolean | null> = {};
-    config?.chains.forEach(chain => {
-      initialValidity[chain.name] = isValidAddress(chain.address);
-    });
+    // Ensure config is not null before trying to access its chains property
+    if (config?.chains) {
+      config.chains.forEach(chain => {
+        initialValidity[chain.name] = isValidAddress(chain.address);
+      });
+    }
     return initialValidity;
   });
 
@@ -46,21 +55,36 @@ export const useRegistrationForm = () => {
     
     let chainIds: number[] = [];
     // Assuming the response is an object with a `chains` property which is an array of numbers (chain IDs).
-    if (supportedChainsData && Array.isArray(supportedChainsData)) {
-        chainIds = supportedChainsData;
-    }
+    // The existing code has a bug here: it checks `supportedChainsData && Array.isArray(supportedChainsData)`
+    // but then it assigns `supportedChainsData` (which is an array) to `chainIds`.
+    // The previous implementation was treating `supportedChainsData` as an object with a `chains` property.
+    // Based on `getSupportedChains()` in `token-service.ts`, it returns `Array<number>`.
+    // So, `chainIds = supportedChainsData;` is correct if `supportedChainsData` is directly the array of numbers.
+    // I will simplify this logic as it seems the `if (supportedChainsData && Array.isArray(supportedChainsData))` check is redundant if `getSupportedChains` always returns an array.
+    // Assuming getSupportedChains returns Array<number> directly.
+    chainIds = supportedChainsData;
     
     return blockchainData.filter(chain => chain.isEVM && chain.chainId && chainIds.includes(chain.chainId));
   }, [supportedChainsData]);
 
   // Use debounced state for saving to localStorage to prevent excessive writes.
-  const debouncedState = useDebounce({ fiatCurrency, chains }, 500);
+  const debouncedState = useDebounce({ 
+    fiatCurrency, 
+    chains, 
+    themePreferences: { 
+      darkModeEnabled, 
+      primaryColor, 
+      shadowLevel 
+    } 
+  }, 500);
 
   // Save the debounced state to localStorage whenever it changes, and the config is loaded.
   // 'isLoaded' from useMerchantConfig will be true after its synchronous read.
   useEffect(() => {
+    // Only save if config is fully loaded (initial sync load or subsequent re-renders)
+    // And if debouncedState has changed from the previous effect run (handled by useDebounce)
     if (isLoaded) { 
-      saveConfig(debouncedState);
+      saveConfig(debouncedState as MerchantConfig); // Cast to MerchantConfig
     }
   }, [debouncedState, isLoaded, saveConfig]);
 
@@ -89,6 +113,7 @@ export const useRegistrationForm = () => {
 
   const handleUseWallet = useCallback((chainInfo: (typeof import('../../../data/blockchains').blockchainData)[0]) => {
     if (!isConnected) {
+      // Connect to the first available connector, assuming it's MetaMask or similar
       connect({ connector: connectors[0] });
     } else {
         // If connected, simply use the connected wallet's address if the target configured chain is EVM.
@@ -147,6 +172,14 @@ export const useRegistrationForm = () => {
     currenciesData, // Now directly from the helper
     supportedChains: supportedChains.length > 0 ? supportedChains : blockchainData.filter(c => c.isEVM), // Fallback if API fails
     
+    // Theme preferences
+    darkModeEnabled,
+    setDarkModeEnabled,
+    primaryColor,
+    setPrimaryColor,
+    shadowLevel,
+    setShadowLevel,
+
     wallet: {
       isConnected,
       address: accountAddress,
@@ -158,4 +191,3 @@ export const useRegistrationForm = () => {
 };
 
 export type UseRegistrationFormReturn = ReturnType<typeof useRegistrationForm>;
-

@@ -20,12 +20,12 @@ export const SelectBlockchain = ({ onSelect, onBack, onDisconnect, selectedChain
             onClick={() => onSelect(chain)}
             className={`p-4 rounded-lg border-2 cursor-pointer transition ${
               selectedChain === chain
-                ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700'
+                ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                : 'border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700'
             }`}
           >
             <div className="flex items-center">
-              <div className="bg-gray-200 dark:bg-gray-700 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+              <div className="bg-gray-100 dark:bg-gray-700 rounded-full w-10 h-10 flex items-center justify-center mr-3">
                 <span className="font-bold text-gray-700 dark:text-gray-300">
                   {chain.charAt(0)}
                 </span>
@@ -38,7 +38,7 @@ export const SelectBlockchain = ({ onSelect, onBack, onDisconnect, selectedChain
       <div className="mt-6 flex justify-between">
         <button
           onClick={onBack}
-          className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
+          className="px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
         >
           Back
         </button>

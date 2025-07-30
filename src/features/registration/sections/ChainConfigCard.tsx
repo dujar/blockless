@@ -81,7 +81,7 @@ const TokenItem = ({ token, chainName, isChecked, onTokenChange, isSelectable }:
 
     return (
         <div 
-            className={`flex items-center p-2 rounded ${isSelectable ? 'hover:bg-gray-100 dark:hover:bg-gray-600/50 cursor-pointer' : 'opacity-70 cursor-not-allowed'}`} 
+            className={`flex items-center p-2 rounded ${isSelectable ? 'hover:bg-gray-200 dark:hover:bg-gray-700/50 cursor-pointer' : 'opacity-70 cursor-not-allowed'}`} 
             title={tooltipText}
             onClick={() => isSelectable && onTokenChange(chainName, token.symbol, !isChecked)} // Toggle only if selectable
         >
@@ -91,7 +91,7 @@ const TokenItem = ({ token, chainName, isChecked, onTokenChange, isSelectable }:
                 checked={isChecked}
                 onChange={e => onTokenChange(chainName, token.symbol, e.target.checked)}
                 disabled={!isSelectable && !isChecked} // Disable if not selectable AND not already checked
-                className="h-4 w-4 rounded border-gray-300 dark:border-gray-500 text-blue-600 focus:ring-blue-500 bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                className="h-4 w-4 rounded border-gray-300 dark:border-gray-500 text-primary-600 focus:ring-primary-500 bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
             />
             <label htmlFor={`token-${token.chainId}-${token.symbol}-${token.address}`} className="ml-3 flex items-center cursor-pointer flex-1 min-w-0">
                 <img 
@@ -107,11 +107,11 @@ const TokenItem = ({ token, chainName, isChecked, onTokenChange, isSelectable }:
     );
 }
 
-const SelectedTokenChip = ({ token, chainName, onTokenRemove, theme }: {
+const SelectedTokenChip = ({ token, chainName, onTokenRemove}: {
     token: TokenInfoDto;
     chainName: string;
     onTokenRemove: (chainName: string, tokenSymbol: string, isChecked: boolean) => void;
-    theme: typeof defaultTheme;
+    theme: typeof defaultTheme; // Theme from blockchainData, not global merchant theme
 }) => {
     // Determine initial image source, preferring API logo, then enhanced helper, then blockless fallback
     const initialImgSrc = token.logoURI || getTokenLogoURI(token.address, token.symbol, chainName);
@@ -124,7 +124,7 @@ const SelectedTokenChip = ({ token, chainName, onTokenRemove, theme }: {
     };
 
     return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${theme.secondaryButton}`}>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-200`}>
             <img 
                 src={imgSrc} 
                 alt={token.name} 
@@ -151,7 +151,7 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
     chainName: string,
     selectedTokens: string[],
     onTokenChange: (chainName: string, tokenSymbol: string, isChecked: boolean) => void,
-    theme: typeof defaultTheme,
+    theme: typeof defaultTheme, // Theme from blockchainData, not global merchant theme
 }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -260,7 +260,7 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
             </p>
 
             {selectedTokenDetails.length > 0 && (
-                <div className="mb-4 flex flex-wrap gap-2 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                <div className="mb-4 flex flex-wrap gap-2 p-3 bg-gray-100 dark:bg-gray-800/50 rounded-lg">
                     {selectedTokenDetails.map(token => (
                         <SelectedTokenChip 
                             // Use a more robust key to prevent issues with duplicate symbols across different token types (e.g., native ETH vs. ERC20 ETH)
@@ -356,7 +356,7 @@ export const ChainConfigCard = ({
   };
 
   return (
-    <div className={`p-4 border rounded-lg transition-all ${theme.bg} ${theme.border}`}>
+    <div className={`p-4 border rounded-lg transition-all ${theme.bg} ${theme.border} shadow-dynamic`}>
       <div className="flex items-center justify-between mb-4">
         <label className={`flex items-center text-lg font-medium ${theme.text}`}>
             {chainLogo ? (
@@ -401,7 +401,9 @@ export const ChainConfigCard = ({
             </div>
              <button
                 onClick={() => onUseWallet(chainInfo)}
-                className={`mt-2 px-3 py-1 text-xs rounded-md ${theme.secondaryButton} ${(!wallet.isConnected || !chainInfo.isEVM) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`mt-2 px-3 py-1 text-xs rounded-md 
+                bg-primary-500 hover:bg-primary-600 text-white 
+                ${(!wallet.isConnected || !chainInfo.isEVM) ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={!wallet.isConnected || !chainInfo.isEVM}
             >
                 {getWalletButtonText()}
@@ -420,4 +422,3 @@ export const ChainConfigCard = ({
     </div>
   );
 };
-

@@ -97,6 +97,6 @@ export class TokenService extends BaseApiService {
     async getCustomTokens(chainId: number, addresses: string[]): Promise<Record<string, TokenInfoDto>> {
         const params = new URLSearchParams();
         addresses.forEach(address => params.append('addresses', address));
-        return this.http.get<Record<string, TokenInfoDto>>(`/v1.4/${chainId}/custom`, { params }).then(res => res.data);
+        return this.http.get<Record<string, TokenInfoDto>>(`/${chainId}/custom`, { params }).then(res => res.data);
     }
 }

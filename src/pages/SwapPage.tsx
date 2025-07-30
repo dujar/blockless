@@ -49,7 +49,7 @@ const SwapPage = () => {
 
   if (error) {
     return (
-      <div className="max-w-md mx-auto bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <div className="max-w-md mx-auto bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative shadow-dynamic" role="alert">
         <strong className="font-bold">Error:</strong>
         <span className="block sm:inline"> {error}</span>
       </div>
@@ -62,14 +62,14 @@ const SwapPage = () => {
 
   if (!selectedDestination) {
     return (
-      <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+      <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-lg shadow-dynamic p-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Choose Payment Destination</h2>
         <div className="space-y-3">
           {swapParams.dst.map((dst, index) => (
             <div
               key={index}
               onClick={() => setSelectedDestination(dst)}
-              className="p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-blue-500 cursor-pointer transition"
+              className="p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary-500 cursor-pointer transition"
             >
               Pay <span className="font-bold">{dst.amount} {dst.token.symbol}</span> on <span className="font-semibold">{dst.blockchain}</span>
             </div>
@@ -81,27 +81,28 @@ const SwapPage = () => {
 
   if (showQRs && sourceChain && sourceToken) {
     return (
-      <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+      <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-lg shadow-dynamic p-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Complete Payment</h2>
         <WalletDeeplinkQRs
           blockchainName={sourceChain}
           tokenSymbol={sourceToken.symbol}
           amount={sourceAmount}
           recipientAddress={selectedDestination.destinationAddress}
+          genericSwapUrl={`${window.location.origin}/swap?dst=${selectedDestination.blockchain}:${selectedDestination.amount}:${selectedDestination.token.symbol || selectedDestination.token.address}:${selectedDestination.destinationAddress}`} // Pass the original swap link
           fiatAmount={0} // Dummy value
           fiatCurrency="USD" // Dummy value
         />
-        <button onClick={() => setShowQRs(false)} className="mt-4 text-blue-500 hover:underline">← Back</button>
+        <button onClick={() => setShowQRs(false)} className="mt-4 text-primary-500 hover:underline">← Back</button>
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+    <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-lg shadow-dynamic p-8">
       {step < 4 && (
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-bold">Swap to Pay</h2>
-          <Link to="/create-order" className="text-sm text-blue-500 hover:underline">Cancel</Link>
+          <Link to="/create-order" className="text-sm text-primary-500 hover:underline">Cancel</Link>
         </div>
       )}
 

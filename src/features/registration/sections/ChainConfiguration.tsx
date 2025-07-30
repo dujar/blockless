@@ -26,7 +26,7 @@ export const ChainConfiguration = ({ form }: ChainConfigurationProps) => {
   };
   
   return (
-    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg">
+    <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg">
       <h2 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">2. Configure Blockchains & Wallets</h2>
       {wallet.isConnected && (
         <div className="mb-4 flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">

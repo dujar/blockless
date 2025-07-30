@@ -51,7 +51,7 @@ export const FiatCurrencySelection = ({ value, onChange, currencies }: FiatCurre
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg">
+    <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg">
       <h2 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">1. Select Fiat Currency</h2>
       <div className="relative w-full max-w-xs" ref={dropdownRef}>
         <button
@@ -118,4 +118,3 @@ export const FiatCurrencySelection = ({ value, onChange, currencies }: FiatCurre
     </div>
   );
 };
-
