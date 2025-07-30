@@ -11,6 +11,8 @@ interface OrderDisplayProps {
         token: string;
         amount: string;
         targetAddress: string;
+        fiatAmount: number;
+        fiatCurrency: string;
     };
     onBackToForm: () => void;
 }
@@ -77,6 +79,8 @@ interface QRCodeDisplayProps {
         token: string;
         amount: string;
         targetAddress: string;
+        fiatAmount: number;
+        fiatCurrency: string;
     };
     onBackToForm: () => void;
 }
@@ -226,6 +230,8 @@ const QRCodeDisplay = ({ qrCodeUrl, formData, onBackToForm }: QRCodeDisplayProps
                     tokenSymbol={formData.token}
                     amount={formData.amount}
                     recipientAddress={formData.targetAddress}
+                    fiatAmount={formData.fiatAmount}
+                    fiatCurrency={formData.fiatCurrency}
                 />
             )}
 

@@ -1,59 +1,40 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useAccount, useConnect, useSwitchChain, useDisconnect } from 'wagmi';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { useMerchantConfig } from '../../../hooks/useMerchantConfig';
 import { blockchainData } from '../../../data/blockchains';
 import { TokenService } from '../../../services/token-service';
 import type { MerchantChainConfig } from '../../../types';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { countries } from '../../../data/countries';
+import { getCurrencyDataFromCountries } from '../../../utils/token-helpers'; // Import the new helper
 
 const tokenService = new TokenService();
 const isValidAddress = (address: string) => /^0x[a-fA-F0-9]{40}$/.test(address);
 
 export const useRegistrationForm = () => {
   const { config, saveConfig, isLoaded } = useMerchantConfig();
-  const [fiatCurrency, setFiatCurrency] = useState('USD');
-  const [chains, setChains] = useState<MerchantChainConfig[]>([]);
-  const [addressValidity, setAddressValidity] = useState<Record<string, boolean | null>>({});
+
+  // Initialize state directly from the loaded config.
+  // If config is null (no saved data), it defaults to 'USD' and an empty array.
+  const [fiatCurrency, setFiatCurrency] = useState(config?.fiatCurrency || 'USD');
+  const [chains, setChains] = useState<MerchantChainConfig[]>(config?.chains || []);
+  
+  // Recalculate address validity based on the initial loaded chains.
+  const [addressValidity, setAddressValidity] = useState<Record<string, boolean | null>>(() => {
+    const initialValidity: Record<string, boolean | null> = {};
+    config?.chains.forEach(chain => {
+      initialValidity[chain.name] = isValidAddress(chain.address);
+    });
+    return initialValidity;
+  });
 
   const { address: accountAddress, chain: accountChain, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
-  const { switchChain } = useSwitchChain();
   const { disconnect } = useDisconnect();
 
-  const currenciesData = useMemo(() => {
-    const currencies: Record<string, { name: string; symbol: string; countries: { name: string; flag: string }[] }> = {};
-  
-    if (Array.isArray(countries)) {
-      countries.forEach(country => {
-        if (!country.currencies || Object.keys(country.currencies).length === 0) return;
-        
-        for (const code in country.currencies) {
-          const currency = (country.currencies as any)[code];
-          if (!currency || !currency.name || !currency.symbol) continue;
-
-          if (!currencies[code]) {
-            currencies[code] = {
-              name: currency.name,
-              symbol: currency.symbol,
-              countries: [],
-            };
-          }
-          if (country.flags.svg) {
-            currencies[code].countries.push({
-              name: country.name.common,
-              flag: country.flags.svg,
-            });
-          }
-        }
-      });
-    }
-  
-    return Object.entries(currencies)
-      .map(([code, data]) => ({ code, ...data }))
-      .sort((a, b) => a.name.localeCompare(b.name));
-  }, []);
+  // Use the new helper function for currenciesData
+  const currenciesData = useMemo(() => getCurrencyDataFromCountries(countries), []);
   
   const { data: supportedChainsData, isLoading: isLoadingSupportedChains } = useQuery({
       queryKey: ['supportedChains'],
@@ -72,26 +53,17 @@ export const useRegistrationForm = () => {
     return blockchainData.filter(chain => chain.isEVM && chain.chainId && chainIds.includes(chain.chainId));
   }, [supportedChainsData]);
 
-  useEffect(() => {
-    if (isLoaded && config) {
-      setFiatCurrency(config.fiatCurrency);
-      setChains(config.chains);
-      const validity: Record<string, boolean | null> = {};
-      config.chains.forEach(chain => {
-        validity[chain.name] = isValidAddress(chain.address);
-      });
-      setAddressValidity(validity);
-    }
-  }, [isLoaded, config]);
-
+  // Use debounced state for saving to localStorage to prevent excessive writes.
   const debouncedState = useDebounce({ fiatCurrency, chains }, 500);
 
+  // Save the debounced state to localStorage whenever it changes, and the config is loaded.
+  // 'isLoaded' from useMerchantConfig will be true after its synchronous read.
   useEffect(() => {
-    if (isLoaded) {
+    if (isLoaded) { 
       saveConfig(debouncedState);
     }
   }, [debouncedState, isLoaded, saveConfig]);
-  
+
   const handleAddressChange = useCallback((chainName: string, address: string) => {
     setChains(prev => prev.map(c => (c.name === chainName ? { ...c, address } : c)));
     setAddressValidity(prev => ({
@@ -101,12 +73,14 @@ export const useRegistrationForm = () => {
   }, []);
 
   useEffect(() => {
+    // Automatically update the address for the connected EVM chain if it's already configured
     if (isConnected && accountAddress && accountChain) {
       const chainInfo = blockchainData.find(b => b.chainId === accountChain.id);
-      if (chainInfo) {
+      if (chainInfo && chainInfo.isEVM) { // Only auto-fill for EVM chains
         const currentChainConfig = chains.find(c => c.name === chainInfo.name);
         // Only update if the chain is enabled and the address is different
-        if (currentChainConfig && currentChainConfig.address !== accountAddress) {
+        // Ensure the found chain config's address is different (case-insensitive) before updating to avoid unnecessary state changes
+        if (currentChainConfig && currentChainConfig.address.toLowerCase() !== accountAddress.toLowerCase()) {
           handleAddressChange(chainInfo.name, accountAddress);
         }
       }
@@ -117,19 +91,20 @@ export const useRegistrationForm = () => {
     if (!isConnected) {
       connect({ connector: connectors[0] });
     } else {
-      if (accountChain?.id !== chainInfo.chainId) {
-        if (chainInfo.chainId) {
-          switchChain({ chainId: chainInfo.chainId });
+        // If connected, simply use the connected wallet's address if the target configured chain is EVM.
+        if (chainInfo.isEVM && accountAddress) {
+            handleAddressChange(chainInfo.name, accountAddress);
+        } else if (!chainInfo.isEVM) {
+            // Warn if trying to use EVM wallet for a non-EVM chain; button should be disabled for this case in UI
+            console.warn(`Cannot use EVM wallet for non-EVM chain: ${chainInfo.name}`);
         }
-      } else if (accountAddress) {
-        handleAddressChange(chainInfo.name, accountAddress);
-      }
     }
-  }, [isConnected, connect, connectors, accountChain, switchChain, accountAddress, handleAddressChange]);
+  }, [isConnected, connect, connectors, accountAddress, handleAddressChange]);
 
   const handleChainChange = (chainName: string, isChecked: boolean) => {
     setChains(prev => {
       if (isChecked) {
+        // Prevent adding duplicate chains
         if (prev.some(c => c.name === chainName)) {
             return prev;
         }
@@ -151,8 +126,8 @@ export const useRegistrationForm = () => {
       prev.map(c => {
         if (c.name === chainName) {
           const newTokens = isChecked
-            ? [...new Set([...c.tokens, tokenSymbol])]
-            : c.tokens.filter(t => t !== tokenSymbol);
+            ? [...new Set([...c.tokens, tokenSymbol])] // Add token if checked, ensure uniqueness
+            : c.tokens.filter(t => t !== tokenSymbol); // Remove token if unchecked
           return { ...c, tokens: newTokens };
         }
         return c;
@@ -161,7 +136,7 @@ export const useRegistrationForm = () => {
   };
   
   return {
-    isLoaded: isLoaded && !isLoadingSupportedChains,
+    isLoaded: isLoaded && !isLoadingSupportedChains, // 'isLoaded' from useMerchantConfig will be true after synchronous read
     fiatCurrency,
     setFiatCurrency,
     chains,
@@ -169,8 +144,8 @@ export const useRegistrationForm = () => {
     handleAddressChange,
     handleChainChange,
     handleTokenChange,
-    currenciesData,
-    supportedChains: supportedChains.length > 0 ? supportedChains : blockchainData.filter(c => c.isEVM), // Fallback
+    currenciesData, // Now directly from the helper
+    supportedChains: supportedChains.length > 0 ? supportedChains : blockchainData.filter(c => c.isEVM), // Fallback if API fails
     
     wallet: {
       isConnected,
@@ -183,3 +158,4 @@ export const useRegistrationForm = () => {
 };
 
 export type UseRegistrationFormReturn = ReturnType<typeof useRegistrationForm>;
+

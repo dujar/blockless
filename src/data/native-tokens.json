@@ -1,0 +1,618 @@
+[
+  {
+    "blockchain": "chainlink",
+    "tokenName": "Chainlink",
+    "tokenSymbol": "LINK",
+    "description": "Chainlink is a framework for building Decentralized Oracle Networks (DONs) that bring real-world data onto blockchain networks, enabling the creation of hybrid smart contracts. These DONs provide dece...",
+    "logo": "https://coin-images.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+    "tokenId": "chainlink"
+  },
+  {
+    "blockchain": "cardano",
+    "tokenName": "Cardano",
+    "tokenSymbol": "ADA",
+    "description": "Cardano is a proof-of-stake blockchain platform designed to support decentralized applications (dApps), featuring a multi-asset ledger and smart contract functionality. Unlike many other blockchains, ...",
+    "logo": "https://coin-images.coingecko.com/coins/images/975/large/cardano.png?1696502090",
+    "tokenId": "cardano"
+  },
+  {
+    "blockchain": "solana",
+    "tokenName": "Solana",
+    "tokenSymbol": "SOL",
+    "description": "Solana is a highly functional open source project that banks on blockchain technology’s permissionless nature to provide decentralized finance (DeFi) solutions. It is a layer 1 network that offers fas...",
+    "logo": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+    "tokenId": "solana"
+  },
+  {
+    "blockchain": "polygon",
+    "tokenName": "Polygon",
+    "tokenSymbol": "MATIC",
+    "description": "Polygon (Previously Matic Network) is the first well-structured, easy-to-use platform for Ethereum scaling and infrastructure development. Its core component is Polygon SDK, a modular, flexible framew...",
+    "logo": "https://coin-images.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
+    "tokenId": "matic-network"
+  },
+  {
+    "blockchain": "binancecoin",
+    "tokenName": "BNB",
+    "tokenSymbol": "BNB",
+    "description": "Binance Coin is the cryptocurrency of the Binance platform. It is a trading platform exclusively for cryptocurrencies. The name \"Binance\" is a combination of binary and finance.\r\n\r\nThus, the startup n...",
+    "logo": "https://coin-images.coingecko.com/coins/images/825/large/bnb-icon2_2x.png?1696501970",
+    "tokenId": "binancecoin"
+  },
+  {
+    "blockchain": "bitcoin",
+    "tokenName": "Bitcoin",
+    "tokenSymbol": "BTC",
+    "description": "Bitcoin is the first successful internet money based on peer-to-peer technology; whereby no central bank or authority is involved in the transaction and production of the Bitcoin currency. It was crea...",
+    "logo": "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
+    "tokenId": "bitcoin"
+  },
+  {
+    "blockchain": "ethereum",
+    "tokenName": "Ethereum",
+    "tokenSymbol": "ETH",
+    "description": "Ethereum is a global, open-source platform for decentralized applications. In other words, the vision is to create a world computer that anyone can build applications in a decentralized manner; while ...",
+    "logo": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+    "tokenId": "ethereum"
+  },
+  {
+    "blockchain": "litecoin",
+    "tokenName": "Litecoin",
+    "tokenSymbol": "LTC",
+    "description": "Litecoin is a peer-to-peer cryptocurrency created by Charlie Lee. It was created based on the Bitcoin protocol but differs in terms of the hashing algorithm used. Litecoin uses the memory intensive Sc...",
+    "logo": "https://coin-images.coingecko.com/coins/images/2/large/litecoin.png?1696501400",
+    "tokenId": "litecoin"
+  },
+  {
+    "blockchain": "avalanche",
+    "tokenName": "Avalanche",
+    "tokenSymbol": "AVAX",
+    "description": "Avalanche is a high throughput smart contract blockchain platform. Validators secure the network through a proof-of-stake consensus protocol. It is said to be fast, low cost, and environmental friendl...",
+    "logo": "https://coin-images.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png?1696512369",
+    "tokenId": "avalanche-2"
+  },
+  {
+    "blockchain": "polkadot",
+    "tokenName": "Polkadot",
+    "tokenSymbol": "DOT",
+    "description": "Polkadot is a platform that allows diverse blockchains to transfer messages, including value, in a trust-free fashion; sharing their unique features while pooling their security. In brief, Polkadot is...",
+    "logo": "https://coin-images.coingecko.com/coins/images/12171/large/polkadot.png?1696512008",
+    "tokenId": "polkadot"
+  },
+  {
+    "blockchain": "algorand",
+    "tokenName": "Algorand",
+    "tokenSymbol": "ALGO",
+    "description": "Algorand is a scalable, secure, and decentralized digital currency and smart contract platform. Its protocol uses a variation of Proof-of-Stake (PoS) called Pure PoS (PPoS) to secure the network and r...",
+    "logo": "https://coin-images.coingecko.com/coins/images/4380/large/download.png?1696504978",
+    "tokenId": "algorand"
+  },
+  {
+    "blockchain": "uniswap",
+    "tokenName": "Uniswap",
+    "tokenSymbol": "UNI",
+    "description": "UNI is the governance token for Uniswap, an Automated Market Marker DEX on the Ethereum blockchain. The UNI token allows token holders to participate in the governance of the protocol. Key decisions s...",
+    "logo": "https://coin-images.coingecko.com/coins/images/12504/large/uniswap-logo.png?1720676669",
+    "tokenId": "uniswap"
+  },
+  {
+    "blockchain": "cosmos",
+    "tokenName": "Cosmos Hub",
+    "tokenSymbol": "ATOM",
+    "description": "The Cosmos network consists of many independent, parallel blockchains, called zones, each powered by classical Byzantine fault-tolerant (BFT) consensus protocols like Tendermint (already used by platf...",
+    "logo": "https://coin-images.coingecko.com/coins/images/1481/large/cosmos_hub.png?1696502525",
+    "tokenId": "cosmos"
+  },
+  {
+    "blockchain": "monero",
+    "tokenName": "Monero",
+    "tokenSymbol": "XMR",
+    "description": "...",
+    "logo": "https://coin-images.coingecko.com/coins/images/69/large/monero_logo.png?1696501460",
+    "tokenId": "monero"
+  },
+  {
+    "blockchain": "stellar",
+    "tokenName": "Stellar",
+    "tokenSymbol": "XLM",
+    "description": "The Stellar network is an open source, distributed, and community owned network used to facilitate cross-asset transfers of value. Stellar aims to help facilitate cross-asset transfer of value at a fr...",
+    "logo": "https://coin-images.coingecko.com/coins/images/100/large/fmpFRHHQ_400x400.jpg?1735231350",
+    "tokenId": "stellar"
+  },
+  {
+    "blockchain": "elrond",
+    "tokenName": "MultiversX",
+    "tokenSymbol": "EGLD",
+    "description": "What is MultiversX \r\n\r\nMultiversX is a blockchain protocol that offers true horizontal scalability by using all aspects of sharding (Network, Transaction & State). The project describes itself as a te...",
+    "logo": "https://coin-images.coingecko.com/coins/images/12335/large/egld-token-logo.png?1696512162",
+    "tokenId": "elrond-erd-2"
+  },
+  {
+    "blockchain": "tron",
+    "tokenName": "TRON",
+    "tokenSymbol": "TRX",
+    "description": "What is Tron?\r\nTron's mission is to build a truly decentralized internet and aims to be the largest blockchain-based operating system in the world, known as the TRON protocol. The TRON protocol will o...",
+    "logo": "https://coin-images.coingecko.com/coins/images/1094/large/tron-logo.png?1696502193",
+    "tokenId": "tron"
+  },
+  {
+    "blockchain": "filecoin",
+    "tokenName": "Filecoin",
+    "tokenSymbol": "FIL",
+    "description": "The Filecoin network achieves staggering economies of scale by allowing anyone worldwide to participate as storage providers. It also makes storage resemble a commodity or utility by decoupling hard-d...",
+    "logo": "https://coin-images.coingecko.com/coins/images/12817/large/filecoin.png?1696512609",
+    "tokenId": "filecoin"
+  },
+  {
+    "blockchain": "near",
+    "tokenName": "NEAR Protocol",
+    "tokenSymbol": "NEAR",
+    "description": "NEAR Protocol is the blockchain for AI. A high-performance, AI-native platform built to power the next generation of decentralized applications and intelligent agents. It provides the infrastructure A...",
+    "logo": "https://coin-images.coingecko.com/coins/images/10365/large/near.jpg?1696510367",
+    "tokenId": "near"
+  },
+  {
+    "blockchain": "tezos",
+    "tokenName": "Tezos",
+    "tokenSymbol": "XTZ",
+    "description": "What Is Tezos (XTZ)?\r\n\r\n\r\nTezos is a high-performing blockchain and open-source platform for assets and applications, with a strong focus on code security, on-chain governance, and decentralization. T...",
+    "logo": "https://coin-images.coingecko.com/coins/images/976/large/Tezos-logo.png?1696502091",
+    "tokenId": "tezos"
+  },
+  {
+    "blockchain": "eos",
+    "tokenName": "EOS",
+    "tokenSymbol": "EOS",
+    "description": "Blockchain built and run by the EOS Community.\r\n \r\nThe EOSIO core development is now in the hands of the community:\r\nhttps://medium.com/eos-network-foundation/eosio-coalition-report-april-28th-71d5b77...",
+    "logo": "https://coin-images.coingecko.com/coins/images/738/large/CG_EOS_Icon.png?1731705232",
+    "tokenId": "eos"
+  },
+  {
+    "blockchain": "dash",
+    "tokenName": "Dash",
+    "tokenSymbol": "DASH",
+    "description": "Dash (DASH) is digital cash designed to offer financial freedom to everyone. Payments are instant, easy and secure, with near-zero fees.\r\nBuilt to support real life use cases, Dash is the leading dece...",
+    "logo": "https://coin-images.coingecko.com/coins/images/19/large/dash-logo.png?1696501423",
+    "tokenId": "dash"
+  },
+  {
+    "blockchain": "kava",
+    "tokenName": "Kava",
+    "tokenSymbol": "KAVA",
+    "description": "Kava is a cross-chain DeFi Hub for decentralized financial services and applications. The Kava DeFi Hub operates like a decentralized bank for digital assets connecting users with products like stable...",
+    "logo": "https://coin-images.coingecko.com/coins/images/9761/large/kava.png?1696509822",
+    "tokenId": "kava"
+  },
+  {
+    "blockchain": "theta-token",
+    "tokenName": "Theta Network",
+    "tokenSymbol": "THETA",
+    "description": "Theta Network is the leading blockchain-powered decentralized cloud for AI, media and entertainment. It can be viewed as a \"dual network\" consisting of two complementary subsystems, the Theta Edge Net...",
+    "logo": "https://coin-images.coingecko.com/coins/images/2538/large/theta-token-logo.png?1696503349",
+    "tokenId": "theta-token"
+  },
+  {
+    "blockchain": "nano",
+    "tokenName": "Nano",
+    "tokenSymbol": "XNO",
+    "description": "Nano, a low-latency cryptocurrency built on an innovative block-lattice data structure offering unlimited scalability and no transaction fees. Nano by design is a simple protocol with the sole purpose...",
+    "logo": "https://coin-images.coingecko.com/coins/images/756/large/nano.png?1696501910",
+    "tokenId": "nano"
+  },
+  {
+    "blockchain": "waves",
+    "tokenName": "Waves",
+    "tokenSymbol": "WAVES",
+    "description": "Waves is an open blockchain protocol and development toolset for Web 3.0 applications and decentralized solutions, aiming to raise security, reliability and speed of IT systems. It enables anyone to b...",
+    "logo": "https://coin-images.coingecko.com/coins/images/425/large/waves.png?1696501700",
+    "tokenId": "waves"
+  },
+  {
+    "blockchain": "oasis",
+    "tokenName": "Oasis",
+    "tokenSymbol": "ROSE",
+    "description": "Oasis is a layer-one blockchain built to support confidential applications at scale. It’s home to Sapphire, the world’s first private EVM network, Oasis Privacy Layer, a cross-chain privacy solution f...",
+    "logo": "https://coin-images.coingecko.com/coins/images/13162/large/200x200_%28Rounded%29.png?1743579893",
+    "tokenId": "oasis-network"
+  },
+  {
+    "blockchain": "sushi",
+    "tokenName": "Sushi",
+    "tokenSymbol": "SUSHI",
+    "description": "SushiSwap is a decentralized, multi-chain DEX that allows users to swap a wide range of assets across 40+ blockchain networks. It is powered by the industry's most advanced swap and aggregation stack,...",
+    "logo": "https://coin-images.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png?1696512101",
+    "tokenId": "sushi"
+  },
+  {
+    "blockchain": "maker",
+    "tokenName": "Maker",
+    "tokenSymbol": "MKR",
+    "description": "MKR is a cryptocurrency depicted as a smart contract platform and works alongside the Dai coin and aims to act as a hedge currency that provides traders with a stable alternative to the majority of co...",
+    "logo": "https://coin-images.coingecko.com/coins/images/1364/large/Mark_Maker.png?1696502423",
+    "tokenId": "maker"
+  },
+  {
+    "blockchain": "harmony",
+    "tokenName": "Harmony",
+    "tokenSymbol": "ONE",
+    "description": "Harmony’s open, decentralized network is enabled through the use of the native protocol token - Harmony ONE. The token incentivizes and rewards a variety of participants including developers, validato...",
+    "logo": "https://coin-images.coingecko.com/coins/images/4344/large/Y88JAze.png?1696504947",
+    "tokenId": "harmony"
+  },
+  {
+    "blockchain": "aave",
+    "tokenName": "Aave",
+    "tokenSymbol": "AAVE",
+    "description": "Aave is a decentralized money market protocol where users can lend and borrow cryptocurrency across 20 different assets as collateral. The protocol has a native token called AAVE, which is also a gove...",
+    "logo": "https://coin-images.coingecko.com/coins/images/12645/large/aave-token-round.png?1720472354",
+    "tokenId": "aave"
+  },
+  {
+    "blockchain": "iotex",
+    "tokenName": "IoTeX",
+    "tokenSymbol": "IOTX",
+    "description": "IoTeX is a modular infrastructure for Decentralized Physical Infrastructure Network (DePIN) applicatoins that offers a comprehensive suite of tools to create fully decentralized, composable, and inter...",
+    "logo": "https://coin-images.coingecko.com/coins/images/3334/large/20250711-123945.jpeg?1752309881",
+    "tokenId": "iotex"
+  },
+  {
+    "blockchain": "curve-dao-token",
+    "tokenName": "Curve DAO",
+    "tokenSymbol": "CRV",
+    "description": "Similar to Uniswap, Curve Finance is an Automated Market Maker (AMM) based Decentralised Exchange (DEX). Unlike Uniswap, its main focus is only to swap between assets that are supposed to have the sam...",
+    "logo": "https://coin-images.coingecko.com/coins/images/12124/large/Curve.png?1696511967",
+    "tokenId": "curve-dao-token"
+  },
+  {
+    "blockchain": "0x",
+    "tokenName": "0x Protocol",
+    "tokenSymbol": "ZRX",
+    "description": "...",
+    "logo": "https://coin-images.coingecko.com/coins/images/863/large/0x.png?1696501996",
+    "tokenId": "0x"
+  },
+  {
+    "blockchain": "balancer",
+    "tokenName": "Balancer",
+    "tokenSymbol": "BAL",
+    "description": "Balancer is a DeFi protocol that provides permissionless technology to streamline AMM development for developers and empower liquidity providers with an ever-expanding DEX product suite.\r\n\r\nThis is ma...",
+    "logo": "https://coin-images.coingecko.com/coins/images/11683/large/Balancer.png?1696511572",
+    "tokenId": "balancer"
+  },
+  {
+    "blockchain": "golem",
+    "tokenName": "Golem",
+    "tokenSymbol": "GLM",
+    "description": "What Is Golem Network?\r\n\r\nGolem Network is an open-source, decentralized computing platform that is building an ecosystem to provide computing power to the AI industry. A peer-to-peer marketplace for ...",
+    "logo": "https://coin-images.coingecko.com/coins/images/542/large/Golem_Submark_Positive_RGB.png?1696501761",
+    "tokenId": "golem"
+  },
+  {
+    "blockchain": "bancor",
+    "tokenName": "Bancor Network",
+    "tokenSymbol": "BNT",
+    "description": "About Bancor?\r\nBancor is an ecosystem of decentralized, open-source protocols that promote on-chain trading and liquidity. \r\n\r\nIts main protocol, Carbon, is a decentralized trading protocol allowing u...",
+    "logo": "https://coin-images.coingecko.com/coins/images/736/large/Bancor_Token.png?1710479159",
+    "tokenId": "bancor"
+  },
+  {
+    "blockchain": "the-graph",
+    "tokenName": "The Graph",
+    "tokenSymbol": "GRT",
+    "description": "The Graph is an indexing protocol and global API for organizing blockchain data and making it easily accessible with GraphQL. Developers can use Graph Explorer to search, find, and publish all the pub...",
+    "logo": "https://coin-images.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159",
+    "tokenId": "the-graph"
+  },
+  {
+    "blockchain": "fantom",
+    "tokenName": "Fantom",
+    "tokenSymbol": "FTM",
+    "description": "FANTOM is a new DAG based Smart Contract platform that intends to solve the scalability issues of existing public distributed ledger technologies. \r\n\r\nThe platform intends to distinguish itself from t...",
+    "logo": "https://coin-images.coingecko.com/coins/images/4001/large/Fantom_round.png?1696504642",
+    "tokenId": "fantom"
+  },
+  {
+    "blockchain": "loopring",
+    "tokenName": "Loopring",
+    "tokenSymbol": "LRC",
+    "description": "Loopring is a Decentralized Exchange (DEX) built on an Ethereum Layer-2 (L2) solution called zkRollup. It has both Automated Market Maker (AMM)-based and orderbook-based exchanges. \r\n\r\nzkRollup is an ...",
+    "logo": "https://coin-images.coingecko.com/coins/images/913/large/LRC.png?1696502034",
+    "tokenId": "loopring"
+  },
+  {
+    "blockchain": "klaytn",
+    "tokenName": "Klaytn",
+    "tokenSymbol": "KLAY",
+    "description": "Klaytn is a public blockchain focused on the metaverse, gamefi, and the creator economy. Officially launched in June 2019, it is the dominant blockchain platform in South Korea and is now undergoing g...",
+    "logo": "https://coin-images.coingecko.com/coins/images/9672/large/klaytn.png?1696509742",
+    "tokenId": "klay-token"
+  },
+  {
+    "blockchain": "axie-infinity",
+    "tokenName": "Axie Infinity",
+    "tokenSymbol": "AXS",
+    "description": "AXS is the governance token for the Axie Infinity game. Token holders will be able to shape and vote for the direction of the game universe. This is unlike traditional games where all decisions are ma...",
+    "logo": "https://coin-images.coingecko.com/coins/images/13029/large/axie_infinity_logo.png?1696512817",
+    "tokenId": "axie-infinity"
+  },
+  {
+    "blockchain": "arbitrum",
+    "tokenName": "Arbitrum",
+    "tokenSymbol": "ARB",
+    "description": "Arbitrum is one of the leading Ethereum scaling solutions bringing cheap transactions to tens of thousands of users in an environment that feels very similar to Ethereum. It is an optimistic rollup an...",
+    "logo": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
+    "tokenId": "arbitrum"
+  },
+  {
+    "blockchain": "enjincoin",
+    "tokenName": "Enjin Coin",
+    "tokenSymbol": "ENJ",
+    "description": "Enjin\r\nEnjin is a leading blockchain ecosystem dedicated to revolutionizing the gaming industry by integrating blockchain technology into games, applications, and businesses.\r\nFounded in 2009 by Maxim...",
+    "logo": "https://coin-images.coingecko.com/coins/images/1102/large/Symbol_Only_-_Purple.png?1709725966",
+    "tokenId": "enjincoin"
+  },
+  {
+    "blockchain": "flow",
+    "tokenName": "Flow",
+    "tokenSymbol": "FLOW",
+    "description": "Flow is a layer one blockchain designed from the ground up for consumer apps and the digital assets that power them. The network runs on a Proof of Stake consensus mechanism with a unique \"multi-role\"...",
+    "logo": "https://coin-images.coingecko.com/coins/images/13446/large/5f6294c0c7a8cda55cb1c936_Flow_Wordmark.png?1696513210",
+    "tokenId": "flow"
+  },
+  {
+    "blockchain": "optimism",
+    "tokenName": "Optimism",
+    "tokenSymbol": "OP",
+    "description": "Optimism is more than just a single blockchain – it's a growing network of chains called the Superchain, all built on the open-source OP Stack. While OP Mainnet was the first, many prominent chains no...",
+    "logo": "https://coin-images.coingecko.com/coins/images/25244/large/Optimism.png?1696524385",
+    "tokenId": "optimism"
+  },
+  {
+    "blockchain": "secret",
+    "tokenName": "Secret",
+    "tokenSymbol": "SCRT",
+    "description": "Secret is the native coin of the Secret Network, a decentralized network for private / secure computation. Nodes on the network (known as secret nodes) can perform generalizable computations over encr...",
+    "logo": "https://coin-images.coingecko.com/coins/images/11871/large/scrt_200.png?1733344413",
+    "tokenId": "secret"
+  },
+  {
+    "blockchain": "cronos",
+    "tokenName": "Cronos",
+    "tokenSymbol": "CRO",
+    "description": "We propose Crypto.com Chain, the next generation decentralized mobile payment protocol, the most efficient and secure way to pay and be paid in crypto, anywhere, any crypto\r\nwithout fees. Crypto.com C...",
+    "logo": "https://coin-images.coingecko.com/coins/images/7310/large/cro_token_logo.png?1696507599",
+    "tokenId": "crypto-com-chain"
+  },
+  {
+    "blockchain": "radix",
+    "tokenName": "Radix",
+    "tokenSymbol": "XRD",
+    "description": "Radix is building an open, interconnected platform where the full range of powerful DeFi applications will be built securely and safely....",
+    "logo": "https://coin-images.coingecko.com/coins/images/4374/large/6266da240f9ff5b6237a154c_Radix-Icon-256x256.png?1719376420",
+    "tokenId": "radix"
+  },
+  {
+    "blockchain": "mina-protocol",
+    "tokenName": "Mina Protocol",
+    "tokenSymbol": "MINA",
+    "description": "The world's lightest blockchain, powered by participants. Mina is building a privacy-preserving gateway between the real world and crypto — and the infrastructure for the secure, democratic future we ...",
+    "logo": "https://coin-images.coingecko.com/coins/images/15628/large/JM4_vQ34_400x400.png?1696515261",
+    "tokenId": "mina-protocol"
+  },
+  {
+    "blockchain": "moonbeam",
+    "tokenName": "Moonbeam",
+    "tokenSymbol": "GLMR",
+    "description": "Moonbeam is much more than just an EVM implementation: it’s a highly specialized Layer 1 chain that mirrors Ethereum’s Web3 RPC, accounts, keys, subscriptions, logs, and more. The Moonbeam platform ex...",
+    "logo": "https://coin-images.coingecko.com/coins/images/22459/large/Moonbeam_GLMR_ICON.png?1716647586",
+    "tokenId": "moonbeam"
+  },
+  {
+    "blockchain": "conflux",
+    "tokenName": "Conflux",
+    "tokenSymbol": "CFX",
+    "description": "What is Conflux \r\nConflux is a permissionless Layer 1 blockchain connecting decentralized economies across borders and protocols. Recently migrated to hybrid PoW/PoS consensus, Conflux provides a fast...",
+    "logo": "https://coin-images.coingecko.com/coins/images/13079/large/3vuYMbjN.png?1696512867",
+    "tokenId": "conflux-token"
+  },
+  {
+    "blockchain": "ecash",
+    "tokenName": "eCash",
+    "tokenSymbol": "XEC",
+    "description": "eCash (XEC) is a Layer-1 digital cash network, developed by Bitcoin ABC. It was created on Nov 15th, 2020, and has since distinguished itself from its predecessors and other Bitcoin clients by integra...",
+    "logo": "https://coin-images.coingecko.com/coins/images/16646/large/Logo_final-22.png?1696516207",
+    "tokenId": "ecash"
+  },
+  {
+    "blockchain": "astar",
+    "tokenName": "Astar",
+    "tokenSymbol": "ASTR",
+    "description": "Astar is a collective driving web3 adoption originating from Japan, seamlessly bridging Astar Network and Soneium ecosystems. Soneium, an advanced Layer 2 solution developed by Sony Block Solutions La...",
+    "logo": "https://coin-images.coingecko.com/coins/images/22617/large/astr.png?1696521933",
+    "tokenId": "astar"
+  },
+  {
+    "blockchain": "wax",
+    "tokenName": "WAX",
+    "tokenSymbol": "WAXP",
+    "description": "WAX is a purpose-built blockchain and protocol token designed to make e-commerce transactions faster, easier, and safer for all participants. The WAX Blockchain uses Delegated Proof of Stake (DPoS) as...",
+    "logo": "https://coin-images.coingecko.com/coins/images/1372/large/WAX_Coin_Tickers_P_512px.png?1696502430",
+    "tokenId": "wax"
+  },
+  {
+    "blockchain": "thorchain",
+    "tokenName": "THORChain",
+    "tokenSymbol": "RUNE",
+    "description": "THORChain is building a chain-agnostic bridging protocol that will allow trustless and secure value-transfer connections with most other chains (such as Bitcoin, Ethereum, Monero and all of Binance Ch...",
+    "logo": "https://coin-images.coingecko.com/coins/images/6595/large/Rune200x200.png?1696506946",
+    "tokenId": "thorchain"
+  },
+  {
+    "blockchain": "injective-protocol",
+    "tokenName": "Injective",
+    "tokenSymbol": "INJ",
+    "description": "...",
+    "logo": "https://coin-images.coingecko.com/coins/images/12882/large/Other_200x200.png?1738782212",
+    "tokenId": "injective-protocol"
+  },
+  {
+    "blockchain": "kadena",
+    "tokenName": "Kadena",
+    "tokenSymbol": "KDA",
+    "description": "Kadena is launching one of the world’s first true scalable blockchains ready for applications.\r\n \r\nKadena’s public blockchain is a braided, high-throughput Proof of Work system that runs Chainweb, a p...",
+    "logo": "https://coin-images.coingecko.com/coins/images/3693/large/Social_-_Profile_Picture.png?1723001308",
+    "tokenId": "kadena"
+  },
+  {
+    "blockchain": "siacoin",
+    "tokenName": "Siacoin",
+    "tokenSymbol": "SC",
+    "description": "Sia is a decentralized cloud storage platform similar in concept to Dropbox and other centralized storage provider where instead of renting storage space from a centralized entity, clients rent storag...",
+    "logo": "https://coin-images.coingecko.com/coins/images/289/large/shard_transparent_200.png?1752867579",
+    "tokenId": "siacoin"
+  },
+  {
+    "blockchain": "syscoin",
+    "tokenName": "Syscoin",
+    "tokenSymbol": "SYS",
+    "description": "What Is Syscoin (SYS)?\r\n\r\nFounded in 2014 as a fork of Bitcoin, Syscoin (SYS) is a trailblazing blockchain network that synergizes the robust security of Bitcoin's Proof of Work (PoW) consensus algori...",
+    "logo": "https://coin-images.coingecko.com/coins/images/119/large/Syscoin.png?1696501494",
+    "tokenId": "syscoin"
+  },
+  {
+    "blockchain": "icon",
+    "tokenName": "ICON",
+    "tokenSymbol": "ICX",
+    "description": "Founded in August 2017, ICON has spent many years fostering its L1 ecosystem and pushing for sustainable cross-chain development infrastructure. As many apps experience cross-chain difficulties today,...",
+    "logo": "https://coin-images.coingecko.com/coins/images/1060/large/ICON-symbol-coingecko_latest.png?1706638336",
+    "tokenId": "icon"
+  },
+  {
+    "blockchain": "band-protocol",
+    "tokenName": "Band Protocol",
+    "tokenSymbol": "BAND",
+    "description": "...",
+    "logo": "https://coin-images.coingecko.com/coins/images/9545/large/Band_token_blue_violet_token.png?1696509627",
+    "tokenId": "band-protocol"
+  },
+  {
+    "blockchain": "ravencoin",
+    "tokenName": "Ravencoin",
+    "tokenSymbol": "RVN",
+    "description": "Ravencoin is a blockchain specifically dedicated to the creation and peer-to-peer transfer of assets. Just as Monero is solely focused on privacy, Ravencoin specializes in asset transfer – nothing mor...",
+    "logo": "https://coin-images.coingecko.com/coins/images/3412/large/ravencoin.png?1696504108",
+    "tokenId": "ravencoin"
+  },
+  {
+    "blockchain": "vechain",
+    "tokenName": "VeChain",
+    "tokenSymbol": "VET",
+    "description": "Launched in 2015 as a private consortium network, the VeChain Foundation went on to develop the VeChainThor public blockchain, a fully programmable EVM compatible L1 smart contract platform that is ad...",
+    "logo": "https://coin-images.coingecko.com/coins/images/1167/large/VET.png?1742383283",
+    "tokenId": "vechain"
+  },
+  {
+    "blockchain": "ontology",
+    "tokenName": "Ontology",
+    "tokenSymbol": "ONT",
+    "description": "Ontology is a new high-performance public blockchain project &amp; a distributed trust collaboration platform.It provides new high-performance public blockchains that include a series of complete dist...",
+    "logo": "https://coin-images.coingecko.com/coins/images/3447/large/ONT.png?1696504138",
+    "tokenId": "ontology"
+  },
+  {
+    "blockchain": "pivx",
+    "tokenName": "PIVX",
+    "tokenSymbol": "PIVX",
+    "description": "PIVX, a cutting edge User Data Protection oriented blockchain project and cryptocurrency, announced on November 25th 2015 and fair-launched on January 30th 2016. Upon its launch (based on the quark Pr...",
+    "logo": "https://coin-images.coingecko.com/coins/images/548/large/PIVX-Shield.png?1696501766",
+    "tokenId": "pivx"
+  },
+  {
+    "blockchain": "qtum",
+    "tokenName": "Qtum",
+    "tokenSymbol": "QTUM",
+    "description": "Qtum is a decentralized and open-source smart contracts platform and value transfer protocol. Qtum uses proof-of-stake consensus, meaning node operators are rewarded for validating transactions. It is...",
+    "logo": "https://coin-images.coingecko.com/coins/images/684/large/Qtum_Logo_blue_CG.png?1696501874",
+    "tokenId": "qtum"
+  },
+  {
+    "blockchain": "verge",
+    "tokenName": "Verge",
+    "tokenSymbol": "XVG",
+    "description": "Verge coin started its cryptocurrency journey in 2014, going by the name of DogecoinDark. The reason it was created was to create a truly private cryptocurrency. The founder of Verge felt that Bitcoin...",
+    "logo": "https://coin-images.coingecko.com/coins/images/203/large/Verge_Coin_%28native%29_icon_200x200.jpg?1699220755",
+    "tokenId": "verge"
+  },
+  {
+    "blockchain": "feathercoin",
+    "tokenName": "Feathercoin",
+    "tokenSymbol": "FTC",
+    "description": "Feathercoin (FTC or ₣) is an open source cryptocurrency, published under the license of MIT / X11.1, based on the Litecoin protocol. On 16 April 2013 Feathercoin successfully forked from Litecoin by t...",
+    "logo": "https://coin-images.coingecko.com/coins/images/12/large/feathercoin.png?1696501416",
+    "tokenId": "feathercoin"
+  },
+  {
+    "blockchain": "reddcoin",
+    "tokenName": "ReddCoin",
+    "tokenSymbol": "RDD",
+    "description": "Launched in 2014 as a fork of Litecoin, Reddcoin (RDD) is a decentralized cryptocurrency used to tip or send payments for social content. The Reddcoin API supports social platforms such as Reddit, Twi...",
+    "logo": "https://coin-images.coingecko.com/coins/images/40/large/redd_logo.png?1696501440",
+    "tokenId": "reddcoin"
+  },
+  {
+    "blockchain": "potcoin",
+    "tokenName": "Potcoin",
+    "tokenSymbol": "POT",
+    "description": "PotCoin is one of the first coins ever created, launched on January 21, 2014, just 46 days after Dogecoin. \r\n\r\nNow operating exclusively on the Solana blockchain, it serves as a digital payment soluti...",
+    "logo": "https://coin-images.coingecko.com/coins/images/51/large/potcoin.png?1696501447",
+    "tokenId": "potcoin"
+  },
+  {
+    "blockchain": "navcoin",
+    "tokenName": "Navio",
+    "tokenSymbol": "NAV",
+    "description": "Navio is an innovative project and one of the first fully private blockchains powered by its unique Proof-of-Private-Stake (PoPS) consensus mechanism.\r\n\r\nDesigned as a decentralized privacy platform, ...",
+    "logo": "https://coin-images.coingecko.com/coins/images/233/large/Navio_logo.png?1750844506",
+    "tokenId": "nav-coin"
+  },
+  {
+    "blockchain": "particl",
+    "tokenName": "Particl",
+    "tokenSymbol": "PART",
+    "description": "Particl is an open-source and decentralized privacy platform built on the blockchain specifically designed to work with any cryptocurrency. It allows decentralized applications (Dapps) of all sorts to...",
+    "logo": "https://coin-images.coingecko.com/coins/images/839/large/Particl.png?1696501978",
+    "tokenId": "particl"
+  },
+  {
+    "blockchain": "bitcoin-cash",
+    "tokenName": "Bitcoin Cash",
+    "tokenSymbol": "BCH",
+    "description": "Bitcoin Cash is a hard fork of Bitcoin with a protocol upgrade to fix on-chain capacity. Bitcoin Cash intends to be a Bitcoin without Segregated Witness (SegWit) as soft fork, where upgrades of the pr...",
+    "logo": "https://coin-images.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png?1696501932",
+    "tokenId": "bitcoin-cash"
+  },
+  {
+    "blockchain": "dogecoin",
+    "tokenName": "Dogecoin",
+    "tokenSymbol": "DOGE",
+    "description": "Dogecoin is a cryptocurrency based on the popular \"Doge\" Internet meme and features a Shiba Inu on its logo. Dogecoin is a Litecoin fork. Introduced as a \"joke currency\" on 6 December 2013, Dogecoin q...",
+    "logo": "https://coin-images.coingecko.com/coins/images/5/large/dogecoin.png?1696501409",
+    "tokenId": "dogecoin"
+  },
+  {
+    "blockchain": "primecoin",
+    "tokenName": "Primecoin",
+    "tokenSymbol": "XPM",
+    "description": "Primecoin is a rather interesting digital currency. It was developed by Sunny King, one of the same developers that created PPCoin and invented Proof-of-stake. Primecoin does not follow the same rules...",
+    "logo": "https://coin-images.coingecko.com/coins/images/13/large/primecoin.png?1696501417",
+    "tokenId": "primecoin"
+  },
+  {
+    "blockchain": "neo",
+    "tokenName": "NEO",
+    "tokenSymbol": "NEO",
+    "description": "NEO is a next generation smart economy platform (formerly Antshares) and China's first open source blockchain that was founded in 2014, is often known as the “Ethereum of China”. \r\n\r\nWhat is NEO?\r\nNEO...",
+    "logo": "https://coin-images.coingecko.com/coins/images/480/large/NEO_512_512.png?1696501735",
+    "tokenId": "neo"
+  }
+]

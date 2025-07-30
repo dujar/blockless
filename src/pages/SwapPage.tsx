@@ -88,6 +88,8 @@ const SwapPage = () => {
           tokenSymbol={sourceToken.symbol}
           amount={sourceAmount}
           recipientAddress={selectedDestination.destinationAddress}
+          fiatAmount={0} // Dummy value
+          fiatCurrency="USD" // Dummy value
         />
         <button onClick={() => setShowQRs(false)} className="mt-4 text-blue-500 hover:underline">← Back</button>
       </div>

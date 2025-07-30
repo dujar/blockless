@@ -12,7 +12,9 @@ export const useSwapForm = ({ onFormReset }: UseSwapFormOptions = {}) => {
     blockchain: '',
     token: '',
     amount: '',
-    targetAddress: ''
+    targetAddress: '',
+    fiatAmount: 0, // Dummy value
+    fiatCurrency: 'USD', // Dummy value
   });
 
   const [isAddressValid, setIsAddressValid] = useState<boolean | null>(null);
@@ -69,7 +71,9 @@ export const useSwapForm = ({ onFormReset }: UseSwapFormOptions = {}) => {
       blockchain: '',
       token: '',
       amount: '',
-      targetAddress: ''
+      targetAddress: '',
+      fiatAmount: 0,
+      fiatCurrency: ''
     });
     setIsAddressValid(null);
     onFormReset?.();

@@ -60,13 +60,6 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
     setStep(2);
   };
 
-
-  // const _handleSwap = () => {
-  //   // In a real implementation, this would call the swap function
-  //   console.log('Swapping', amount, selectedToken, 'to target address:', swapParams.dst.destinationAddress || 'user wallet');
-  //   alert(`Swapping ${amount} ${selectedToken?.symbol} on ${selectedChain} ${(swapParams.dst.destinationAddress ? `to ${swapParams.dst.destinationAddress}` : 'to your wallet')}`);
-  // };
-
   return (
     <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
       {/* Step Indicator */}
@@ -237,6 +230,8 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
               tokenSymbol={selectedToken?.symbol || ''} 
               amount={amount} 
               recipientAddress={swapParams.dst[0]?.destinationAddress || ''} 
+              fiatAmount={0} // Dummy value
+              fiatCurrency="USD" // Dummy value
             />
           </div>
         </div>
