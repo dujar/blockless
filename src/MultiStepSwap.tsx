@@ -64,7 +64,6 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
           recipientAddress={destinationInfo.destinationAddress}
           fiatAmount={0} // Fiat amount is not relevant for direct crypto payments via deeplink here
           fiatCurrency="USD" // Default to USD
-          genericSwapUrl={`${window.location.origin}/swap?dst=${destinationInfo.blockchain}:${destinationInfo.amount}:${destinationInfo.token.symbol || destinationInfo.token.address}:${destinationInfo.destinationAddress}`} // Pass the original swap link
         />
         <button onClick={() => setShowQRs(false)} className="mt-4 text-primary-500 hover:underline">← Back</button>
       </div>
@@ -112,4 +111,3 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
 };
 
 export default MultiStepSwap;
-

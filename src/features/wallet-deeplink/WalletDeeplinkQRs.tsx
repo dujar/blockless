@@ -11,12 +11,11 @@ interface WalletDeeplinkQRsProps {
   tokenSymbol: string;
   amount: string;
   recipientAddress: string;
-  fiatAmount: number; // New prop
-  fiatCurrency: string; // New prop
-  genericSwapUrl: string | null; // New prop to pass the generic swap URL, now can be null
+  fiatAmount: number;
+  fiatCurrency: string;
 }
 
-export const WalletDeeplinkQRs = ({ blockchainName, tokenSymbol, amount, recipientAddress, fiatAmount, fiatCurrency, genericSwapUrl }: WalletDeeplinkQRsProps) => {
+export const WalletDeeplinkQRs = ({ blockchainName, tokenSymbol, amount, recipientAddress, fiatAmount, fiatCurrency }: WalletDeeplinkQRsProps) => {
   const [selectedWallet, setSelectedWallet] = useState<WalletWithDeeplink | null>(null);
   const { chain, token, applicableWallets } = useWalletDeeplinks({
     blockchainName,
@@ -49,9 +48,8 @@ export const WalletDeeplinkQRs = ({ blockchainName, tokenSymbol, amount, recipie
         tokenSymbol={tokenSymbol}
         amount={amount}
         recipientAddress={recipientAddress}
-        fiatAmount={fiatAmount} // Pass fiatAmount
-        fiatCurrency={fiatCurrency} // Pass fiatCurrency
-        genericSwapUrl={genericSwapUrl} // Pass genericSwapUrl
+        fiatAmount={fiatAmount}
+        fiatCurrency={fiatCurrency}
         onClose={handleBackClick} 
       />
     );
@@ -63,4 +61,3 @@ export const WalletDeeplinkQRs = ({ blockchainName, tokenSymbol, amount, recipie
 };
 
 export default WalletDeeplinkQRs;
-

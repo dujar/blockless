@@ -54,7 +54,7 @@ const OrderQRCodeDisplaySection = ({ form }: OrderQRCodeDisplayProps) => {
                             {chain.tokens.filter((token) => parseFloat(token.amount) > 0).map((token) => (
                                 <div key={token.symbol} className="p-4 bg-gray-100 dark:bg-gray-700/50 rounded-lg">
                                     <h4 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Pay {token.amount} {token.symbol}</h4>
-                                    <WalletDeeplinkQRs blockchainName={chain.name} tokenSymbol={token.symbol} amount={token.amount} recipientAddress={chain.address} fiatAmount={order.fiatAmount} fiatCurrency={order.fiatCurrency} genericSwapUrl={order.crossChainUrl} />
+                                    <WalletDeeplinkQRs blockchainName={chain.name} tokenSymbol={token.symbol} amount={token.amount} recipientAddress={chain.address} fiatAmount={order.fiatAmount} fiatCurrency={order.fiatCurrency} />
                                 </div>
                             ))}
                             {chain.tokens.filter((token) => parseFloat(token.amount) > 0).length === 0 && (<p className="text-sm text-gray-500 dark:text-gray-400">No convertible tokens available for QR codes on this chain.</p>)}
@@ -69,4 +69,3 @@ const OrderQRCodeDisplaySection = ({ form }: OrderQRCodeDisplayProps) => {
 };
 
 export default OrderQRCodeDisplaySection;
-

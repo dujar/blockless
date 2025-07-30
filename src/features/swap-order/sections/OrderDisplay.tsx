@@ -204,7 +204,6 @@ const QRCodeDisplay = ({ qrCodeUrl, formData, quoteData, isQuoteLoading, quoteEr
                     recipientAddress={formData.targetAddress}
                     fiatAmount={formData.fiatAmount}
                     fiatCurrency={formData.fiatCurrency}
-                    genericSwapUrl={qrCodeUrl} 
                 />
             )}
 
