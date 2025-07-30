@@ -42,3 +42,8 @@ AGENT.md
 .vercel
 
 .env
+
+
+# Added by cargo
+
+/target

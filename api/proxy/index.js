@@ -1,6 +1,6 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+// import type { VercelRequest, VercelResponse } from '@vercel/node';
+// export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req, res) {
   // Allow only http://localhost:* or a single user-defined origin
   const origin = req.headers.origin || '';
   const isLocalhost = /^https?:\/\/localhost(:\d+)?$/i.test(origin);
