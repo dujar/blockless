@@ -1,6 +1,8 @@
 import type { TokenInfoDto } from '../services/types';
 import { blockchainData } from '../data/blockchains';
 import { countries } from '../data/countries';
+import nativeTokensJson from '../data/native-tokens.json'; // Import native-tokens.json
+
 
 // Import specific token logos
 import ethLogo from '../assets/eth.svg';
@@ -116,6 +118,39 @@ export const getTokenLogoURI = (tokenAddress: string, tokenSymbol: string, chain
     // 4. Fallback to generic Blockless logo
     return blocklessLogo; 
 };
+
+/**
+ * Retrieves the logo for a blockchain, primarily from native-tokens.json mapping.
+ * @param chainId The chain ID of the blockchain.
+ * @param chainName The display name of the blockchain.
+ * @returns The URL of the blockchain logo, or undefined if not found.
+ */
+export const getBlockchainLogo = (chainName: string): string | undefined => {
+    // Map internal chain names to what's used in native-tokens.json if different (e.g., "BNB Chain" -> "binancecoin")
+    const idMap: { [key: string]: string } = {
+        'BNB Chain': 'binancecoin',
+        'Polygon': 'polygon',
+        'Ethereum': 'ethereum',
+        'Avalanche': 'avalanche',
+        'Arbitrum': 'arbitrum',
+        'Optimism': 'optimism',
+        'Base': 'base',
+        'Linea': 'linea',
+        // Add other mappings if chainName differs from blockchain ID in native-tokens.json
+    };
+    const lookupId = idMap[chainName] || chainName.toLowerCase().replace(/\s/g, ''); // Use mapped ID or a simple lowercase conversion
+
+    // Try to find the logo from NATIVE_TOKENS_INFO (which uses explicit local imports)
+    const nativeInfo = NATIVE_TOKENS_INFO[chainName];
+    if (nativeInfo && nativeInfo.logo) {
+        return nativeInfo.logo;
+    }
+
+    // Fallback to native-tokens.json (which typically has more generic blockchain images from Coingecko)
+    const tokenInfo = (nativeTokensJson as any[]).find(token => token.blockchain === lookupId);
+    return tokenInfo?.logo;
+};
+
 
 export const injectAndCategorizeTokens = (fetchedTokens: TokenInfoDto[], chainId: number, chainName: string) => {
     const currentChain = blockchainData.find(chain => chain.chainId === chainId);

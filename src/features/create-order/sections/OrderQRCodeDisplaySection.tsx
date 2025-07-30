@@ -1,0 +1,72 @@
+import WalletDeeplinkQRs from '../../wallet-deeplink/WalletDeeplinkQRs';
+import { CrossChainQRCodeDisplay } from '../components/CrossChainQRCodeDisplay';
+import type { useCreateOrderForm } from '../hooks/useCreateOrderForm';
+import { getTokenLogoURI } from '../../../utils/token-helpers';
+import OneInchLogo from '../../../assets/1inch.svg';
+import blocklessLogo from '../../../assets/blockless.svg';
+
+const formatCurrency = (amount: number, currencyCode: string) => {
+    try {
+        return new Intl.NumberFormat(navigator.language, { style: 'currency', currency: currencyCode }).format(amount);
+    } catch (e) {
+        console.error("Error formatting currency:", e);
+        return `${amount} ${currencyCode}`;
+    }
+};
+
+type OrderQRCodeDisplayProps = {
+    form: ReturnType<typeof useCreateOrderForm>;
+};
+
+const OrderQRCodeDisplaySection = ({ form }: OrderQRCodeDisplayProps) => {
+    const { order, setOrder, setFiatAmountInput, setStep, activeTab, setActiveTab } = form;
+
+    if (!order) return null;
+
+    return (
+        <div className="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg shadow-dynamic">
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Order: {formatCurrency(order.fiatAmount, order.fiatCurrency)}</h1>
+                <button onClick={() => { setOrder(null); setFiatAmountInput(''); setStep(1); }} className="text-primary-500 hover:underline">New Order</button>
+            </div>
+            {/* Make tabs sticky on mobile */}
+            <div className="sticky top-0 z-10 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                <nav className="-mb-px flex space-x-4 overflow-x-auto" aria-label="Tabs">
+                    {order.chains.map((chain) => chain.tokens.some((token) => parseFloat(token.amount) > 0) && (
+                        <button key={chain.name} onClick={() => setActiveTab(chain.name)} className={`whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm ${activeTab === chain.name ? 'border-primary-500 text-primary-600 dark:text-primary-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200'}`}>
+                            <img src={getTokenLogoURI('native', '', chain.name)} alt={chain.name} className="h-5 w-5 mr-2 inline-block rounded-full" onError={(e) => { (e.target as HTMLImageElement).src = blocklessLogo; }} />
+                            {chain.name}
+                        </button>
+                    ))}
+                    {order.crossChainUrl && (
+                        <button onClick={() => setActiveTab('cross-chain')} className={`whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm ${activeTab === 'cross-chain' ? 'border-b-2 border-primary-500 text-primary-600 dark:text-primary-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200'}`}>
+                            <img src={OneInchLogo} alt="1inch" className="h-5 w-5 mr-2 inline-block rounded-full" onError={(e) => { (e.target as HTMLImageElement).src = blocklessLogo; }} />
+                            Cross-Chain Swap
+                        </button>
+                    )}
+                </nav>
+            </div>
+            <div className="py-6">
+                {order.chains.map((chain) => activeTab === chain.name && (
+                    <div key={chain.name}>
+                        <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Pay with Wallet on {chain.name}</h3>
+                        <div className="space-y-6">
+                            {chain.tokens.filter((token) => parseFloat(token.amount) > 0).map((token) => (
+                                <div key={token.symbol} className="p-4 bg-gray-100 dark:bg-gray-700/50 rounded-lg">
+                                    <h4 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Pay {token.amount} {token.symbol}</h4>
+                                    <WalletDeeplinkQRs blockchainName={chain.name} tokenSymbol={token.symbol} amount={token.amount} recipientAddress={chain.address} fiatAmount={order.fiatAmount} fiatCurrency={order.fiatCurrency} genericSwapUrl={order.crossChainUrl} />
+                                </div>
+                            ))}
+                            {chain.tokens.filter((token) => parseFloat(token.amount) > 0).length === 0 && (<p className="text-sm text-gray-500 dark:text-gray-400">No convertible tokens available for QR codes on this chain.</p>)}
+                        </div>
+                    </div>
+                ))}
+                {activeTab === 'cross-chain' && order.crossChainUrl && (<CrossChainQRCodeDisplay order={order} onBackToOrderDetails={() => setStep(2)} />)}
+                {activeTab === 'cross-chain' && !order.crossChainUrl && (<p className="text-sm text-gray-500 dark:text-gray-400">No valid cross-chain swap URL could be generated. Ensure at least one token is configured.</p>)}
+            </div>
+        </div>
+    );
+};
+
+export default OrderQRCodeDisplaySection;
+

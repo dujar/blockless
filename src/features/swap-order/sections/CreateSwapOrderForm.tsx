@@ -23,6 +23,13 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
     const handleConnectWallet = () => {
         connect({ connector: connectors[0] });
     };
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (isFormValid()) {
+            onGenerateQR();
+        }
+    };
     
     const availableChains = blockchainData.map(chain => ({
         id: chain.networkId,
@@ -30,12 +37,12 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
     }));
 
     return (
-        <div className="lg:order-2 bg-white dark:bg-gray-900 rounded-2xl shadow-lg shadow-dynamic">
+        <div className="lg:order-2 bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg shadow-dynamic">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                 Create Swap Order
             </h2>
             
-            <div className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Blockchain Selection */}
                 <div>
                     <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
@@ -66,7 +73,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                     <input
                         type="text"
                         name="token"
-                        value={formData.token}
+                        value={formData.token?.address}
                         onChange={handleInputChange}
                         className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         placeholder="e.g. ETH, USDC, BTC"
@@ -120,6 +127,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                         </span>
                         {isConnected ? (
                             <button
+                                type="button"
                                 onClick={() => disconnect()}
                                 className="text-sm text-red-500 hover:text-red-700 dark:hover:text-red-400"
                             >
@@ -127,6 +135,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                             </button>
                         ) : (
                             <button
+                                type="button"
                                 onClick={handleConnectWallet}
                                 className="text-sm text-primary-500 hover:text-primary-700 dark:hover:text-primary-400"
                             >
@@ -166,13 +175,14 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                 {/* Action Buttons */}
                 <div className="flex space-x-3 pt-4">
                     <button
+                        type="button"
                         onClick={handleReset}
                         className="flex-1 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg font-medium transition"
                     >
                         Reset
                     </button>
                     <button
-                        onClick={onGenerateQR}
+                        type="submit"
                         disabled={!isFormValid()}
                         className={`flex-1 px-4 py-3 rounded-lg font-medium transition ${
                         !isFormValid()
@@ -183,7 +193,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                         Generate
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
     );
 };

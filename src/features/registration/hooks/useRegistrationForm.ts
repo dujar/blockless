@@ -191,3 +191,4 @@ export const useRegistrationForm = () => {
 };
 
 export type UseRegistrationFormReturn = ReturnType<typeof useRegistrationForm>;
+

@@ -34,9 +34,12 @@ const  SwapOrder= () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <OrderDisplay
           showQRCode={showQRCode}
-          qrCodeUrl={form.generateQRCodeURL()}
+          qrCodeUrl={""}
           formData={form.formData}
           onBackToForm={() => setShowQRCode(false)}
+          quoteData={form.quoteData}
+          isQuoteLoading={form.isQuoteLoading}
+          quoteError={form.quoteError}
         />
         <CreateSwapOrderForm
           form={form}

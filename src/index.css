@@ -10,8 +10,20 @@ input[type='number'] {
   -moz-appearance: textfield; /* Firefox */
 }
 
-/* Default (light) theme variables - Blue primary */
+/* Default variables, can be considered a general fallback */
 :root {
+  --shadow-dynamic: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); /* shadow-md */
+}
+
+/* Dark mode default */
+.dark {
+  --shadow-dynamic: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-lg */
+}
+
+/* Primary Color Options for merchant customization */
+
+/* Blue theme (light mode) - This is the default theme */
+.theme-blue {
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;
   --color-primary-200: #bfdbfe;
@@ -23,28 +35,21 @@ input[type='number'] {
   --color-primary-800: #1e40af;
   --color-primary-900: #1e3a8a;
   --color-primary-950: #172554;
-
-  --shadow-dynamic: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); /* shadow-md */
 }
-
-/* Dark mode default (indigo primary) */
-.dark {
-  --color-primary-50: #1e3a8a; /* Keep dark shades for primary-50, etc. for specific uses */
-  --color-primary-100: #3730a3;
-  --color-primary-200: #4f46e5;
-  --color-primary-300: #6366f1;
+/* Blue theme (dark mode) */
+.dark.theme-blue {
+  --color-primary-50: #eef2ff;
+  --color-primary-100: #e0e7ff;
+  --color-primary-200: #c7d2fe;
+  --color-primary-300: #a5b4fc;
   --color-primary-400: #818cf8;
-  --color-primary-500: #6366f1; /* Darker primary for contrast */
+  --color-primary-500: #6366f1;
   --color-primary-600: #4f46e5;
   --color-primary-700: #4338ca;
   --color-primary-800: #3730a3;
   --color-primary-900: #312e81;
   --color-primary-950: #1e1b4b;
-
-  --shadow-dynamic: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-lg */
 }
-
-/* Primary Color Options for merchant customization */
 
 /* Red theme (light mode) */
 .theme-red {
@@ -70,9 +75,9 @@ input[type='number'] {
   --color-primary-500: #ef4444;
   --color-primary-600: #f87171;
   --color-primary-700: #fca5a5;
-  --color-primary-800: #fee2e2;
-  --color-primary-900: #fef2f2;
-  --color-primary-950: #4b0e0e; /* Adjust if needed for better contrast in dark */
+  --color-primary-800: #fecaca;
+  --color-primary-900: #fee2e2;
+  --color-primary-950: #fef2f2;
 }
 
 /* Green theme (light mode) */
@@ -101,7 +106,7 @@ input[type='number'] {
   --color-primary-700: #86efac;
   --color-primary-800: #bbf7d0;
   --color-primary-900: #dcfce7;
-  --color-primary-950: #0a4d2c; /* Adjust if needed for better contrast in dark */
+  --color-primary-950: #f0fdf4;
 }
 
 /* Shadow level variables */

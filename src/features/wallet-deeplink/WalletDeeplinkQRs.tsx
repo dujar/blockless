@@ -13,7 +13,7 @@ interface WalletDeeplinkQRsProps {
   recipientAddress: string;
   fiatAmount: number; // New prop
   fiatCurrency: string; // New prop
-  genericSwapUrl: string; // New prop to pass the generic swap URL
+  genericSwapUrl: string | null; // New prop to pass the generic swap URL, now can be null
 }
 
 export const WalletDeeplinkQRs = ({ blockchainName, tokenSymbol, amount, recipientAddress, fiatAmount, fiatCurrency, genericSwapUrl }: WalletDeeplinkQRsProps) => {

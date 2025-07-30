@@ -9,7 +9,7 @@ interface ConfigurationSummaryProps {
 export const ConfigurationSummary = ({ chains, fiatCurrency }: ConfigurationSummaryProps) => {
   if (chains.length === 0) {
     return (
-      <div className="sticky top-24 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl shadow-inner text-center shadow-dynamic">
+      <div className="sticky top-24 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl shadow-inner shadow-dynamic text-center">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Configuration Summary</h3>
         <p className="text-sm text-gray-700 dark:text-gray-400">Your selections will appear here.</p>
       </div>
@@ -47,3 +47,4 @@ export const ConfigurationSummary = ({ chains, fiatCurrency }: ConfigurationSumm
     </div>
   );
 };
+

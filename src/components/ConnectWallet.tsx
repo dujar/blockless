@@ -22,3 +22,4 @@ export const ConnectWallet = ({ onConnect }: ConnectWalletProps) => (
     </button>
   </div>
 );
+

@@ -89,7 +89,7 @@ const TokenItem = ({ token, chainName, isChecked, onTokenChange, isSelectable }:
                 type="checkbox"
                 id={`token-${token.chainId}-${token.symbol}-${token.address}`}
                 checked={isChecked}
-                onChange={e => onTokenChange(chainName, token.symbol, e.target.checked)}
+                onChange={e => onTokenChange(chainName, e.target.id.split('-')[2], e.target.checked)} // Use the symbol from the ID if needed for robustness
                 disabled={!isSelectable && !isChecked} // Disable if not selectable AND not already checked
                 className="h-4 w-4 rounded border-gray-300 dark:border-gray-500 text-primary-600 focus:ring-primary-500 bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
             />
@@ -111,7 +111,6 @@ const SelectedTokenChip = ({ token, chainName, onTokenRemove}: {
     token: TokenInfoDto;
     chainName: string;
     onTokenRemove: (chainName: string, tokenSymbol: string, isChecked: boolean) => void;
-    theme: typeof defaultTheme; // Theme from blockchainData, not global merchant theme
 }) => {
     // Determine initial image source, preferring API logo, then enhanced helper, then blockless fallback
     const initialImgSrc = token.logoURI || getTokenLogoURI(token.address, token.symbol, chainName);
@@ -268,7 +267,6 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
                             token={token} 
                             chainName={chainName} 
                             onTokenRemove={onTokenChange} 
-                            theme={theme} 
                         />
                     ))}
                 </div>
@@ -422,3 +420,4 @@ export const ChainConfigCard = ({
     </div>
   );
 };
+
