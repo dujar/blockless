@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useChainContext } from '../context/CrossChainContext';
 import type { BlockchainData } from '../../../data/blockchains';
-import { BlockchainTokenSelection } from '../components/BlockchainTokenSelection';
+import { BlockchainTokenPaymentOption } from '../components/BlockchainTokenPaymentOption';
 
 export const OrderSelectionStep: React.FC = () => {
   const { chain, setChain, chainResponse,orders } = useChainContext();
@@ -30,7 +30,7 @@ export const OrderSelectionStep: React.FC = () => {
   return (
     <div className="space-y-4">
       {orders.map(order => (
-        <BlockchainTokenSelection key={order.dstAddress + order.token + order.amount} order={order} />
+        <BlockchainTokenPaymentOption key={order.dstAddress + order.token + order.amount} order={order} />
       ))}
     </div>
   );

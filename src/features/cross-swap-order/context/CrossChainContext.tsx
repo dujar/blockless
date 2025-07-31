@@ -9,7 +9,6 @@ const chainsByNetworkId = blockchainData.reduce((acc: { [key: number]: typeof bl
     acc[chain.networkId] = {
         ...chain,
         id: chain.networkId +"",
-        // nativeCurrency: chain.nativeCurrency,
     };
     return acc;
 }, {} as Record<number, typeof blockchainData[number]>);
@@ -17,7 +16,6 @@ const chainsByNetworkName = blockchainData.reduce((acc: { [key: string]: typeof 
     acc[chain.name.toLocaleLowerCase() + ""] = {
         ...chain,
         id: chain.networkId +"",
-        // nativeCurrency: chain.nativeCurrency,
     };
     return acc;
 }, {} as Record<string, typeof blockchainData[number]>);

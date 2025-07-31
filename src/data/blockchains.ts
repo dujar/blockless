@@ -1,3 +1,5 @@
+import nativeTokensJson from './native-tokens.json';
+
 export interface BlockchainTheme {
   bg: string;
   border: string;
@@ -14,20 +16,57 @@ export const defaultTheme: BlockchainTheme = {
   label: "text-gray-700 dark:text-gray-300", // Adjusted for new dark label logic
 };
 
+/**
+ * Interface representing native token information as found in native-tokens.json.
+ */
+export interface NativeTokenInfo {
+  blockchain: string; // The identifier used in native-tokens.json (e.g., "ethereum", "binancecoin")
+  tokenName: string;
+  tokenSymbol: string;
+  description: string;
+  logo: string;
+  tokenId: string; // Unique identifier for the token (e.g., "ethereum", "binancecoin")
+}
 
-export interface BlockchainData{
-  // please fill
-  id: string; // Unique identifier for the blockchain
+export interface BlockchainData {
+  id: string; // Unique identifier for the blockchain (e.g., "ethereum", "bnb")
   name: string; // Display name of the blockchain
-  chainId: number | null; // Chain ID, null if not applicable
-  networkId: number; // Network ID, used for identification
+  chainId: number | null; // Chain ID, null if not applicable (e.g., Solana)
+  networkId: number; // Network ID, used for identification (can be different from chainId)
   icon: string; // Icon name or path for the blockchain
   isEVM: boolean; // Indicates if the blockchain is EVM-compatible
   walletFormat: string; // Wallet address format (e.g., "0x", "base58", etc.)
   theme?: BlockchainTheme; // Optional theme for the blockchain, if different
-  initialAmount?: string; // Added initialAmount
-  nativeTokenAddress?: string; // Added nativeTokenAddress
+  initialAmount?: string; // Initial amount suggested for transactions
+  /**
+   * Details about the native token for this blockchain, pulled from native-tokens.json.
+   * This property is optional as not all blockchains might have corresponding entries.
+   */
+  nativeToken?: NativeTokenInfo;
+  nativeTokenAddress?: string; // Address of a wrapped native token or a primary native token if its not the 'native' keyword (e.g., WETH)
 }
+
+// Create a map from native-tokens.json entries for efficient lookup.
+// The key for the map is the 'blockchain' field from native-tokens.json.
+const nativeTokensMap = new Map<string, NativeTokenInfo>();
+(nativeTokensJson as NativeTokenInfo[]).forEach(token => {
+  nativeTokensMap.set(token.blockchain, token);
+});
+
+/**
+ * Helper function to retrieve native token data for a given blockchain ID,
+ * handling specific naming discrepancies between blockchainData and native-tokens.json.
+ * @param blockchainId The ID of the blockchain from blockchainData.
+ * @returns The NativeTokenInfo object if found, otherwise undefined.
+ */
+const getNativeTokenForBlockchain = (blockchainId: string): NativeTokenInfo | undefined => {
+  // Special handling for 'bnb' ID which corresponds to 'binancecoin' in native-tokens.json
+  if (blockchainId === 'bnb') {
+    return nativeTokensMap.get('binancecoin');
+  }
+  // For all other cases, the blockchainData 'id' should match native-tokens.json 'blockchain' field
+  return nativeTokensMap.get(blockchainId);
+};
 
 export const blockchainData: BlockchainData[] = [
   {
@@ -233,8 +272,19 @@ export const blockchainData: BlockchainData[] = [
     "initialAmount": "0.01",
     "nativeTokenAddress": "" // Placeholder
   }
-];
+].map(chain => {
+  const nativeToken = getNativeTokenForBlockchain(chain.id);
+  // Return a new object with the nativeToken property added if found
+  return {
+    ...chain,
+    ...(nativeToken && { nativeToken: nativeToken })
+  };
+});
 
-export const getChainDetails = (chainId: number): BlockchainData | undefined => {
+export const getChainDetailsByChainId = (chainId: number): BlockchainData | undefined => {
   return blockchainData.find(chain => chain.chainId === chainId);
+};
+
+export const getChainDetailsByNetworkId = (networkId: number): BlockchainData | undefined => {
+  return blockchainData.find(chain => chain.networkId === networkId);
 };
