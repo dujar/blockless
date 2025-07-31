@@ -21,7 +21,6 @@ const SwapPage = () => {
   const [oneInchSwapUrl, setOneInchSwapUrl] = useState<string>('');
 
   const { isConnected } = useAccount();
-  const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
 
   const {
@@ -78,9 +77,6 @@ const SwapPage = () => {
     }
   }, [selectedDestination, formData.targetAddress, handleInputChange]);
 
-  const handleConnectWallet = () => {
-    connect({ connector: connectors[0] });
-  };
 
   const handleGenerateQRs = async () => {
     if (selectedDestination && isFormValid()) {
@@ -182,7 +178,7 @@ const SwapPage = () => {
         </div>
       )}
 
-      {step === 1 && selectedDestination && <ConnectWallet onConnect={handleConnectWallet} />}
+      {step === 1 && selectedDestination && <ConnectWallet />}
       
       {step === 2 && isConnected && (
         <SelectBlockchain

@@ -1,18 +1,22 @@
-import React from 'react';
-import { useTheme } from '../context/theme-context';
+import React, { useEffect, useState } from 'react';
 
 const ThemeSwitcher: React.FC = () => {
-  const { darkModeEnabled, setDarkModeEnabled } = useTheme();
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const toggleTheme = () => {
-    setDarkModeEnabled(!darkModeEnabled);
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
   return (
     <button 
       onClick={toggleTheme} 
       className="btn btn-ghost">
-      {darkModeEnabled ? 'Light Mode' : 'Dark Mode'}
+      {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
     </button>
   );
 };

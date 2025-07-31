@@ -1,15 +1,20 @@
 import { defineConfig, loadEnv } from 'vite'; // Import loadEnv
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
-import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from '@tailwindcss/postcss'
+
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
 
   const env = loadEnv(mode, process.cwd(), ''); // Prefix '' loads all vars
 
   return {
+    css: {
+      postcss: {
+        plugins: [tailwindcss],
+      },
+    },
     plugins: [
-      tailwindcss(),
       react(),
       VitePWA({
         registerType: 'autoUpdate',

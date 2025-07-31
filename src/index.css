@@ -284,8 +284,6 @@ html {
     @apply text-white;
 }
 
-@layer base {
-    body {
-        @apply bg-base-100 text-base-content;
-    }
+body {
+    @apply bg-base-100 text-base-content;
 }

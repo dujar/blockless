@@ -15,7 +15,6 @@ interface MultiStepSwapProps {
 const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
   const [step, setStep] = useState(1);
   const { isConnected, chain } = useAccount();
-  const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   
   // Token selection state for the source of the swap
@@ -49,9 +48,6 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
     }
   }, [isConnected, chain]);
 
-  const handleConnectWallet = () => {
-    connect({ connector: connectors[0] });
-  };
 
   if (showQRs && sourceChain && sourceToken && destinationInfo) {
     return (
@@ -80,7 +76,7 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
         </div>
       )}
 
-      {step === 1 && swapParams.dst.length === 1 && <ConnectWallet onConnect={handleConnectWallet} />}
+      {step === 1 && swapParams.dst.length === 1 && <ConnectWallet />}
       
       {step === 2 && isConnected && (
         <SelectBlockchain

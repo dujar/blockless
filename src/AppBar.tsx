@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import blocklessLogo from './assets/blockless.svg';
-import { ConnectWallet } from './components/ConnectWallet';
+import { ConnectButton } from './components/ConnectButton';
 import ThemeSwitcher from './components/ThemeSwitcher';
 
 export default function AppBar() {
@@ -24,9 +24,9 @@ export default function AppBar() {
       </div>
 
       {/* Right section: Theme Switcher and Connect Wallet */}
-      <div className="flex space-x-2">
+      <div className="flex items-center space-x-2">
         <ThemeSwitcher />
-        <ConnectWallet onConnect={() => {}} />
+        <ConnectButton />
       </div>
     </div>
   );

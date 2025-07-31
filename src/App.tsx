@@ -12,6 +12,7 @@ import RegisterPage from './pages/RegisterPage';
 import CreateOrderPage from './pages/CreateOrderPage';
 import SwapPage from './pages/SwapPage';
 import SplashScreen from './SplashScreen';
+import ConnectWalletPage from './pages/ConnectWalletPage';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -38,6 +39,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/create-order" element={<CreateOrderPage />} />
             <Route path="/swap" element={<SwapPage />} />
+            <Route path="/connect-wallet" element={<ConnectWalletPage />} />
           </Routes>
         </div>
       </main>
