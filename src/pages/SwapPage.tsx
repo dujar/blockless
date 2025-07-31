@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { useAccount, useDisconnect } from 'wagmi';
 import { parseSwapParamsSafe, type SwapInfo, type SwapParams } from '../SwapParamSafe';
 import { ConnectWallet } from '../components/ConnectWallet';
 import { SelectBlockchain } from '../components/SelectBlockchain';

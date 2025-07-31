@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { useAccount, useDisconnect } from 'wagmi';
 import { Link } from 'react-router-dom'; // Import Link
 import type { SwapParams } from './SwapParamSafe';
 import WalletDeeplinkQRs from './features/wallet-deeplink/WalletDeeplinkQRs';
