@@ -45,7 +45,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Blockchain Selection */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-800 dark:text-primary-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
                         Blockchain
                     </label>
                     <div className="flex space-x-2">
@@ -53,7 +53,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                             name="blockchain"
                             value={formData.blockchain}
                             onChange={handleInputChange}
-                            className="flex-1 p-3 border border-gray-300 dark:border-primary-800 rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white"
+                            className="flex-1 p-3 border border-gray-300 dark:border-gray-800 rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white"
                         >
                             <option value="">Select Blockchain</option>
                             {availableChains.map(chain => (
@@ -67,7 +67,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                 
                 {/* Token Input */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-800 dark:text-primary-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
                         Token Symbol
                     </label>
                     <input
@@ -75,14 +75,14 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                         name="token"
                         value={formData.token?.address}
                         onChange={handleInputChange}
-                        className="w-full p-3 border border-gray-300 dark:border-primary-800 rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white"
+                        className="w-full p-3 border border-gray-300 dark:border-gray-800 rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white"
                         placeholder="e.g. ETH, USDC, BTC"
                     />
                 </div>
                 
                 {/* Amount Input */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-800 dark:text-primary-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
                         Amount
                     </label>
                     <input
@@ -90,7 +90,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                         name="amount"
                         value={formData.amount}
                         onChange={handleInputChange}
-                        className="w-full p-3 border border-gray-300 dark:border-primary-800 rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white"
+                        className="w-full p-3 border border-gray-300 dark:border-gray-800 rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white"
                         placeholder="0.0"
                         step="any"
                     />
@@ -98,7 +98,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                 
                 {/* Recipient Address */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-800 dark:text-primary-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
                         Recipient Address
                     </label>
                     <div className="relative flex items-center">
@@ -107,7 +107,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                             name="targetAddress"
                             value={formData.targetAddress}
                             onChange={handleInputChange}
-                            className="w-full p-3 pr-10 border border-gray-300 dark:border-primary-800 rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white"
+                            className="w-full p-3 pr-10 border border-gray-300 dark:border-gray-800 rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white"
                             placeholder="0x..."
                         />
                         {isAddressValid === true && (
@@ -122,7 +122,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                 {/* Wallet Connection */}
                 <div className="pt-4">
                     <div className="flex items-center justify-between mb-4">
-                        <span className="text-sm font-medium text-gray-800 dark:text-primary-300">
+                        <span className="text-sm font-medium text-gray-800 dark:text-gray-300">
                             Wallet Connection
                         </span>
                         {isConnected ? (
@@ -137,7 +137,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                             <button
                                 type="button"
                                 onClick={handleConnectWallet}
-                                className="text-sm text-primary-500 hover:text-primary-700 dark:hover:text-primary-400"
+                                className="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-400"
                             >
                                 Connect Wallet
                             </button>
@@ -154,18 +154,18 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                             </div>
                         </div>
                     ) : (
-                        <div className="p-3 bg-gray-50 dark:bg-primary-900/50 border border-gray-200 dark:border-primary-800 rounded-lg">
+                        <div className="p-3 bg-gray-50 dark:bg-primary-900/50 border border-gray-200 dark:border-gray-800 rounded-lg">
                             <div className="flex items-center">
                                 <div className="w-3 h-3 rounded-full bg-gray-400 mr-2"></div>
-                                <span className="text-sm text-gray-600 dark:text-primary-400">
+                                <span className="text-sm text-gray-600 dark:text-gray-400">
                                     Not connected
                                 </span>
                             </div>
                         </div>
                     )}
                     {!isConnected && (
-                        <div className="mt-4 p-3 bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-lg">
-                            <p className="text-sm text-primary-700 dark:text-primary-300">
+                        <div className="mt-4 p-3 bg-primary-50 dark:bg-primary-900/20 border border-gray-200 dark:border-gray-800 rounded-lg">
+                            <p className="text-sm text-gray-700 dark:text-gray-300">
                                 You can connect your wallet to auto-fill your recipient address.
                             </p>
                         </div>
@@ -177,7 +177,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                     <button
                         type="button"
                         onClick={handleReset}
-                        className="flex-1 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-primary-800 dark:hover:bg-primary-700 text-gray-800 dark:text-primary-200 rounded-lg font-medium transition"
+                        className="flex-1 px-4 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-primary-800 dark:hover:bg-primary-700 text-gray-800 dark:text-gray-200 rounded-lg font-medium transition"
                     >
                         Reset
                     </button>
@@ -186,7 +186,7 @@ const CreateSwapOrderForm = ({ form, onGenerateQR }: CreateSwapOrderFormProps) =
                         disabled={!isFormValid()}
                         className={`flex-1 px-4 py-3 rounded-lg font-medium transition ${
                         !isFormValid()
-                            ? 'bg-gray-300 dark:bg-primary-700 text-gray-500 dark:text-primary-400 cursor-not-allowed'
+                            ? 'bg-gray-300 dark:bg-primary-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
                             : 'bg-primary-500 hover:bg-primary-600 text-white'
                         }`}
                     >

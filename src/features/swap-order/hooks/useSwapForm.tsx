@@ -85,7 +85,6 @@ export const useSwapForm = ({ onFormReset }: UseSwapFormOptions = {}) => {
   const generateSwapQuote = useCallback(async (
     dstChainName: string, 
     dstTokenInfo: { symbol?: string; address?: string; },
-    _dstAmount: string
   ): Promise<string | null> => {
     setIsQuoteLoading(true);
     setQuoteError(null);

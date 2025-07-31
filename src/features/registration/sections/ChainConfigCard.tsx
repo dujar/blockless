@@ -54,7 +54,7 @@ const getBlockchainLogo = (chain: BlockchainData): string | undefined => {
     };
     const lookupId = idMap[chain.id] || chain.id; // Use mapped ID or original
 
-    const tokenInfo = (nativeTokens as any[]).find(token => token.blockchain === lookupId);
+    const tokenInfo = (nativeTokens as { blockchain: string; logo: string }[]).find(token => token.blockchain === lookupId);
     return tokenInfo?.logo;
 };
 
@@ -91,7 +91,7 @@ const TokenItem = ({ token, chainName, isChecked, onTokenChange, isSelectable }:
                 checked={isChecked}
                 onChange={e => onTokenChange(chainName, e.target.id.split('-')[2], e.target.checked)} // Use the symbol from the ID if needed for robustness
                 disabled={!isSelectable && !isChecked} // Disable if not selectable AND not already checked
-                className="h-4 w-4 rounded border-gray-300 dark:border-primary-600 text-primary-600 focus:ring-primary-500 bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                className="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-gray-600 focus:ring-primary-500 bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
             />
             <label htmlFor={`token-${token.chainId}-${token.symbol}-${token.address}`} className="ml-3 flex items-center cursor-pointer flex-1 min-w-0">
                 <img 
@@ -100,7 +100,7 @@ const TokenItem = ({ token, chainName, isChecked, onTokenChange, isSelectable }:
                     className="h-6 w-6 mr-2 rounded-full flex-shrink-0" 
                     onError={handleError} 
                 />
-                <span className="text-sm font-medium text-gray-800 dark:text-primary-200 truncate">{token.symbol}</span>
+                <span className="text-sm font-medium text-gray-800 dark:text-gray-200 truncate">{token.symbol}</span>
                 {riskInfo.level > 1 && <span className={`ml-2 text-xs font-semibold ${riskInfo.color}`}>({riskInfo.label})</span>}
             </label>
         </div>
@@ -123,7 +123,7 @@ const SelectedTokenChip = ({ token, chainName, onTokenRemove}: {
     };
 
     return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-200`}>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 dark:bg-primary-900/30 text-gray-800 dark:text-gray-200`}>
             <img 
                 src={imgSrc} 
                 alt={token.name} 
@@ -133,7 +133,7 @@ const SelectedTokenChip = ({ token, chainName, onTokenRemove}: {
             {token.symbol}
             <button
                 type="button"
-                className="ml-2 -mr-0.5 h-4 w-4 rounded-full inline-flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-primary-400 dark:hover:text-primary-200"
+                className="ml-2 -mr-0.5 h-4 w-4 rounded-full inline-flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 onClick={() => onTokenRemove(chainName, token.symbol, false)}
             >
                 <span className="sr-only">Remove {token.symbol}</span>
@@ -178,8 +178,8 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
             fetchedTokens = (searchedTokensData || []).map((token: TokenDto): TokenInfoDto => ({
                 ...token,
                 logoURI: token.logoURI || getTokenLogoURI(token.address, token.symbol, chainName),
-                tags: token.tags?.map(t => t.value) || [],
-                extensions: (token as any).extensions || {},
+                tags: token.tags?.map((t: { value: string }) => t.value) || [],
+                extensions: {},
             }));
         } else {
             // If not searching, use the full whitelisted list
@@ -254,7 +254,7 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
             <label className={`block text-sm font-medium mb-2 ${theme.label}`}>
                 Accepted Tokens on {chainName}
             </label>
-            <p className="text-xs text-gray-500 dark:text-primary-400 mb-3">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
                 Only native blockchain tokens and common stablecoins are currently supported for selection.
             </p>
 
@@ -293,7 +293,7 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
                 
                 {sortedCategories.map(category => (
                     <div key={category}>
-                        <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-primary-400 px-2 py-1">
+                        <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-gray-400 px-2 py-1">
                             {category} ({categorizedTokens[category].length})
                         </h4>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-2">
@@ -313,7 +313,7 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
                 ))}
 
                 {tokensToDisplay.length === 0 && !isLoading && !isSearching && !error && (
-                    <div className="text-center text-gray-500 dark:text-primary-400 p-4">
+                    <div className="text-center text-gray-500 dark:text-gray-400 p-4">
                         No native or stable tokens found matching your search.
                     </div>
                 )}
@@ -389,10 +389,10 @@ export const ChainConfigCard = ({
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 space-x-1">
                   {addressValidity === true && <span className="text-green-500">✓</span>}
-                  <button onClick={() => handleCopy(currentChainConfig?.address || '')} className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-primary-200">
+                  <button onClick={() => handleCopy(currentChainConfig?.address || '')} className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                   </button>
-                  <button onClick={() => onAddressChange(chainInfo.name, '')} className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-primary-200">
+                  <button onClick={() => onAddressChange(chainInfo.name, '')} className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                   </button>
               </div>

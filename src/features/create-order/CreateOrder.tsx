@@ -15,7 +15,7 @@ const CreateOrder = () => {
         return (
             <div className="text-center bg-white dark:bg-primary-950 p-8 rounded-2xl shadow-lg shadow-dynamic max-w-lg mx-auto">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Merchant Profile Not Found</h2>
-                <p className="text-gray-700 dark:text-primary-400 mb-6">
+                <p className="text-gray-700 dark:text-gray-400 mb-6">
                     To create an order, you first need to register your payment preferences.
                 </p>
                 <Link to="/register" className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium transition">

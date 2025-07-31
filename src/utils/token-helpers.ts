@@ -147,14 +147,14 @@ export const getBlockchainLogo = (chainName: string): string | undefined => {
     }
 
     // Fallback to native-tokens.json (which typically has more generic blockchain images from Coingecko)
-    const tokenInfo = (nativeTokensJson as any[]).find(token => token.blockchain === lookupId);
+    const tokenInfo = (nativeTokensJson as { blockchain: string; logo: string }[]).find(token => token.blockchain === lookupId);
     return tokenInfo?.logo;
 };
 
 
 export const injectAndCategorizeTokens = (fetchedTokens: TokenInfoDto[], chainId: number, chainName: string) => {
     const currentChain = blockchainData.find(chain => chain.chainId === chainId);
-    let injectedTokens: TokenInfoDto[] = [];
+    const injectedTokens: TokenInfoDto[] = [];
 
     if (currentChain) {
         // 1. Handle native token injection
@@ -302,7 +302,7 @@ export const getCurrencyDataFromCountries = (countriesArray: typeof countries): 
         if (!country.currencies || Object.keys(country.currencies).length === 0) return;
         
         for (const code in country.currencies) {
-          const currency = (country.currencies as any)[code];
+          const currency = (country.currencies as Record<string, { name: string; symbol: string }>)[code];
           if (!currency || !currency.name || !currency.symbol) continue;
 
           if (!currencies[code]) {

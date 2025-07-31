@@ -9,8 +9,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      react(),
       tailwindcss(),
+      react(),
       VitePWA({
         registerType: 'autoUpdate',
         devOptions: {

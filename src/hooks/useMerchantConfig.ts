@@ -26,7 +26,7 @@ export const useMerchantConfig = () => {
   const [config, setConfig] = useState<MerchantConfig | null>(getInitialConfig());
   // isLoaded is true initially because we attempted to load the config synchronously.
   // It will reflect whether a config was found or not via the 'config' state itself.
-  const [isLoaded, _setIsLoaded] = useState(true); 
+  const [isLoaded] = useState(true); 
 
   // The saveConfig and clearConfig functions remain the same, ensuring updates
   // to localStorage and React state are consistent.

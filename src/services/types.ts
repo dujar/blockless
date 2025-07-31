@@ -144,7 +144,7 @@ export interface AggregatedBalancesAndAllowancesResponse {
     name: string;
     logoURI: string;
     isCustom: boolean;
-    wallets: Record<string, any>;
+    wallets: Record<string, { balance: string; allowance: string }>;
     type: string;
     tracked?: boolean;
 }
@@ -195,7 +195,7 @@ export interface GetQuoteParams {
 }
 
 export interface CustomPresetParams {
-    // Empty in spec, can be extended if needed
+    [key: string]: unknown;
 }
 
 export interface AuctionPoint {

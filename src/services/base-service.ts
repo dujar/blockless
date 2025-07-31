@@ -31,7 +31,7 @@ export class BaseApiService {
         // }
         baseURL="/api"+baseURL;
 
-        let config:CreateAxiosDefaults = {
+        const config:CreateAxiosDefaults = {
             baseURL,
         };
         if(isDevelopment){

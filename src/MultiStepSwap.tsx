@@ -65,7 +65,7 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
           fiatAmount={0} // Fiat amount is not relevant for direct crypto payments via deeplink here
           fiatCurrency="USD" // Default to USD
         />
-        <button onClick={() => setShowQRs(false)} className="mt-4 text-primary-500 hover:underline">← Back</button>
+        <button onClick={() => setShowQRs(false)} className="mt-4 text-gray-500 hover:underline">← Back</button>
       </div>
     );
   }
@@ -76,11 +76,11 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Swap to Pay</h2>
           {/* Link back to create order page */}
-          <Link to="/create-order" className="text-sm text-primary-500 hover:underline">Cancel</Link>
+          <Link to="/create-order" className="text-sm text-gray-500 hover:underline">Cancel</Link>
         </div>
       )}
 
-      {step === 1 && <ConnectWallet onConnect={handleConnectWallet} />}
+      {step === 1 && swapParams.dst.length === 1 && <ConnectWallet onConnect={handleConnectWallet} />}
       
       {step === 2 && isConnected && (
         <SelectBlockchain

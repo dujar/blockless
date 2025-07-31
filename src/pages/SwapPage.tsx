@@ -86,8 +86,7 @@ const SwapPage = () => {
     if (selectedDestination && isFormValid()) {
       const generatedUrl = await generateSwapQuote(
         selectedDestination.blockchain,
-        selectedDestination.token,
-        selectedDestination.amount
+        selectedDestination.token
       );
       if (generatedUrl) {
         setOneInchSwapUrl(generatedUrl);
@@ -102,7 +101,7 @@ const SwapPage = () => {
         <strong className="font-bold">Error:</strong>
         <span className="block sm:inline"> {error}</span>
         <div className="mt-4 text-center">
-            <Link to="/create-order" className="text-primary-500 hover:underline">
+            <Link to="/create-order" className="text-gray-500 hover:underline">
               ← Back to Create Order
             </Link>
         </div>
@@ -114,7 +113,7 @@ const SwapPage = () => {
     return (
       <div className="max-w-2xl mx-auto bg-white dark:bg-primary-950 rounded-2xl shadow-lg shadow-dynamic p-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Choose Payment Destination</h2>
-        <p className="text-gray-700 dark:text-primary-400 mb-6">
+        <p className="text-gray-700 dark:text-gray-400 mb-6">
             Multiple payment options are available. Please select one to proceed.
         </p>
         <div className="space-y-3">
@@ -122,7 +121,7 @@ const SwapPage = () => {
             <div
               key={index}
               onClick={() => setSelectedDestination(dst)}
-              className="p-4 rounded-lg border-2 border-gray-200 dark:border-primary-800 hover:border-primary-500 cursor-pointer transition flex items-center space-x-4"
+              className="p-4 rounded-lg border-2 border-gray-200 dark:border-gray-800 hover:border-gray-500 cursor-pointer transition flex items-center space-x-4"
             >
               <img src={getBlockchainLogo(dst.blockchain) || blocklessLogo} alt={dst.blockchain} className="w-10 h-10 rounded-full" />
               <div className="flex-1">
@@ -130,13 +129,13 @@ const SwapPage = () => {
                   <img src={getTokenLogoURI(dst.token.address || '', dst.token.symbol || '', dst.blockchain)} alt={dst.token.symbol || 'Token'} className="w-6 h-6 rounded-full mr-2"/>
                   <span className="text-lg font-bold text-gray-900 dark:text-white">{dst.amount} {dst.token.symbol}</span>
                 </div>
-                <div className="text-sm text-gray-500 dark:text-primary-400 break-all truncate">Recipient: {dst.destinationAddress}</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400 break-all truncate">Recipient: {dst.destinationAddress}</div>
               </div>
             </div>
           ))}
         </div>
          <div className="mt-8 text-center">
-            <Link to="/create-order" className="text-primary-500 hover:underline">← Back to Create Order</Link>
+            <Link to="/create-order" className="text-gray-500 hover:underline">← Back to Create Order</Link>
         </div>
       </div>
     );
@@ -163,27 +162,27 @@ const SwapPage = () => {
     <div className="max-w-2xl mx-auto bg-white dark:bg-primary-950 rounded-2xl shadow-lg p-8">
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Swap to Pay</h2>
-        <button onClick={handleReset} className="text-sm text-primary-500 hover:underline">Cancel</button>
+        <button onClick={handleReset} className="text-sm text-gray-500 hover:underline">Cancel</button>
       </div>
 
       {selectedDestination && (
-        <div className="mb-8 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg border border-primary-200 dark:border-primary-800">
-          <h3 className="text-lg font-semibold text-primary-800 dark:text-primary-200 mb-2">You are paying for:</h3>
+        <div className="mb-8 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg border border-gray-200 dark:border-gray-800">
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">You are paying for:</h3>
           <div className="flex items-center space-x-4">
             <img src={getBlockchainLogo(selectedDestination.blockchain) || blocklessLogo} alt={selectedDestination.blockchain} className="w-10 h-10 rounded-full"/>
             <div className="flex-1 min-w-0">
-              <p className="text-primary-700 dark:text-primary-300 text-sm mb-1">On <span className="font-semibold">{selectedDestination.blockchain}</span></p>
+              <p className="text-gray-700 dark:text-gray-300 text-sm mb-1">On <span className="font-semibold">{selectedDestination.blockchain}</span></p>
               <div className="flex items-center">
                 <img src={getTokenLogoURI(selectedDestination.token.address || '', selectedDestination.token.symbol || '', selectedDestination.blockchain)} alt={selectedDestination.token.symbol || 'Token'} className="w-6 h-6 rounded-full mr-2"/>
-                <span className="text-xl font-bold text-primary-900 dark:text-primary-100 break-all">{selectedDestination.amount} {selectedDestination.token.symbol}</span>
+                <span className="text-xl font-bold text-gray-900 dark:text-gray-100 break-all">{selectedDestination.amount} {selectedDestination.token.symbol}</span>
               </div>
-              <div className="text-xs text-primary-500 dark:text-primary-400 break-all truncate mt-1">Recipient: {selectedDestination.destinationAddress}</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400 break-all truncate mt-1">Recipient: {selectedDestination.destinationAddress}</div>
             </div>
           </div>
         </div>
       )}
 
-      {step === 1 && <ConnectWallet onConnect={handleConnectWallet} />}
+      {step === 1 && selectedDestination && <ConnectWallet onConnect={handleConnectWallet} />}
       
       {step === 2 && isConnected && (
         <SelectBlockchain

@@ -59,7 +59,7 @@ export const useCreateOrderForm = () => {
                         const tokenIdentifier = `${chainId}-${symbol}`;
                         let tokenAddress: string = `0x${'a'.repeat(40)}`;
                         let decimals: number = 18;
-                        let tags: string[] = [];
+                        const tags: string[] = [];
                         const nativeInfo = NATIVE_TOKENS_INFO[chainConfig.name];
                         if (nativeInfo && nativeInfo.symbol === symbol) {
                             tokenAddress = nativeInfo.address;

@@ -34,7 +34,7 @@ export const ConfigurationSummary = ({ chains, fiatCurrency }: ConfigurationSumm
                 <div className="text-xs font-mono break-all text-gray-700 dark:text-gray-300 mb-2">{chain.address}</div>
                 <div className="flex flex-wrap gap-2">
                   {chain.tokens.map(token => (
-                    <span key={token} className={`px-2 py-1 text-xs font-medium rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-200`}>
+                    <span key={token} className={`px-2 py-1 text-xs font-medium rounded-full bg-primary-100 dark:bg-primary-900/30 text-gray-800 dark:text-gray-200`}>
                       {token}
                     </span>
                   ))}
