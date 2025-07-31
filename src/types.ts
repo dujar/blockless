@@ -8,9 +8,8 @@ export interface MerchantConfig {
   fiatCurrency: string;
   chains: MerchantChainConfig[];
   themePreferences?: {
-    darkModeEnabled?: boolean;
-    primaryColor?: 'blue' | 'red' | 'green'; // Predefined primary color options
+    darkModeEnabled?: boolean; // Removed: now handled by ThemeContext
+    primaryColor?: 'blue' | 'red' | 'green' | 'orange'; // Predefined primary color options
     shadowLevel?: 'sm' | 'md' | 'lg' | 'xl'; // Predefined shadow level options
   };
 }
-

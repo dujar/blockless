@@ -3,6 +3,10 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "./index.html",
+    // Safelist these dynamic classes for Tailwind to pick them up
+    // This ensures that even if dynamically constructed, they are included in the final CSS
+    { raw: 'theme-blue theme-red theme-green theme-orange dark:theme-blue dark:theme-red dark:theme-green dark:theme-orange' },
+    { raw: 'shadow-sm-applied shadow-md-applied shadow-lg-applied shadow-xl-applied dark:shadow-sm-applied dark:shadow-md-applied dark:shadow-lg-applied dark:shadow-xl-applied' }
   ],
   darkMode: 'class',
   theme: {

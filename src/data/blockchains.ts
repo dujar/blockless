@@ -8,10 +8,10 @@ export interface BlockchainTheme {
 }
 
 export const defaultTheme: BlockchainTheme = {
-  bg: "bg-gray-50 dark:bg-gray-800/20",
-  border: "border-gray-200 dark:border-gray-700",
-  text: "text-gray-800 dark:text-gray-200",
-  label: "text-gray-700 dark:text-gray-300",
+  bg: "bg-gray-50 dark:bg-primary-900/50", // Adjusted for new dark background logic
+  border: "border-gray-200 dark:border-primary-800", // Adjusted for new dark border logic
+  text: "text-gray-800 dark:text-primary-200", // Adjusted for new dark text logic
+  label: "text-gray-700 dark:text-primary-300", // Adjusted for new dark label logic
 };
 
 
@@ -37,10 +37,10 @@ export const blockchainData: BlockchainData[] = [
     "isEVM": true,
     "walletFormat": "0x",
     "theme": {
-      "bg": "bg-indigo-50 dark:bg-indigo-900/20",
-      "border": "border-indigo-200 dark:border-indigo-800",
-      "text": "text-indigo-800 dark:text-indigo-200",
-      "label": "text-indigo-700 dark:text-indigo-300",
+      "bg": "bg-indigo-50 dark:bg-primary-950",
+      "border": "border-indigo-200 dark:border-primary-800",
+      "text": "text-indigo-800 dark:text-primary-200",
+      "label": "text-indigo-700 dark:text-primary-300",
     }
   },
   {
@@ -52,10 +52,10 @@ export const blockchainData: BlockchainData[] = [
     "isEVM": true,
     "walletFormat": "0x",
     "theme": {
-      "bg": "bg-blue-50 dark:bg-blue-900/20",
-      "border": "border-blue-200 dark:border-blue-800",
-      "text": "text-blue-800 dark:text-blue-200",
-      "label": "text-blue-700 dark:text-blue-300",
+      "bg": "bg-blue-50 dark:bg-primary-950",
+      "border": "border-blue-200 dark:border-primary-800",
+      "text": "text-blue-800 dark:text-primary-200",
+      "label": "text-blue-700 dark:text-primary-300",
     }
   },
   {
@@ -67,10 +67,10 @@ export const blockchainData: BlockchainData[] = [
     "isEVM": true,
     "walletFormat": "0x",
     "theme": {
-      "bg": "bg-red-50 dark:bg-red-900/20",
-      "border": "border-red-200 dark:border-red-800",
-      "text": "text-red-800 dark:text-red-200",
-      "label": "text-red-700 dark:text-red-300",
+      "bg": "bg-red-50 dark:bg-primary-950",
+      "border": "border-red-200 dark:border-primary-800",
+      "text": "text-red-800 dark:text-primary-200",
+      "label": "text-red-700 dark:text-primary-300",
     }
   },
   {
@@ -82,10 +82,10 @@ export const blockchainData: BlockchainData[] = [
     "isEVM": true,
     "walletFormat": "0x",
     "theme": {
-      "bg": "bg-yellow-50 dark:bg-yellow-900/20",
-      "border": "border-yellow-200 dark:border-yellow-800",
-      "text": "text-yellow-800 dark:text-yellow-200",
-      "label": "text-yellow-700 dark:text-yellow-300",
+      "bg": "bg-yellow-50 dark:bg-primary-950",
+      "border": "border-yellow-200 dark:border-primary-800",
+      "text": "text-yellow-800 dark:text-primary-200",
+      "label": "text-yellow-700 dark:text-primary-300",
     }
   },
   {
@@ -97,10 +97,10 @@ export const blockchainData: BlockchainData[] = [
     "isEVM": true,
     "walletFormat": "0x",
     "theme": {
-      "bg": "bg-emerald-50 dark:bg-emerald-900/20",
-      "border": "border-emerald-200 dark:border-emerald-800",
-      "text": "text-emerald-800 dark:text-emerald-200",
-      "label": "text-emerald-700 dark:text-emerald-300",
+      "bg": "bg-emerald-50 dark:bg-primary-950",
+      "border": "border-emerald-200 dark:border-primary-800",
+      "text": "text-emerald-800 dark:text-primary-200",
+      "label": "text-emerald-700 dark:text-primary-300",
     }
   },
   {
@@ -130,10 +130,10 @@ export const blockchainData: BlockchainData[] = [
     "isEVM": true,
     "walletFormat": "0x",
     "theme": {
-      "bg": "bg-red-50 dark:bg-red-900/20",
-      "border": "border-red-200 dark:border-red-800",
-      "text": "text-red-800 dark:text-red-200",
-      "label": "text-red-700 dark:text-red-300",
+      "bg": "bg-red-50 dark:bg-primary-950",
+      "border": "border-red-200 dark:border-primary-800",
+      "text": "text-red-800 dark:text-primary-200",
+      "label": "text-red-700 dark:text-primary-300",
     }
   },
   {
@@ -145,10 +145,10 @@ export const blockchainData: BlockchainData[] = [
     "isEVM": true,
     "walletFormat": "0x",
     "theme": {
-      "bg": "bg-violet-50 dark:bg-violet-900/20",
-      "border": "border-violet-200 dark:border-violet-800",
-      "text": "text-violet-800 dark:text-violet-200",
-      "label": "text-violet-700 dark:text-violet-300",
+      "bg": "bg-violet-50 dark:bg-primary-950",
+      "border": "border-violet-200 dark:border-primary-800",
+      "text": "text-violet-800 dark:text-primary-200",
+      "label": "text-violet-700 dark:text-primary-300",
     }
   },
   {
@@ -160,10 +160,10 @@ export const blockchainData: BlockchainData[] = [
     "isEVM": true,
     "walletFormat": "0x",
     "theme": {
-      "bg": "bg-gray-100 dark:bg-gray-800",
-      "border": "border-gray-300 dark:border-gray-600",
-      "text": "text-gray-900 dark:text-gray-100",
-      "label": "text-gray-800 dark:text-gray-200",
+      "bg": "bg-gray-100 dark:bg-primary-950",
+      "border": "border-gray-300 dark:border-primary-900",
+      "text": "text-gray-900 dark:text-primary-100",
+      "label": "text-gray-800 dark:text-primary-200",
     }
   },
   {
@@ -175,10 +175,10 @@ export const blockchainData: BlockchainData[] = [
     "isEVM": true,
     "walletFormat": "0x",
     "theme": {
-      "bg": "bg-blue-50 dark:bg-blue-900/20",
-      "border": "border-blue-200 dark:border-blue-800",
-      "text": "text-blue-800 dark:text-blue-200",
-      "label": "text-blue-700 dark:text-blue-300",
+      "bg": "bg-blue-50 dark:bg-primary-950",
+      "border": "border-blue-200 dark:border-primary-800",
+      "text": "text-blue-800 dark:text-primary-200",
+      "label": "text-blue-700 dark:text-primary-300",
     }
   },
   {
@@ -190,10 +190,10 @@ export const blockchainData: BlockchainData[] = [
     "isEVM": true,
     "walletFormat": "0x",
     "theme": {
-      "bg": "bg-gray-100 dark:bg-gray-800",
-      "border": "border-gray-300 dark:border-gray-600",
-      "text": "text-gray-900 dark:text-gray-100",
-      "label": "text-gray-800 dark:text-gray-200",
+      "bg": "bg-gray-100 dark:bg-primary-950",
+      "border": "border-gray-300 dark:border-primary-900",
+      "text": "text-gray-900 dark:text-primary-100",
+      "label": "text-gray-800 dark:text-primary-200",
     }
   },
   {

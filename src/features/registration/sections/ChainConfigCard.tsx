@@ -81,7 +81,7 @@ const TokenItem = ({ token, chainName, isChecked, onTokenChange, isSelectable }:
 
     return (
         <div 
-            className={`flex items-center p-2 rounded ${isSelectable ? 'hover:bg-gray-200 dark:hover:bg-gray-700/50 cursor-pointer' : 'opacity-70 cursor-not-allowed'}`} 
+            className={`flex items-center p-2 rounded ${isSelectable ? 'hover:bg-gray-200 dark:hover:bg-primary-800/50 cursor-pointer' : 'opacity-70 cursor-not-allowed'}`} 
             title={tooltipText}
             onClick={() => isSelectable && onTokenChange(chainName, token.symbol, !isChecked)} // Toggle only if selectable
         >
@@ -91,7 +91,7 @@ const TokenItem = ({ token, chainName, isChecked, onTokenChange, isSelectable }:
                 checked={isChecked}
                 onChange={e => onTokenChange(chainName, e.target.id.split('-')[2], e.target.checked)} // Use the symbol from the ID if needed for robustness
                 disabled={!isSelectable && !isChecked} // Disable if not selectable AND not already checked
-                className="h-4 w-4 rounded border-gray-300 dark:border-gray-500 text-primary-600 focus:ring-primary-500 bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                className="h-4 w-4 rounded border-gray-300 dark:border-primary-600 text-primary-600 focus:ring-primary-500 bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
             />
             <label htmlFor={`token-${token.chainId}-${token.symbol}-${token.address}`} className="ml-3 flex items-center cursor-pointer flex-1 min-w-0">
                 <img 
@@ -100,7 +100,7 @@ const TokenItem = ({ token, chainName, isChecked, onTokenChange, isSelectable }:
                     className="h-6 w-6 mr-2 rounded-full flex-shrink-0" 
                     onError={handleError} 
                 />
-                <span className="text-sm font-medium text-gray-800 dark:text-gray-200 truncate">{token.symbol}</span>
+                <span className="text-sm font-medium text-gray-800 dark:text-primary-200 truncate">{token.symbol}</span>
                 {riskInfo.level > 1 && <span className={`ml-2 text-xs font-semibold ${riskInfo.color}`}>({riskInfo.label})</span>}
             </label>
         </div>
@@ -133,7 +133,7 @@ const SelectedTokenChip = ({ token, chainName, onTokenRemove}: {
             {token.symbol}
             <button
                 type="button"
-                className="ml-2 -mr-0.5 h-4 w-4 rounded-full inline-flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                className="ml-2 -mr-0.5 h-4 w-4 rounded-full inline-flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-primary-400 dark:hover:text-primary-200"
                 onClick={() => onTokenRemove(chainName, token.symbol, false)}
             >
                 <span className="sr-only">Remove {token.symbol}</span>
@@ -254,12 +254,12 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
             <label className={`block text-sm font-medium mb-2 ${theme.label}`}>
                 Accepted Tokens on {chainName}
             </label>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+            <p className="text-xs text-gray-500 dark:text-primary-400 mb-3">
                 Only native blockchain tokens and common stablecoins are currently supported for selection.
             </p>
 
             {selectedTokenDetails.length > 0 && (
-                <div className="mb-4 flex flex-wrap gap-2 p-3 bg-gray-100 dark:bg-gray-800/50 rounded-lg">
+                <div className="mb-4 flex flex-wrap gap-2 p-3 bg-gray-100 dark:bg-primary-900/50 rounded-lg">
                     {selectedTokenDetails.map(token => (
                         <SelectedTokenChip 
                             // Use a more robust key to prevent issues with duplicate symbols across different token types (e.g., native ETH vs. ERC20 ETH)
@@ -279,7 +279,7 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
                 <input
                     type="text"
                     placeholder="Search for a token..."
-                    className={`w-full p-2 pl-10 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${theme.border}`}
+                    className={`w-full p-2 pl-10 border rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white ${theme.border}`}
                     value={searchTerm}
                     onChange={e => setSearchTerm(e.target.value)}
                     onFocus={() => setIsSearchFocused(true)}
@@ -293,7 +293,7 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
                 
                 {sortedCategories.map(category => (
                     <div key={category}>
-                        <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-gray-400 px-2 py-1">
+                        <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-primary-400 px-2 py-1">
                             {category} ({categorizedTokens[category].length})
                         </h4>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-2">
@@ -313,7 +313,7 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
                 ))}
 
                 {tokensToDisplay.length === 0 && !isLoading && !isSearching && !error && (
-                    <div className="text-center text-gray-500 dark:text-gray-400 p-4">
+                    <div className="text-center text-gray-500 dark:text-primary-400 p-4">
                         No native or stable tokens found matching your search.
                     </div>
                 )}
@@ -360,7 +360,7 @@ export const ChainConfigCard = ({
             {chainLogo ? (
                 <img src={chainLogo} alt={chainInfo.name} className="w-8 h-8 mr-3 rounded-full object-contain" />
             ) : (
-                <span className="flex items-center justify-center w-8 h-8 mr-3 rounded-full bg-gray-200 dark:bg-gray-700 font-bold">
+                <span className="flex items-center justify-center w-8 h-8 mr-3 rounded-full bg-gray-200 dark:bg-primary-800 font-bold">
                     {chainInfo.name.charAt(0)}
                 </span>
             )}
@@ -385,14 +385,14 @@ export const ChainConfigCard = ({
                 value={currentChainConfig.address}
                 onChange={e => onAddressChange(chainInfo.name, e.target.value)}
                 placeholder="0x..."
-                className={`w-full p-2 pr-24 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${addressValidity === false ? 'border-red-500' : theme.border}`}
+                className={`w-full p-2 pr-24 border rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white ${addressValidity === false ? 'border-red-500' : theme.border}`}
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 space-x-1">
                   {addressValidity === true && <span className="text-green-500">✓</span>}
-                  <button onClick={() => handleCopy(currentChainConfig?.address || '')} className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                  <button onClick={() => handleCopy(currentChainConfig?.address || '')} className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-primary-200">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                   </button>
-                  <button onClick={() => onAddressChange(chainInfo.name, '')} className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                  <button onClick={() => onAddressChange(chainInfo.name, '')} className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-primary-200">
                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                   </button>
               </div>
@@ -420,4 +420,3 @@ export const ChainConfigCard = ({
     </div>
   );
 };
-

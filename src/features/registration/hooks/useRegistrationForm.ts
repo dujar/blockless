@@ -22,7 +22,7 @@ export const useRegistrationForm = () => {
   // Theme preferences state
   // Initialize from config, or system preference for dark mode, or default for others
   const [darkModeEnabled, setDarkModeEnabled] = useState(config?.themePreferences?.darkModeEnabled ?? window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const [primaryColor, setPrimaryColor] = useState<'blue' | 'red' | 'green'>(config?.themePreferences?.primaryColor || 'blue');
+  const [primaryColor, setPrimaryColor] = useState<'blue' | 'red' | 'green' | 'orange'>(config?.themePreferences?.primaryColor || 'blue');
   const [shadowLevel, setShadowLevel] = useState<'sm' | 'md' | 'lg' | 'xl'>(config?.themePreferences?.shadowLevel || 'md');
 
 

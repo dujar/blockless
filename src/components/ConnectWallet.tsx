@@ -5,7 +5,7 @@ interface ConnectWalletProps {
 export const ConnectWallet = ({ onConnect }: ConnectWalletProps) => (
   <div className="text-center py-8">
     <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Connect Your Wallet</h2>
-    <p className="text-gray-700 dark:text-gray-300 mb-8">
+    <p className="text-gray-700 dark:text-primary-300 mb-8">
       Connect your wallet to get started with Blockless Swap
     </p>
     <button
@@ -22,4 +22,3 @@ export const ConnectWallet = ({ onConnect }: ConnectWalletProps) => (
     </button>
   </div>
 );
-

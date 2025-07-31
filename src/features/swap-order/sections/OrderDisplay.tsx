@@ -33,7 +33,7 @@ const HowItWorks = () => (
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-1">
                     Fill Order Details
                 </h3>
-                <p className="text-gray-700 dark:text-gray-400">
+                <p className="text-gray-700 dark:text-primary-400">
                     Enter the blockchain, token, amount, and recipient for your order.
                 </p>
             </div>
@@ -47,7 +47,7 @@ const HowItWorks = () => (
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-1">
                     Generate Order
                 </h3>
-                <p className="text-gray-700 dark:text-gray-400">
+                <p className="text-gray-700 dark:text-primary-400">
                     Create a shareable swap link or wallet-specific QR codes.
                 </p>
             </div>
@@ -61,7 +61,7 @@ const HowItWorks = () => (
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-1">
                     Share & Execute
                 </h3>
-                <p className="text-gray-700 dark:text-gray-400">
+                <p className="text-gray-700 dark:text-primary-400">
                     Share the link for a swap, or the QR codes for direct wallet payments.
                 </p>
             </div>
@@ -105,17 +105,17 @@ const QRCodeDisplay = ({ qrCodeUrl, formData, quoteData, isQuoteLoading, quoteEr
 
     return (
         <div className="p-6">
-            <div className="sticky top-0 z-10 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 mb-4">
+            <div className="sticky top-0 z-10 bg-white dark:bg-primary-950 border-b border-gray-200 dark:border-primary-800 mb-4">
                 <nav className="flex space-x-4" aria-label="Tabs">
                     <button
                         onClick={() => setQrMode('link')}
-                        className={`px-3 py-2 font-medium text-sm rounded-t-lg ${qrMode === 'link' ? 'border-b-2 border-primary-500 text-primary-600 dark:text-primary-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
+                        className={`px-3 py-2 font-medium text-sm rounded-t-lg ${qrMode === 'link' ? 'border-b-2 border-primary-500 text-primary-600 dark:text-primary-400' : 'text-gray-500 hover:text-gray-700 dark:text-primary-400 dark:hover:text-primary-200'}`}
                     >
                         Swap Link
                     </button>
                     <button
                         onClick={() => setQrMode('wallets')}
-                        className={`px-3 py-2 font-medium text-sm rounded-t-lg ${qrMode === 'wallets' ? 'border-b-2 border-primary-500 text-primary-600 dark:text-primary-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200'}`}
+                        className={`px-3 py-2 font-medium text-sm rounded-t-lg ${qrMode === 'wallets' ? 'border-b-2 border-primary-500 text-primary-600 dark:text-primary-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-primary-400 dark:hover:text-primary-200'}`}
                     >
                         Wallet Deeplinks
                     </button>
@@ -126,8 +126,8 @@ const QRCodeDisplay = ({ qrCodeUrl, formData, quoteData, isQuoteLoading, quoteEr
             {quoteError && <div className="text-center text-red-500 p-4">Error: {quoteError}</div>}
 
             {quoteData && qrMode === 'link' && (
-                <div className={`flex flex-col ${isFullScreenQR ? 'fixed inset-0 z-50 bg-white dark:bg-gray-900 p-4' : 'items-center'}`} onClick={() => isFullScreenQR && setIsFullScreenQR(false)}>
-                    <div className={`${isFullScreenQR ? 'w-full h-full flex flex-col justify-between' : 'mb-6 bg-gray-100 dark:bg-gray-700/50 rounded-xl shadow-inner w-full'}`} onClick={(e) => e.stopPropagation()}>
+                <div className={`flex flex-col ${isFullScreenQR ? 'fixed inset-0 z-50 bg-white dark:bg-primary-950 p-4' : 'items-center'}`} onClick={() => isFullScreenQR && setIsFullScreenQR(false)}>
+                    <div className={`${isFullScreenQR ? 'w-full h-full flex flex-col justify-between' : 'mb-6 bg-gray-100 dark:bg-primary-900/50 rounded-xl shadow-inner w-full'}`} onClick={(e) => e.stopPropagation()}>
                         <div className={`p-6 flex ${isFullScreenQR ? 'flex-col items-center justify-center' : 'flex-col items-center'}`}>
                             <div
                                 className="border-4 border-primary-500 rounded-lg p-2 cursor-pointer bg-white"
@@ -147,7 +147,7 @@ const QRCodeDisplay = ({ qrCodeUrl, formData, quoteData, isQuoteLoading, quoteEr
                                     logoPaddingStyle="circle"
                                 />
                             </div>
-                            <div className="mt-2 flex items-center text-gray-600 dark:text-gray-400 text-sm justify-center">
+                            <div className="mt-2 flex items-center text-gray-600 dark:text-primary-400 text-sm justify-center">
                                 <span className="mr-1">Powered by</span>
                                 <img src={OneInchLogo} alt="1inch Logo" className="h-4 w-auto" />
                                 <span className="ml-1 font-semibold">1inch Fusion+</span>
@@ -156,13 +156,13 @@ const QRCodeDisplay = ({ qrCodeUrl, formData, quoteData, isQuoteLoading, quoteEr
 
                         <div className="px-6 pb-6 text-sm">
                             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 text-center">Quote Details</h3>
-                            <div className="space-y-2 p-3 bg-white dark:bg-gray-800 rounded-lg">
+                            <div className="space-y-2 p-3 bg-white dark:bg-primary-900 rounded-lg">
                                 <div className="flex justify-between">
-                                    <span className="text-gray-600 dark:text-gray-400">You send:</span>
+                                    <span className="text-gray-600 dark:text-primary-400">You send:</span>
                                     <span className="font-semibold text-gray-900 dark:text-white">{parseFloat(quoteData.srcTokenAmount).toFixed(6)} {formData.sourceToken?.symbol}</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-gray-600 dark:text-gray-400">Recipient gets:</span>
+                                    <span className="text-gray-600 dark:text-primary-400">Recipient gets:</span>
                                     <span className="font-semibold text-gray-900 dark:text-white">{parseFloat(quoteData.dstTokenAmount).toFixed(6)} {quoteData.prices.usd.dstToken ? '...' : ''}</span>
                                 </div>
                             </div>
@@ -221,7 +221,7 @@ const QRCodeDisplay = ({ qrCodeUrl, formData, quoteData, isQuoteLoading, quoteEr
 
 const OrderDisplay = ({ showQRCode, qrCodeUrl, formData, quoteData, isQuoteLoading, quoteError, onBackToForm }: OrderDisplayProps) => {
     return (
-        <div className="lg:order-1 bg-white dark:bg-gray-900 rounded-2xl shadow-lg shadow-dynamic">
+        <div className="lg:order-1 bg-white dark:bg-primary-950 rounded-2xl shadow-lg shadow-dynamic">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 px-6 pt-6">
                 {showQRCode ? 'Your Order' : 'How It Works'}
             </h2>

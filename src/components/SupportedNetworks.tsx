@@ -13,7 +13,7 @@ const SupportedNetworks = () => {
       </h3>
       <div className="flex flex-wrap justify-center gap-4">
         {availableChains.map(chain => (
-          <div key={chain.id} className="bg-white dark:bg-gray-800 rounded-lg shadow px-6 py-3">
+          <div key={chain.id} className="bg-white dark:bg-primary-900 rounded-lg shadow px-6 py-3">
             <span className="font-medium text-gray-900 dark:text-white">{chain.name}</span>
           </div>
         ))}

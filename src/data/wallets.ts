@@ -21,6 +21,7 @@ export interface Wallet { // Added for re-evaluation
   logo: string;
   supports: (chain: typeof blockchainData[0]) => boolean;
   generateDeeplink: (params: DeeplinkParams) => string | null;
+  supportedChains: string[];
 }
 
 export const wallets: Wallet[] = [
@@ -28,6 +29,7 @@ export const wallets: Wallet[] = [
     name: 'MetaMask',
     logo: metaMaskLogo,
     supports: (chain) => chain.isEVM,
+    supportedChains: ['Ethereum', 'Polygon', 'Binance Smart Chain', 'Avalanche', 'Arbitrum', 'Optimism', 'Base', 'Other EVM-compatible chains'],
     generateDeeplink: ({ chain, token, amount, recipientAddress }) => {
       if (!chain.isEVM || !chain.chainId) return null;
       if (token.address === 'native') {
@@ -42,6 +44,7 @@ export const wallets: Wallet[] = [
     name: 'Trust Wallet',
     logo: trustWalletLogo,
     supports: () => true, // Supports many chains
+    supportedChains: ['Ethereum', 'Polygon', 'Binance Smart Chain', 'Avalanche', 'Arbitrum', 'Optimism', 'Base', 'Other EVM-compatible chains', 'Bitcoin', 'Litecoin', 'Bitcoin Cash', 'Other non-EVM chains'],
     generateDeeplink: ({ chain, token, amount, recipientAddress }) => {
       if (!chain.isEVM || !chain.chainId) return null;
       if (token.address === 'native') {
@@ -54,6 +57,7 @@ export const wallets: Wallet[] = [
     name: 'Coinbase Wallet',
     logo: coinbaseWalletLogo,
     supports: () => true,
+    supportedChains: ['Ethereum', 'Polygon', 'Binance Smart Chain', 'Avalanche', 'Arbitrum', 'Optimism', 'Base', 'Other EVM-compatible chains'],
     generateDeeplink: ({ chain, token, amount, recipientAddress }) => {
       if (!chain.isEVM || !chain.chainId) return null;
       if (token.address === 'native') {
@@ -67,6 +71,7 @@ export const wallets: Wallet[] = [
     name: 'Rabby Wallet',
     logo: rabbyWalletLogo,
     supports: (chain) => chain.isEVM,
+    supportedChains: ['Ethereum', 'Polygon', 'Binance Smart Chain', 'Avalanche', 'Arbitrum', 'Optimism', 'Base', 'Other EVM-compatible chains'],
     generateDeeplink: ({ chain, token, amount, recipientAddress }) => {
       if (!chain.isEVM || !chain.chainId) return null;
       const url = new URL('https://rabby.io/send');
@@ -83,6 +88,7 @@ export const wallets: Wallet[] = [
     name: 'Zengo',
     logo: zengoLogo,
     supports: (chain) => chain.isEVM,
+    supportedChains: ['Ethereum', 'Polygon', 'Binance Smart Chain', 'Avalanche', 'Arbitrum', 'Optimism', 'Base', 'Other EVM-compatible chains'],
     generateDeeplink: ({ chain, token, amount, recipientAddress }) => {
         if (!chain.isEVM || !chain.chainId) return null;
         const url = new URL('https://get.zengo.com/send');
@@ -99,6 +105,7 @@ export const wallets: Wallet[] = [
     name: 'Exodus',
     logo: exodusLogo,
     supports: () => true,
+    supportedChains: ['Ethereum', 'Polygon', 'Binance Smart Chain', 'Avalanche', 'Bitcoin', 'Litecoin', 'Bitcoin Cash'],
     generateDeeplink: ({ chain, amount, recipientAddress }) => {
         const coinNameMap: Record<string, string> = {
             ethereum: 'ethereum',
@@ -120,6 +127,7 @@ export const wallets: Wallet[] = [
     name: 'Phantom',
     logo: phantomLogo,
     supports: () => true,
+    supportedChains: ['Ethereum', 'Polygon', 'Binance Smart Chain', 'Avalanche', 'Arbitrum', 'Optimism', 'Base', 'Other EVM-compatible chains', 'Solana'],
     generateDeeplink: ({ chain, token, amount, recipientAddress }) => {
       if (!chain.isEVM) return null;
       const value = parseUnits(amount, token.decimals).toString();
