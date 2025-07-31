@@ -1,0 +1,50 @@
+@plugin "daisyui/theme" {
+  name: "ethereum-light";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: oklch(99% 0.005 260);  
+  --color-base-200: oklch(95% 0.01 260);    /* Light gray */
+  --color-base-300: oklch(88% 0.015 260);  
+  --color-base-content: oklch(20% 0.04 260); 
+
+  --color-primary: oklch(60% 0.22 280);     
+  --color-primary-content: oklch(98% 0.01 280);
+
+  --color-secondary: oklch(75% 0.25 190);  
+  --color-secondary-content: oklch(15% 0.03 190);
+
+  /* ... other colors from original ... */
+
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+@plugin "daisyui/theme" {
+  name: "ethereum-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: oklch(12% 0.02 270);    
+  --color-base-content: oklch(92% 0.03 270); 
+
+  /* ... other dark mode colors ... */
+
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
+}

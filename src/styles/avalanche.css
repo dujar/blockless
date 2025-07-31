@@ -1,0 +1,47 @@
+@plugin "daisyui/theme" {
+  name: "avalanche-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: oklch(99% 0.005 280);   
+  --color-base-200: oklch(95% 0.01 280);    
+  --color-base-300: oklch(90% 0.015 280);   
+  --color-base-content: oklch(20% 0.04 280); 
+
+  --color-primary: oklch(62% 0.28 25);       
+  --color-primary-content: oklch(98% 0.01 25);
+
+  /* ... other colors ... */
+
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+@plugin "daisyui/theme" {
+  name: "avalanche-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: oklch(10% 0.02 280);    
+  --color-base-content: oklch(94% 0.03 280); 
+
+  /* ... dark mode colors ... */
+
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
+}

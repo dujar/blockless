@@ -179,7 +179,7 @@ export const injectAndCategorizeTokens = (fetchedTokens: TokenInfoDto[], chainId
                 });
             } else {
                 // Ensure existing native-like tokens are tagged properly for categorization
-                // And update logoURI if it's generic and we have a specific one
+                // And update logoURI if it's currently a generic one or empty
                 const existingNativeToken = fetchedTokens.find(t => 
                     t.symbol.toLowerCase() === nativeTokenDetails.symbol.toLowerCase() || 
                     (nativeTokenDetails.address && t.address.toLowerCase() === nativeTokenDetails.address.toLowerCase())
@@ -327,3 +327,29 @@ export const getCurrencyDataFromCountries = (countriesArray: typeof countries): 
       .sort((a, b) => a.name.localeCompare(b.name));
 };
 
+export const formatAmount = (amount: string | number, decimals: number = 18): string => {
+  if (typeof amount === 'number') {
+    amount = amount.toString();
+  }
+
+  if (!amount || isNaN(Number(amount))) {
+    return '0';
+  }
+
+  const [integer, fraction] = amount.split('.');
+
+  if (!fraction || fraction.length <= decimals) {
+    return amount;
+  }
+
+  return `${integer}.${fraction.substring(0, decimals)}`;
+};
+
+export const formatTokenAmountWithSymbol = ({ amount, tokenData }: { amount: string; tokenData: TokenInfoDto | undefined }): string => {
+  if (!tokenData) {
+    return amount;
+  }
+
+  const formattedAmount = formatAmount(amount, tokenData.decimals);
+  return `${formattedAmount} ${tokenData.symbol}`;
+};

@@ -1,0 +1,27 @@
+module.exports = {
+  themes: [
+    "ethereum-light",
+    "ethereum-dark",
+    "polygon-light",
+    "polygon-dark",
+    "avalanche-light",
+    "avalanche-dark",
+    "arbitrum-light",
+    "arbitrum-dark",
+    "optimism-light",
+    "optimism-dark",
+    "base-light",
+    "base-dark",
+    "solana-light",
+    "solana-dark",
+    "bnb-light",
+    "bnb-dark",
+    "linea-light",
+    "linea-dark",
+    "zksync-light",
+    "zksync-dark",
+    "sonic-light",
+    "sonic-dark",
+  ],
+  // ... other options
+}

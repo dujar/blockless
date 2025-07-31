@@ -5,6 +5,7 @@ import OrderDetailsSection from './sections/OrderDetailsSection';
 import OrderQRCodeDisplaySection from './sections/OrderQRCodeDisplaySection';
 
 const CreateOrder = () => {
+
     const form = useCreateOrderForm();
 
     if (!form.isLoaded) {

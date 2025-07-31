@@ -46,6 +46,7 @@ export interface TokenInfoDto {
     name: string;
     symbol: string;
     tags: string[];
+    price?: string;
 }
 
 export interface VersionDto {

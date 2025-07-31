@@ -1,0 +1,52 @@
+@plugin "daisyui/theme" {
+  name: "linea-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: oklch(99% 0.01 90);   
+  --color-base-200: oklch(96% 0.02 90); 
+  --color-base-300: oklch(91% 0.025 90);  
+  --color-base-content: oklch(20% 0.04 90); 
+
+  --color-primary: oklch(75% 0.18 90);   
+  --color-primary-content: oklch(98% 0.01 90);
+
+  --color-secondary: oklch(65% 0.12 180);  
+  --color-secondary-content: oklch(80% 0.01 180);
+
+  /* ... other color definitions ... */
+
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+@plugin "daisyui/theme" {
+  name: "linea-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: oklch(12% 0.02 85);    
+  --color-base-200: oklch(18% 0.025 85);    
+  --color-base-300: oklch(24% 0.03 85);    
+  --color-base-content: oklch(92% 0.03 85); 
+
+  /* ... dark mode colors ... */
+
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
+}

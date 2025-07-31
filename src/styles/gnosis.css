@@ -1,0 +1,48 @@
+@plugin "daisyui/theme" {
+  name: "gnosis-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: oklch(98% 0.03 150);   
+  --color-base-200: oklch(95% 0.04 150);   
+  --color-base-300: oklch(90% 0.05 150);   
+  --color-base-content: oklch(40% 0.06 150); 
+
+  --color-primary: oklch(70% 0.20 155);      
+  --color-primary-content: oklch(98% 0.01 155);
+
+  --color-secondary: oklch(60% 0.18 170);   
+  --color-secondary-content: oklch(38% 0.05 170);
+
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+@plugin "daisyui/theme" {
+  name: "gnosis-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: oklch(10% 0.035 150);    
+  --color-base-200: oklch(20% 0.045 150);     
+  --color-base-300: oklch(30% 0.055 150);     
+  --color-base-content: oklch(92% 0.04 150);  
+
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
+}

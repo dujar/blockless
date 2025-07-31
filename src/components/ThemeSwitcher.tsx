@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useTheme } from '../context/useTheme';
 
 const ThemeSwitcher: React.FC = () => {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+  const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');

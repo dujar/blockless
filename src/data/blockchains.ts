@@ -25,6 +25,8 @@ export interface BlockchainData{
   isEVM: boolean; // Indicates if the blockchain is EVM-compatible
   walletFormat: string; // Wallet address format (e.g., "0x", "base58", etc.)
   theme?: BlockchainTheme; // Optional theme for the blockchain, if different
+  initialAmount?: string; // Added initialAmount
+  nativeTokenAddress?: string; // Added nativeTokenAddress
 }
 
 export const blockchainData: BlockchainData[] = [
@@ -41,7 +43,9 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-indigo-200 dark:border-gray-800",
       "text": "text-indigo-800 dark:text-gray-200",
       "label": "text-indigo-700 dark:text-gray-300",
-    }
+    },
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27eAD9083C756Cc2" // WETH
   },
   {
     "id": "arbitrum",
@@ -56,7 +60,9 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-blue-200 dark:border-gray-800",
       "text": "text-blue-800 dark:text-gray-200",
       "label": "text-blue-700 dark:text-gray-300",
-    }
+    },
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1" // WETH on Arbitrum
   },
   {
     "id": "avalanche",
@@ -71,7 +77,9 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-red-200 dark:border-gray-800",
       "text": "text-red-800 dark:text-gray-200",
       "label": "text-red-700 dark:text-gray-300",
-    }
+    },
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "0xb31f66aa3c1e785363f0d87a628ed8fdc74d406b" // WAVAX
   },
   {
     "id": "bnb",
@@ -86,7 +94,9 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-yellow-200 dark:border-gray-800",
       "text": "text-yellow-800 dark:text-gray-200",
       "label": "text-yellow-700 dark:text-gray-300",
-    }
+    },
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c" // WBNB
   },
   {
     "id": "gnosis",
@@ -101,7 +111,9 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-emerald-200 dark:border-gray-800",
       "text": "text-emerald-800 dark:text-gray-200",
       "label": "text-emerald-700 dark:text-gray-300",
-    }
+    },
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "0x9c58bacc331c9abb203196f7cebda137b6044952" // WXDAI
   },
   {
     "id": "solana",
@@ -110,7 +122,9 @@ export const blockchainData: BlockchainData[] = [
     "networkId": 13998, // NetworkEnum.SOLANA, (Placeholder, actual value might differ)
     "icon": "solana",
     "isEVM": false,
-    "walletFormat": "base58"
+    "walletFormat": "base58",
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "So11111111111111111111111111111111111111112" // WSOL
   },
   {
     "id": "sonic",
@@ -119,7 +133,9 @@ export const blockchainData: BlockchainData[] = [
     "networkId": 200000, // NetworkEnum.SONIC, (Placeholder, actual value might differ)
     "icon": "sonic",
     "isEVM": false,
-    "walletFormat": "unknown"
+    "walletFormat": "unknown",
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "" // Placeholder
   },
   {
     "id": "optimism",
@@ -134,7 +150,9 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-red-200 dark:border-gray-800",
       "text": "text-red-800 dark:text-gray-200",
       "label": "text-red-700 dark:text-gray-300",
-    }
+    },
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "0x4200000000000000000000000000000000000006" // WETH on Optimism
   },
   {
     "id": "polygon",
@@ -149,7 +167,9 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-violet-200 dark:border-gray-800",
       "text": "text-violet-800 dark:text-gray-200",
       "label": "text-violet-700 dark:text-gray-300",
-    }
+    },
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270" // WMatic
   },
   {
     "id": "zksync",
@@ -164,7 +184,9 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-gray-300 dark:border-gray-900",
       "text": "text-gray-900 dark:text-gray-100",
       "label": "text-gray-800 dark:text-gray-200",
-    }
+    },
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "0x5aea5775959fbc2557cc8789bc171de4194606a5" // WETH on zkSync
   },
   {
     "id": "base",
@@ -179,7 +201,9 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-blue-200 dark:border-gray-800",
       "text": "text-blue-800 dark:text-gray-200",
       "label": "text-blue-700 dark:text-gray-300",
-    }
+    },
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "0x4200000000000000000000000000000000000006" // WETH on Base
   },
   {
     "id": "linea",
@@ -194,7 +218,9 @@ export const blockchainData: BlockchainData[] = [
       "border": "border-gray-300 dark:border-gray-900",
       "text": "text-gray-900 dark:text-gray-100",
       "label": "text-gray-800 dark:text-gray-200",
-    }
+    },
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f" // WETH on Linea
   },
   {
     "id": "unichain",
@@ -203,6 +229,12 @@ export const blockchainData: BlockchainData[] = [
     "networkId": 100000, // NetworkEnum.UNICHAIN, (Placeholder, actual value might differ)
     "icon": "unichain",
     "isEVM": false,
-    "walletFormat": "unknown"
+    "walletFormat": "unknown",
+    "initialAmount": "0.01",
+    "nativeTokenAddress": "" // Placeholder
   }
 ];
+
+export const getChainDetails = (chainId: number): BlockchainData | undefined => {
+  return blockchainData.find(chain => chain.chainId === chainId);
+};
