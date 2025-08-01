@@ -250,5 +250,17 @@ html {
 }
 
 body {
-    @apply bg-base-100 text-base-content;
+    @apply bg-base-200 text-base-content;
+}
+
+/* Glow effect for clickable QR cards */
+.glow-on-hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.glow-on-hover:hover {
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.5); /* Blue glow on hover */
+}
+.dark .glow-on-hover:hover {
+  box-shadow: 0 0 15px rgba(29, 78, 216, 0.7); /* Darker blue glow for dark mode */
 }

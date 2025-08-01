@@ -120,12 +120,17 @@ export const getTokenLogoURI = (tokenAddress: string, tokenSymbol: string, chain
 };
 
 /**
- * Retrieves the logo for a blockchain, primarily from native-tokens.json mapping.
- * @param chainId The chain ID of the blockchain.
+ * Retrieves the logo for a blockchain, primarily from local assets or native-tokens.json mapping.
  * @param chainName The display name of the blockchain.
  * @returns The URL of the blockchain logo, or undefined if not found.
  */
-export const getBlockchainLogo = (chainName: string): string | undefined => {
+export const getBlockchainLogo = (chainName: string): string => {
+    // Try to find the logo from NATIVE_TOKENS_INFO (which uses explicit local imports)
+    const nativeInfo = NATIVE_TOKENS_INFO[chainName];
+    if (nativeInfo && nativeInfo.logo) {
+        return nativeInfo.logo;
+    }
+
     // Map internal chain names to what's used in native-tokens.json if different (e.g., "BNB Chain" -> "binancecoin")
     const idMap: { [key: string]: string } = {
         'BNB Chain': 'binancecoin',
@@ -136,19 +141,19 @@ export const getBlockchainLogo = (chainName: string): string | undefined => {
         'Optimism': 'optimism',
         'Base': 'base',
         'Linea': 'linea',
+        'zkSync Era': 'zksync', // Add zkSync mapping if it exists in native-tokens.json
         // Add other mappings if chainName differs from blockchain ID in native-tokens.json
     };
     const lookupId = idMap[chainName] || chainName.toLowerCase().replace(/\s/g, ''); // Use mapped ID or a simple lowercase conversion
 
-    // Try to find the logo from NATIVE_TOKENS_INFO (which uses explicit local imports)
-    const nativeInfo = NATIVE_TOKENS_INFO[chainName];
-    if (nativeInfo && nativeInfo.logo) {
-        return nativeInfo.logo;
-    }
-
     // Fallback to native-tokens.json (which typically has more generic blockchain images from Coingecko)
     const tokenInfo = (nativeTokensJson as { blockchain: string; logo: string }[]).find(token => token.blockchain === lookupId);
-    return tokenInfo?.logo;
+    if (tokenInfo?.logo) {
+        return tokenInfo.logo;
+    }
+    
+    // Final fallback to generic Blockless logo
+    return blocklessLogo;
 };
 
 

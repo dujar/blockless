@@ -7,6 +7,7 @@ import { countries } from '../../../data/countries';
 import type { MerchantChainConfig } from '../../../types';
 
 export interface OrderChainConfig extends Omit<MerchantChainConfig, 'tokens'> {
+    chainId: number;
     tokens: { symbol: string; amount: string; info: TokenInfoDto }[];
 }
 
@@ -14,7 +15,7 @@ export interface OrderData {
     fiatAmount: number;
     fiatCurrency: string;
     chains: OrderChainConfig[];
-    crossChainUrl: string;
+    orderSwapUrl: string;
 }
 
 export const useCreateOrderForm = () => {
@@ -128,9 +129,9 @@ export const useCreateOrderForm = () => {
                     if (orderA !== orderB) return orderA - orderB;
                     return a.symbol.localeCompare(b.symbol);
                 });
-                return { ...chainConfig, tokens: processedTokens };
+                return { ...chainConfig, chainId: chainId!, tokens: processedTokens };
             }),
-            crossChainUrl: '',
+            orderSwapUrl: '',
         };
 
         const crossChainParams = new URLSearchParams();
@@ -146,15 +147,15 @@ export const useCreateOrderForm = () => {
 
         if (validDstParams.length > 0) {
             validDstParams.forEach(param => crossChainParams.append('dst', param));
-            newOrder.crossChainUrl = `${window.location.origin}/swap?${crossChainParams.toString()}`;
+            newOrder.orderSwapUrl = `${window.location.origin}/swap?${crossChainParams.toString()}`;
         } else {
-            newOrder.crossChainUrl = '';
+            newOrder.orderSwapUrl = '';
         }
         
         setOrder(newOrder);
         setStep(2);
         const firstValidChain = newOrder.chains.find(chain => chain.tokens.some(token => parseFloat(token.amount) > 0));
-        setActiveTab(firstValidChain?.name || (newOrder.crossChainUrl ? 'cross-chain' : ''));
+        setActiveTab(firstValidChain?.name || (newOrder.orderSwapUrl ? 'cross-chain' : ''));
     }, [config, fiatAmountInput, mockPrices, tokenInfoMap]);
 
     return {

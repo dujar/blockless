@@ -2,6 +2,7 @@ import { QRCode } from 'react-qrcode-logo';
 import type { Wallet } from '../../../data/wallets';
 import blocklessLogo from '../../../assets/blockless.svg'; // Import blockless logo for fallback
 import { useState } from 'react'; // Import useState
+import { QrCodeDisplayCard } from '../../../components/qr-code-display-card'; // Import the new component
 
 type WalletWithDeeplink = Wallet & { deeplink: string };
 
@@ -48,10 +49,10 @@ export const FullScreenQRCode = ({ wallet, blockchainName, tokenSymbol, amount, 
 
     return (
         <div
-            className="fixed inset-0 bg-gray-800 opacity-75 flex flex-col items-center justify-center z-50 cursor-pointer p-4"
+            className="fixed inset-0 bg-gray-800 bg-opacity-75 flex flex-col items-center justify-center z-50 cursor-pointer p-4"
             onClick={onClose}
         >
-            <div className="bg-white dark:bg-primary-950 rounded-lg shadow-lg p-6 w-full max-w-md" onClick={e => e.stopPropagation()}>
+            <div className="bg-white dark:bg-primary-950 rounded-lg shadow-lg p-6 w-full max-w-[90vw]" onClick={e => e.stopPropagation()}>
                 <div className="text-center mb-6">
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                         Pay {amount} {tokenSymbol}
@@ -65,20 +66,17 @@ export const FullScreenQRCode = ({ wallet, blockchainName, tokenSymbol, amount, 
                 </div>
 
                 <div className="flex justify-center mb-6">
-                    <div className="p-2 bg-white rounded-lg border-4 border-gray-500">
-                        <QRCode
-                            value={wallet.deeplink}
-                            size={256}
-                            logoImage={wallet.logo || blocklessLogo} // Use wallet logo, fallback to blockless
-                            logoWidth={64}
-                            logoHeight={64}
-                            logoOpacity={1} // Ensure logo is fully opaque
-                            removeQrCodeBehindLogo={true} // ensure logo is clearly visible
-                            logoPadding={2}
-                            logoPaddingStyle="circle"
-                            qrStyle="squares"
-                        />
-                    </div>
+                    <QrCodeDisplayCard
+                        value={wallet.deeplink}
+                        mainLogo={wallet.logo || blocklessLogo}
+                        logoWidth={64}
+                        logoHeight={64}
+                        errorCorrectionLevel="H"
+                        title="" // Title is handled by parent, not for the QR card itself
+                        subtitle="" // Subtitle is handled by parent
+                        detail="" // Detail is handled by parent
+                        isClickable={false} // Not clickable in fullscreen mode
+                    />
                 </div>
 
                 <div className="text-center space-y-2 text-gray-800 dark:text-gray-300 text-sm">
@@ -143,3 +141,4 @@ export const FullScreenQRCode = ({ wallet, blockchainName, tokenSymbol, amount, 
         </div>
     );
 };
+

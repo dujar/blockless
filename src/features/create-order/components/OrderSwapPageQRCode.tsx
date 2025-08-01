@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import blocklessLogo from '../../../assets/blockless.svg';
-import OneInchLogo from '../../../assets/1inch.svg'; // Import 1inch logo
 import type { OrderData } from '../hooks/useCreateOrderForm';
 import type { TokenInfoDto } from '../../../services/types';
+import { QrCodeDisplayCard } from '../../../components/qr-code-display-card'; // Import the new QR display card
 
-interface CrossChainQRCodeDisplayProps {
+interface OrderSwapPageQRCodeProps {
     order: OrderData;
     onBackToOrderDetails: () => void;
 }
 
-export const CrossChainQRCodeDisplay = ({ order, onBackToOrderDetails }: CrossChainQRCodeDisplayProps) => {
+export const OrderSwapPageQRCode = ({ order, onBackToOrderDetails }: OrderSwapPageQRCodeProps) => {
     const [isFullScreenQR, setIsFullScreenQR] = useState(false);
-    const [copiedLink, setCopiedLink] = useState(false);
     
     const formatCurrency = (amount: number, currencyCode: string) => {
         try {
@@ -57,11 +56,11 @@ export const CrossChainQRCodeDisplay = ({ order, onBackToOrderDetails }: CrossCh
 
     const copyToClipboard = (text: string) => {
         navigator.clipboard.writeText(text).then(() => {
-            setCopiedLink(true);
-            setTimeout(() => setCopiedLink(false), 2000);
+            // Optional: show a toast notification for copied link
         });
     };
 
+    // The orderSwapUrl is generated in useCreateOrderForm and points to our internal /order page.
     const shareUrl = order.orderSwapUrl;
     const shareText = `Pay ${formatCurrency(order.fiatAmount, order.fiatCurrency)} using crypto via Blockless Swap!`;
 
@@ -70,6 +69,10 @@ export const CrossChainQRCodeDisplay = ({ order, onBackToOrderDetails }: CrossCh
         telegram: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`,
         whatsapp: `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`,
     };
+
+    if (!shareUrl) {
+        return <p className="text-sm text-gray-500 dark:text-gray-400">No valid Order Swap URL could be generated. Ensure at least one token is configured.</p>;
+    }
 
     return (
         <div className={isFullScreenQR ? 'fixed inset-0 z-50 bg-white dark:bg-primary-950 p-4 flex flex-col justify-between' : ''} onClick={() => isFullScreenQR && setIsFullScreenQR(false)}>
@@ -80,68 +83,27 @@ export const CrossChainQRCodeDisplay = ({ order, onBackToOrderDetails }: CrossCh
             )}
             <div className={`flex flex-col ${isFullScreenQR ? 'flex-grow justify-center' : 'space-y-8'}`} onClick={(e) => e.stopPropagation()}>
                 <div>
-                    <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Pay from any Chain/Token</h3>
-                    <p className="text-gray-700 dark:text-gray-400 mb-2">Scan this QR code to open the Blockless swap page, powered by 1inch Fusion+.</p>
+                    <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Blockless Order Swap Page</h3>
+                    <p className="text-gray-700 dark:text-gray-400 mb-2">Scan this QR code to open a dedicated payment page for this order.</p>
                     <p className="text-sm text-yellow-600 dark:text-yellow-400 mb-4">
                         This QR code will redirect to a website (it is not a wallet deeplink).
                     </p>
 
-                    {/* QR Codes Section */}
-                    <div className="flex flex-col sm:flex-row justify-center gap-6 mb-8">
-                        {/* Blockless QR Code */}
-                        <div className="flex flex-col items-center">
-                            <h4 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">Blockless Link</h4>
-                            <div
-                                className="p-2 bg-white rounded-lg border-4 border-gray-500 cursor-pointer"
-                                onClick={() => setIsFullScreenQR(true)}
-                            >
-                                <QRCode
-                                    value={order.orderSwapUrl}
-                                    size={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) : 192}
-                                    quietZone={10}
-                                    bgColor="#ffffff"
-                                    fgColor="#000000"
-                                    logoImage={blocklessLogo}
-                                    logoWidth={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
-                                    logoHeight={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
-                                    removeQrCodeBehindLogo={true}
-                                    logoPadding={2}
-                                    logoPaddingStyle="circle"
-                                    qrStyle="squares"
-                                />
-                            </div>
-                            <div className="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                via Blockless
-                            </div>
-                        </div>
-
-                        {/* 1inch Fusion+ QR Code */}
-                        <div className="flex flex-col items-center">
-                            <h4 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">1inch Fusion+ Link</h4>
-                            <div
-                                className="p-2 bg-white rounded-lg border-4 border-gray-500 cursor-pointer"
-                                onClick={() => setIsFullScreenQR(true)}
-                            >
-                                <QRCode
-                                    value={order.orderSwapUrl}
-                                    size={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) : 192}
-                                    quietZone={10}
-                                    bgColor="#ffffff"
-                                    fgColor="#000000"
-                                    logoImage={OneInchLogo}
-                                    logoWidth={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
-                                    logoHeight={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
-                                    removeQrCodeBehindLogo={true}
-                                    logoPadding={2}
-                                    logoPaddingStyle="circle"
-                                    qrStyle="squares"
-                                />
-                            </div>
-                            <div className="mt-2 flex items-center text-gray-600 dark:text-gray-400 text-sm justify-center">
-                                <span className="mr-1">Powered by</span>
-                                <img src={OneInchLogo} alt="1inch Logo" className="h-4 w-auto" />
-                            </div>
-                        </div>
+                    {/* Main QR Code for Blockless Order Swap Page */}
+                    <div className="flex justify-center mb-8">
+                        <QrCodeDisplayCard
+                            value={shareUrl}
+                            mainLogo={blocklessLogo} // Use Blockless logo
+                            logoWidth={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
+                            logoHeight={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
+                            title="Blockless Order Page"
+                            subtitle={`Total: ${formatCurrency(order.fiatAmount, order.fiatCurrency)}`}
+                            detail="Scan to pay"
+                            errorCorrectionLevel="H"
+                            isClickable={true}
+                            onClick={() => setIsFullScreenQR(true)}
+                            className="w-full max-w-sm"
+                        />
                     </div>
 
                     {/* Shareable Link Section */}
@@ -155,16 +117,14 @@ export const CrossChainQRCodeDisplay = ({ order, onBackToOrderDetails }: CrossCh
                                     className="p-1 rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-primary-800 transition"
                                     title="Copy link"
                                 >
-                                    {copiedLink ? (
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                                    ) : (
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" /><path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" /></svg>
-                                    )}
+                                    {/* Copy icon */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" /><path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" /></svg>
                                 </button>
                                 <a href={shareUrl} target="_blank" rel="noopener noreferrer"
                                     className="p-1 rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-primary-800 transition"
                                     title="Open in browser"
                                 >
+                                    {/* External link icon */}
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
                                 </a>
                             </div>
@@ -195,4 +155,6 @@ export const CrossChainQRCodeDisplay = ({ order, onBackToOrderDetails }: CrossCh
             </div>
         </div>
     );
-}
+};
+
+export default OrderSwapPageQRCode;

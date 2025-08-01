@@ -60,6 +60,7 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
           recipientAddress={destinationInfo.destinationAddress}
           fiatAmount={0} // Fiat amount is not relevant for direct crypto payments via deeplink here
           fiatCurrency="USD" // Default to USD
+          isTransferType="other"
         />
         <button onClick={() => setShowQRs(false)} className="mt-4 text-gray-500 hover:underline">← Back</button>
       </div>
@@ -76,7 +77,7 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
         </div>
       )}
 
-      {step === 1 && swapParams.dst.length === 1 && <ConnectWallet />}
+      
       
       {step === 2 && isConnected && (
         <SelectBlockchain

@@ -65,7 +65,9 @@ const getNativeTokenForBlockchain = (blockchainId: string): NativeTokenInfo | un
     return nativeTokensMap.get('binancecoin');
   }
   // For all other cases, the blockchainData 'id' should match native-tokens.json 'blockchain' field
-  return nativeTokensMap.get(blockchainId);
+  // or a common name variant for lookup
+  const nativeTokenEntry = nativeTokensMap.get(blockchainId) || nativeTokensMap.get(blockchainId.toLowerCase().replace(/\s/g, ''));
+  return nativeTokenEntry;
 };
 
 export const blockchainData: BlockchainData[] = [
@@ -288,3 +290,4 @@ export const getChainDetailsByChainId = (chainId: number): BlockchainData | unde
 export const getChainDetailsByNetworkId = (networkId: number): BlockchainData | undefined => {
   return blockchainData.find(chain => chain.networkId === networkId);
 };
+

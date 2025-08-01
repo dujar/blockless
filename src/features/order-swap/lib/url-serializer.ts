@@ -151,6 +151,7 @@ export const rehydrateOrderData = (serializedData: SerializedOrderData): Rehydra
 
     return {
       ...chain,
+      chainId: blockchainData.find(b => b.name === chain.name)?.chainId!,
       tokens: rehydratedTokens,
     };
   });
