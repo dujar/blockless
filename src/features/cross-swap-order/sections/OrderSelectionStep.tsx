@@ -30,7 +30,7 @@ export const OrderSelectionStep: React.FC = () => {
   return (
     <div className="space-y-4">
       {orders.map(order => (
-        <BlockchainTokenPaymentOption key={order.dstAddress + order.token + order.amount} order={order} />
+        <BlockchainTokenPaymentOption key={order.orderHash} order={order} />
       ))}
     </div>
   );

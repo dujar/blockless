@@ -483,3 +483,19 @@ export interface OrdersByHashesInput {
 // #endregion
 
 // #endregion
+
+
+// #region Spot Price API Types
+
+export type PricesResponse = Record<string, string>;
+
+export interface SpotPriceDto {
+    address: string;
+    price: string;
+}
+
+export interface SpotPriceResponseDto {
+    prices: SpotPriceDto[];
+}
+
+// #endregion

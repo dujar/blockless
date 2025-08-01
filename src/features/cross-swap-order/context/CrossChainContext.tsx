@@ -35,12 +35,34 @@ const useHook = ()=>{
     let orders = useMemo(() => {
         return params.map((param) => {
             const [chainName,amount,token ,dstAddress] = param.split(':');
+            //TODO: remove this mock
             return {
-                dstAddress,
-                token,
-                amount: parseFloat(amount||"0"),
-                chain: chainsByNetworkName[chainName.toLocaleLowerCase()],
-            };
+                orderHash: '0x123',
+                signature: '0x123',
+                deadline: 123,
+                auctionStartDate: 123,
+                auctionEndDate: 123,
+                quoteId: '0x123',
+                remainingMakerAmount: '123',
+                makerBalance: '123',
+                makerAllowance: '123',
+                isMakerContract: false,
+                extension: '0x123',
+                srcChainId: 1,
+                dstChainId: 1,
+                order: {
+                    salt: '0x123',
+                    makerAsset: '0x123',
+                    takerAsset: '0x123',
+                    maker: '0x123',
+                    receiver: '0x123',
+                    makingAmount: '123',
+                    takingAmount: '123',
+                    makerTraits: '0x123',
+                },
+                secretHashes: [],
+                fills: [],
+            }
         });
     }, [params]);
     const contextValue = {

@@ -1,5 +1,5 @@
-@import "styles/themes.css";
 @import "tailwindcss";
+@import "styles/themes.css";
 /* You can add your custom CSS here */
 
 /* Hide spinner arrows for number input fields */
