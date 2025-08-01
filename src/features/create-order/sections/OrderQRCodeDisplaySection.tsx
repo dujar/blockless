@@ -4,6 +4,7 @@ import type { useCreateOrderForm } from '../hooks/useCreateOrderForm';
 import { getTokenLogoURI } from '../../../utils/token-helpers';
 import OneInchLogo from '../../../assets/1inch.svg';
 import blocklessLogo from '../../../assets/blockless.svg';
+import { encodeOrderToUrlParam, serializeOrderData } from '../../order-swap/lib/url-serializer'; // Import new serializer
 
 const formatCurrency = (amount: number, currencyCode: string) => {
     try {
@@ -23,6 +24,11 @@ const OrderQRCodeDisplaySection = ({ form }: OrderQRCodeDisplayProps) => {
 
     if (!order) return null;
 
+    // Generate the new order swap URL for the new tab
+    const serializedOrder = serializeOrderData(order);
+    const encodedOrderParam = encodeOrderToUrlParam(serializedOrder);
+    const orderSwapUrl = `${window.location.origin}/order?order=${encodedOrderParam}`;
+
     return (
         <div className="bg-white dark:bg-primary-950 p-8 rounded-2xl shadow-lg shadow-dynamic">
             <div className="flex justify-between items-center mb-6">
@@ -38,12 +44,11 @@ const OrderQRCodeDisplaySection = ({ form }: OrderQRCodeDisplayProps) => {
                             {chain.name}
                         </button>
                     ))}
-                    {order.crossChainUrl && (
-                        <button onClick={() => setActiveTab('cross-chain')} className={`whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm ${activeTab === 'cross-chain' ? 'border-b-2 border-gray-500 text-gray-600 dark:text-gray-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200'}`}>
-                            <img src={OneInchLogo} alt="1inch" className="h-5 w-5 mr-2 inline-block rounded-full" onError={(e) => { (e.target as HTMLImageElement).src = blocklessLogo; }} />
-                            Cross-Chain Swap
-                        </button>
-                    )}
+                    {/* The new "Order Swap" tab which links to the new dedicated order page */}
+                    <button onClick={() => setActiveTab('order-swap')} className={`whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm ${activeTab === 'order-swap' ? 'border-b-2 border-gray-500 text-gray-600 dark:text-gray-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200'}`}>
+                        <img src={blocklessLogo} alt="Blockless" className="h-5 w-5 mr-2 inline-block rounded-full" />
+                        Order Swap
+                    </button>
                 </nav>
             </div>
             <div className="py-6">
@@ -61,11 +66,17 @@ const OrderQRCodeDisplaySection = ({ form }: OrderQRCodeDisplayProps) => {
                         </div>
                     </div>
                 ))}
-                {activeTab === 'cross-chain' && order.crossChainUrl && (<CrossChainQRCodeDisplay order={order} onBackToOrderDetails={() => setStep(2)} />)}
-                {activeTab === 'cross-chain' && !order.crossChainUrl && (<p className="text-sm text-gray-500 dark:text-gray-400">No valid cross-chain swap URL could be generated. Ensure at least one token is configured.</p>)}
+                {/* When 'Order Swap' tab is active, display the QR for the new orderSwapUrl */}
+                {activeTab === 'order-swap' && (
+                    <CrossChainQRCodeDisplay order={{ ...order, crossChainUrl: orderSwapUrl }} onBackToOrderDetails={() => setStep(2)} />
+                )}
+                {activeTab === 'order-swap' && !orderSwapUrl && (
+                    <p className="text-sm text-gray-500 dark:text-gray-400">No valid Order Swap URL could be generated. Ensure at least one token is configured.</p>
+                )}
             </div>
         </div>
     );
 };
 
 export default OrderQRCodeDisplaySection;
+

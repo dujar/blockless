@@ -15,6 +15,7 @@ import CrossSwapPage from './pages/CrossSwapPage';
 import SplashScreen from './SplashScreen';
 import ConnectWalletPage from './pages/ConnectWalletPage';
 import BlockchainThemesPage from './pages/BlockchainThemesPage';
+import OrderSwapPage from './features/order-swap/page'; // Import the new OrderSwapPage
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -44,6 +45,7 @@ function App() {
               <Route path="/swap" element={<CrossSwapPage />} />
               <Route path="/connect-wallet" element={<ConnectWalletPage />} />
               <Route path="/blockchain-themes" element={<BlockchainThemesPage />} />
+              <Route path="/order" element={<OrderSwapPage />} /> {/* New route for Order Swap */}
             </Routes>
           </div>
         </main>
