@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { rehydrateOrderData } from '../lib/url-serializer'; // Only rehydrateOrderData is needed
 import type { RehydratedOrderData, SerializedOrderData } from '../types'; // Import SerializedOrderData for type check
+import { decodeOrderFromUrlParam } from '../lib/url-serializer';
+
 
 export const useOrderFromUrl = () => {
   const [searchParams] = useSearchParams();
@@ -12,25 +14,21 @@ export const useOrderFromUrl = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    const orderId = searchParams.get('id'); // Change from 'order' to 'id'
-
-    if (!orderId) {
+    // Retrieve the base64 encoded string from the 'id' parameter
+    const encodedOrderIdParam = searchParams.get('id'); 
+    
+    if (!encodedOrderIdParam) {
       setError('No order ID found in URL. Order details cannot be loaded.');
       setLoading(false);
       return;
     }
 
     try {
-      // Retrieve serialized data from sessionStorage using the ID
-      const storedOrderJson = sessionStorage.getItem(`order_${orderId}`);
-      if (!storedOrderJson) {
-        setError('Order not found or has expired. Please create a new order.');
-        setLoading(false);
-        return;
-      }
+      // Decode the base64 string directly
+      const serializedData: SerializedOrderData = decodeOrderFromUrlParam(encodedOrderIdParam);
       
-      const serializedData: SerializedOrderData = JSON.parse(storedOrderJson);
-      const rehydratedOrder = rehydrateOrderData(serializedData);
+      // Pass the original encoded ID to rehydrateOrderData so it can reconstruct the shareable URL
+      const rehydratedOrder = rehydrateOrderData(serializedData, encodedOrderIdParam); 
       setOrder(rehydratedOrder);
     } catch (e) {
       setError((e as Error).message || 'Failed to parse order data from URL.');
@@ -42,4 +40,3 @@ export const useOrderFromUrl = () => {
 
   return { order, loading, error };
 };
-

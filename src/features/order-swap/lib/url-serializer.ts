@@ -72,7 +72,6 @@ export const decodeOrderFromUrlParam = (encodedString: string): SerializedOrderD
     throw new Error("Invalid order data in URL.");
   }
 };
-
 /**
  * Rehydrates simplified token details into a full TokenInfoDto.
  * It attempts to enrich the data using local constants and then falls back to basic info.
@@ -128,13 +127,15 @@ const rehydrateTokenInfo = (serializableToken: SerializableTokenDetails): TokenI
   };
 };
 
+
 /**
  * Reconstructs the full OrderData object from the SerializedOrderData.
  * This re-adds the detailed TokenInfoDto and regenerates the crossChainUrl (for the /swap route).
  * @param serializedData The SerializedOrderData object from the URL or storage.
+ * @param orderId Optional ID from the URL, used to reconstruct orderSwapUrl.
  * @returns The rehydrated OrderData object.
  */
-export const rehydrateOrderData = (serializedData: SerializedOrderData): RehydratedOrderData => {
+export const rehydrateOrderData = (serializedData: SerializedOrderData, orderId?: string): RehydratedOrderData => {
   const rehydratedChains = serializedData.chains.map(chain => {
     const rehydratedTokens = chain.tokens.map(token => ({
       symbol: token.symbol,
@@ -183,19 +184,16 @@ export const rehydrateOrderData = (serializedData: SerializedOrderData): Rehydra
       crossChainUrl = `https://app.1inch.io/swap?${crossChainParams.toString()}`;
   }
 
-  // The orderSwapUrl will be generated with a short ID in useCreateOrderForm,
-  // and is not re-generated here during rehydration as its purpose is for the initial link.
-  // It is part of the `RehydratedOrderData` because it's passed from `useCreateOrderForm`'s `OrderData` type.
-  // When rehydrating, we don't have the original short order URL, so it will be empty unless specifically stored.
-  // For the purpose of the order display page, only `crossChainUrl` and wallet transfers are needed.
-  // The `orderSwapUrl` property is now effectively just for the initial QR generation on the create order page.
-  // For the `/order` page, it's irrelevant, so it can be an empty string or undefined.
+  // REVISED: If orderId is provided, reconstruct the orderSwapUrl for *this* page.
+  // The `encodeJsonToBase64(serializedData)` is not needed here as `orderId` *is* the encoded data.
+  const orderSwapUrl = orderId ? `${window.location.origin}/order?id=${orderId}` : "";
+
   return {
     fiatAmount: serializedData.fiatAmount,
     fiatCurrency: serializedData.fiatCurrency,
     chains: rehydratedChains,
     crossChainUrl,
-    orderSwapUrl: "", // This field is not rehydrated as it's specific to the QR generation context
+    orderSwapUrl, // Use the reconstructed URL
   };
 };
 
