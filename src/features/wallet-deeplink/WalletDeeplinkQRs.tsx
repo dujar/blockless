@@ -97,6 +97,7 @@ export const WalletDeeplinkQRs = ({ blockchainName, tokenSymbol, amount, recipie
                   isDisabled={true}
                   disabledMessage="No current wallet supports this chain."
                   className="col-span-full mx-auto max-w-sm"
+                  errorCorrectionLevel="M" // Explicitly set to M
               />
           </div>
       );
@@ -116,6 +117,7 @@ export const WalletDeeplinkQRs = ({ blockchainName, tokenSymbol, amount, recipie
           onClick={() => handleWalletClick(wallet)}
           tooltipText={`Open ${wallet.name} to pay ${amount} ${tokenSymbol} on ${blockchainName}`}
           className="mx-auto max-w-xs sm:max-w-none p-4" // Adjusted padding for QR code display cards
+          errorCorrectionLevel="H" // Explicitly set to M
         />
       ))}
     </div>

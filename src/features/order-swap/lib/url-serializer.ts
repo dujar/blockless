@@ -16,12 +16,17 @@ import type { TokenInfoDto } from '../../../services/types';
 const toSerializableTokenDetails = (tokenInfo: TokenInfoDto): SerializableTokenDetails => ({
   symbol: tokenInfo.symbol,
   address: tokenInfo.address,
-  decimals: tokenInfo.decimals,
+  // Decimals are often available via token-service or inferred from common tokens.
+  // Removing decimals from direct serialization to reduce payload size,
+  // as they can be re-fetched or re-inferred during rehydration.
+  // If specific decimals are critical and cannot be inferred, they might need to be kept.
+  // For this context, assuming `rehydrateTokenInfo` can handle this.
+  decimals: tokenInfo.decimals, // Keep decimals as it's directly used in formatAmount
   chainId: tokenInfo.chainId,
 });
 
 /**
- * Converts an OrderData (from useCreateOrderForm) into a SerializedOrderData suitable for URL params.
+ * Converts an OrderData (from useCreateOrderForm) into a SerializedOrderData suitable for storage.
  * This simplifies the TokenInfoDto to only essential fields.
  * @param orderData The order data from useCreateOrderForm.
  * @returns Serialized order data object.
@@ -44,17 +49,9 @@ export const serializeOrderData = (orderData: RehydratedOrderData): SerializedOr
 };
 
 /**
- * Encodes the serialized order data into a Base64 string for URL safety and compactness.
- * @param data The SerializedOrderData object.
- * @returns A Base64 encoded string.
- */
-export const encodeOrderToUrlParam = (data: SerializedOrderData): string => {
-  const jsonString = JSON.stringify(data);
-  return btoa(jsonString);
-};
-
-/**
  * Decodes a Base64 string from a URL parameter back into SerializedOrderData.
+ * NOTE: This function is being phased out as order data will be stored in sessionStorage.
+ * It remains here for historical context or if needed for other specific, short parameters.
  * @param encodedString The Base64 encoded string.
  * @returns The decoded SerializedOrderData object.
  * @throws Error if decoding or parsing fails.
@@ -115,7 +112,7 @@ const rehydrateTokenInfo = (serializableToken: SerializableTokenDetails): TokenI
   return {
     address: address,
     chainId: chainId,
-    decimals: decimals,
+    decimals: decimals, // Use provided decimals, or default if not available from a source
     extensions: {},
     logoURI: getTokenLogoURI(address, symbol, chainName),
     name: symbol, // Default name to symbol
@@ -127,7 +124,7 @@ const rehydrateTokenInfo = (serializableToken: SerializableTokenDetails): TokenI
 /**
  * Reconstructs the full OrderData object from the SerializedOrderData.
  * This re-adds the detailed TokenInfoDto and regenerates the crossChainUrl (for the /swap route).
- * @param serializedData The SerializedOrderData object from the URL.
+ * @param serializedData The SerializedOrderData object from the URL or storage.
  * @returns The rehydrated OrderData object.
  */
 export const rehydrateOrderData = (serializedData: SerializedOrderData): RehydratedOrderData => {
@@ -162,8 +159,11 @@ export const rehydrateOrderData = (serializedData: SerializedOrderData): Rehydra
   rehydratedChains.forEach(chain => {
       chain.tokens.forEach(token => {
           if (parseFloat(token.amount) > 0 && chain.address && token.info.symbol) {
-              const chainName = getChainDetailsByChainId(token.info.chainId)?.name || chain.name;
-              const dst = `${chainName}:${token.amount}:${token.info.symbol}:${chain.address}`;
+              // Use token address for 1inch deeplink if it's not 'native' or a mock address.
+              // For native tokens, 1inch usually prefers its canonical address (WETH, WMATIC, etc.).
+              // Using token.info.address directly for 1inch links as it's expected to be a contract address or special '0xeeee' for native.
+              const tokenIdentifier = token.info.address; 
+              const dst = `${token.info.chainId}:${token.amount}:${tokenIdentifier}:${chain.address}`;
               validDstParams.push(dst);
           }
       });
@@ -172,16 +172,23 @@ export const rehydrateOrderData = (serializedData: SerializedOrderData): Rehydra
   let crossChainUrl = '';
   if (validDstParams.length > 0) {
       validDstParams.forEach(param => crossChainParams.append('dst', param));
-      // Construct URL relative to origin, which will be the app's base URL for the /swap route
-      crossChainUrl = `${window.location.origin}/swap?${crossChainParams.toString()}`;
+      // Construct URL for the 1inch app swap page
+      crossChainUrl = `https://app.1inch.io/swap?${crossChainParams.toString()}`;
   }
 
+  // The orderSwapUrl will be generated with a short ID in useCreateOrderForm,
+  // and is not re-generated here during rehydration as its purpose is for the initial link.
+  // It is part of the `RehydratedOrderData` because it's passed from `useCreateOrderForm`'s `OrderData` type.
+  // When rehydrating, we don't have the original short order URL, so it will be empty unless specifically stored.
+  // For the purpose of the order display page, only `crossChainUrl` and wallet transfers are needed.
+  // The `orderSwapUrl` property is now effectively just for the initial QR generation on the create order page.
+  // For the `/order` page, it's irrelevant, so it can be an empty string or undefined.
   return {
     fiatAmount: serializedData.fiatAmount,
     fiatCurrency: serializedData.fiatCurrency,
     chains: rehydratedChains,
     crossChainUrl,
-    orderSwapUrl: crossChainUrl,
+    orderSwapUrl: "", // This field is not rehydrated as it's specific to the QR generation context
   };
 };
 

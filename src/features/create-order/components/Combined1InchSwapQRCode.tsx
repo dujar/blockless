@@ -27,8 +27,9 @@ export const Combined1InchSwapQRCode = ({ order, onBackToOrderDetails }: Combine
         });
     };
 
-    const shareUrl = order.orderSwapUrl;
-    const shareText = `Pay ${formatCurrency(order.fiatAmount, order.fiatCurrency)} using crypto via Blockless Swap!`;
+    // Use order.crossChainUrl for the combined 1inch app swap
+    const shareUrl = order.crossChainUrl;
+    const shareText = `Pay ${formatCurrency(order.fiatAmount, order.fiatCurrency)} using crypto via 1inch Fusion+!`;
 
     const socialShareLinks = {
         twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
@@ -37,14 +38,14 @@ export const Combined1InchSwapQRCode = ({ order, onBackToOrderDetails }: Combine
     };
 
     if (!shareUrl) {
-        return <p className="text-sm text-neutral-content">No valid cross-chain swap URL could be generated. Ensure at least one token is configured.</p>;
+        return <p className="text-sm text-neutral-content">No valid combined cross-chain swap URL could be generated. Ensure at least one token is configured.</p>;
     }
 
     return (
         <div className={isFullScreenQR ? 'fixed inset-0 z-50 bg-base-100 p-4 flex flex-col justify-between' : ''} onClick={() => isFullScreenQR && setIsFullScreenQR(false)}>
             {isFullScreenQR && (
                 <div className="text-center mb-4" onClick={(e) => e.stopPropagation()}>
-                    <h3 className="text-xl font-semibold text-base-content mb-2">Scan to pay from any chain / token</h3>
+                    <h3 className="text-xl font-semibold text-base-content mb-2">Scan to pay from any chain / token via 1inch</h3>
                     <p className="text-base-content">
                         Total: {formatCurrency(order.fiatAmount, order.fiatCurrency)}
                     </p>
@@ -52,10 +53,10 @@ export const Combined1InchSwapQRCode = ({ order, onBackToOrderDetails }: Combine
             )}
             <div className={`flex flex-col ${isFullScreenQR ? 'flex-grow justify-center' : 'space-y-8'}`} onClick={(e) => e.stopPropagation()}>
                 <div>
-                    <h3 className="text-xl font-semibold mb-4 text-base-content">Pay from any Chain/Token</h3>
-                    <p className="text-neutral-content mb-2">Scan this QR code to open the Blockless swap page, powered by 1inch Fusion+.</p>
+                    <h3 className="text-xl font-semibold mb-4 text-base-content">Pay from any Chain/Token via 1inch</h3>
+                    <p className="text-neutral-content mb-2">Scan this QR code to open the 1inch app for a combined cross-chain swap.</p>
                     <p className="text-sm text-yellow-600 dark:text-yellow-400 mb-4">
-                        This QR code will redirect to a website (it is not a wallet deeplink).
+                        This QR code will redirect to the 1inch app/website (it is not a wallet deeplink to a specific wallet).
                     </p>
 
                     {/* Main QR Code for Combined 1inch Swap on our platform */}
@@ -65,12 +66,12 @@ export const Combined1InchSwapQRCode = ({ order, onBackToOrderDetails }: Combine
                             mainLogo={OneInchLogo} // Use 1inch logo as it's powered by them
                             logoWidth={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
                             logoHeight={isFullScreenQR ? Math.min(window.innerWidth * 0.8, window.innerHeight * 0.5) * 0.25 : 48}
-                            title="Blockless Cross-Chain Swap"
-                            subtitle="Powered by 1inch Fusion+"
-                            detail={`Pay ${formatCurrency(order.fiatAmount, order.fiatCurrency)}`}
+                            title="1inch Cross-Chain Swap"
+                            subtitle="Pay with any crypto"
+                            detail={`Total: ${formatCurrency(order.fiatAmount, order.fiatCurrency)}`}
+                            errorCorrectionLevel="M" // Explicitly set to M
                             isClickable={true}
                             onClick={() => setIsFullScreenQR(true)}
-                            errorCorrectionLevel="H"
                             className="w-full max-w-sm"
                         />
                     </div>

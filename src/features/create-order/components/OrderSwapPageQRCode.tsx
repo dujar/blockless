@@ -99,7 +99,7 @@ export const OrderSwapPageQRCode = ({ order, onBackToOrderDetails }: OrderSwapPa
                             title="Blockless Order Page"
                             subtitle={`Total: ${formatCurrency(order.fiatAmount, order.fiatCurrency)}`}
                             detail="Scan to pay"
-                            errorCorrectionLevel="H"
+                            errorCorrectionLevel="M" // Explicitly set to M
                             isClickable={true}
                             onClick={() => { if (isFullScreenQR) { window.open(shareUrl, '_blank'); } else { setIsFullScreenQR(true); } }}
                             className="w-full max-w-sm"
@@ -158,3 +158,4 @@ export const OrderSwapPageQRCode = ({ order, onBackToOrderDetails }: OrderSwapPa
 };
 
 export default OrderSwapPageQRCode;
+

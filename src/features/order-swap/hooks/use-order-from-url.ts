@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { decodeOrderFromUrlParam, rehydrateOrderData } from '../lib/url-serializer';
-import type { RehydratedOrderData } from '../types';
+import { rehydrateOrderData } from '../lib/url-serializer'; // Only rehydrateOrderData is needed
+import type { RehydratedOrderData, SerializedOrderData } from '../types'; // Import SerializedOrderData for type check
 
 export const useOrderFromUrl = () => {
   const [searchParams] = useSearchParams();
@@ -12,16 +12,24 @@ export const useOrderFromUrl = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    const encodedOrder = searchParams.get('order');
+    const orderId = searchParams.get('id'); // Change from 'order' to 'id'
 
-    if (!encodedOrder) {
-      setError('No order data found in URL.');
+    if (!orderId) {
+      setError('No order ID found in URL. Order details cannot be loaded.');
       setLoading(false);
       return;
     }
 
     try {
-      const serializedData = decodeOrderFromUrlParam(encodedOrder);
+      // Retrieve serialized data from sessionStorage using the ID
+      const storedOrderJson = sessionStorage.getItem(`order_${orderId}`);
+      if (!storedOrderJson) {
+        setError('Order not found or has expired. Please create a new order.');
+        setLoading(false);
+        return;
+      }
+      
+      const serializedData: SerializedOrderData = JSON.parse(storedOrderJson);
       const rehydratedOrder = rehydrateOrderData(serializedData);
       setOrder(rehydratedOrder);
     } catch (e) {
@@ -34,3 +42,4 @@ export const useOrderFromUrl = () => {
 
   return { order, loading, error };
 };
+

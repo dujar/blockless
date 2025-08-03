@@ -32,7 +32,7 @@ export const QrCodeDisplayCard: React.FC<QrCodeDisplayCardProps> = ({
   title,
   subtitle,
   detail,
-  errorCorrectionLevel = 'H',
+  errorCorrectionLevel = 'M', // Changed default from 'H' to 'M' to allow more data
   isClickable = false,
   onClick,
   isDisabled = false,

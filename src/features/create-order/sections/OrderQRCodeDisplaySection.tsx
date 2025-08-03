@@ -31,6 +31,7 @@ const OrderQRCodeDisplaySection = ({ form }: OrderQRCodeDisplayProps) => {
     // Calculate counts for tabs
     const walletTransferCount = payableChains.reduce((acc, chain) => acc + chain.tokens.filter(token => parseFloat(token.amount) > 0).length, 0);
     const orderSwapCount = order.orderSwapUrl ? 1 : 0;
+    // Cross-chain swap count can be the sum of all tokens across all chains that have an amount > 0
     const crossChainSwapCount = payableChains.reduce((acc, chain) => acc + chain.tokens.filter(token => parseFloat(token.amount) > 0).length, 0);
 
     return (
@@ -121,6 +122,7 @@ const OrderQRCodeDisplaySection = ({ form }: OrderQRCodeDisplayProps) => {
                 {activeTab === 'order-swap' && (
                     <div className="space-y-6">
                         <h3 className="text-xl font-semibold mb-4 text-base-content">Internal Order Swap Page</h3>
+                        {/* orderSwapUrl is now a short ID link */}
                         <OrderSwapPageQRCode order={{ ...order, orderSwapUrl: order.orderSwapUrl }} onBackToOrderDetails={() => setStep(2)} />
                     </div>
                 )}
