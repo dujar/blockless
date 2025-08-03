@@ -5,7 +5,7 @@ import { blockchainData } from '../../../data/blockchains';
 import { getCurrencyDataFromCountries, getTokenLogoURI, NATIVE_TOKENS_INFO, COMMON_STABLECOINS_INFO, getCategory, TOKEN_CATEGORIES } from '../../../utils/token-helpers';
 import { countries } from '../../../data/countries';
 import type { MerchantChainConfig } from '../../../types';
-import { serializeOrderData } from '../../order-swap/lib/url-serializer'; // Only serializeOrderData is needed for storage
+import { encodeJsonToBase64, serializeOrderData } from '../../order-swap/lib/url-serializer'; // Only serializeOrderData is needed for storage
 
 export interface OrderChainConfig extends Omit<MerchantChainConfig, 'tokens'> {
     chainId: number;
@@ -156,7 +156,10 @@ export const useCreateOrderForm = () => {
         const orderId = Math.random().toString(36).substring(2, 15); // Simple random ID
         const serializableOrderForStorage = serializeOrderData(newOrder); // Use serializeOrderData
         sessionStorage.setItem(`order_${orderId}`, JSON.stringify(serializableOrderForStorage));
-        newOrder.orderSwapUrl = `${window.location.origin}/order?id=${serializableOrderForStorage}`;
+        newOrder.orderSwapUrl = `${window.location.origin}/order?id=${
+            encodeJsonToBase64(
+                serializableOrderForStorage
+            )}`;
         
         // Generate crossChainUrl for direct 1inch app link (combined dst params)
         const crossChainParams = new URLSearchParams();

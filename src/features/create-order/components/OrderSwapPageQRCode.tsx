@@ -4,6 +4,10 @@ import blocklessLogo from '../../../assets/blockless.svg';
 import type { OrderData } from '../hooks/useCreateOrderForm';
 import type { TokenInfoDto } from '../../../services/types';
 import { QrCodeDisplayCard } from '../../../components/qr-code-display-card'; // Import the new QR display card
+import telegramLogo from '../../../assets/telegram.svg'; // Import Telegram logo
+import whatsappLogo from '../../../assets/whatsapp.png'; // Import WhatsApp logo
+import xLogo from '../../../assets/x.svg'; // Import X (Twitter) logo
+import facebookLogo from '../../../assets/facebook.png'; // Import Facebook logo
 
 interface OrderSwapPageQRCodeProps {
     order: OrderData;
@@ -68,6 +72,7 @@ export const OrderSwapPageQRCode = ({ order, onBackToOrderDetails }: OrderSwapPa
         twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
         telegram: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`,
         whatsapp: `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`,
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`,
     };
 
     if (!shareUrl) {
@@ -129,20 +134,24 @@ export const OrderSwapPageQRCode = ({ order, onBackToOrderDetails }: OrderSwapPa
                                 </a>
                             </div>
                         </div>
-                        <div className="max-w-sm text-sm font-sans break-all text-base-content bg-base-200 p-3 rounded-lg shadow-inner">
+                        {/* Removed max-w-sm to allow text to flow up to parent container */}
+                        <div className="text-sm font-sans break-all text-base-content bg-base-200 p-3 rounded-lg shadow-inner">
                             <a href={shareUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
                                 {shareUrl}
                             </a>
                         </div>
                         <div className="flex justify-center items-center space-x-4 mt-3">
-                            <a href={socialShareLinks.twitter} target="_blank" rel="noopener noreferrer" title="Share on Twitter" className="text-neutral-content hover:text-info-content">
-                                <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.21-.669-3.924 4.727H2.25l8.14-9.29L2.25 2.25h3.308l5.21 6.69z"></path></svg>
+                            <a href={socialShareLinks.twitter} target="_blank" rel="noopener noreferrer" title="Share on X (Twitter)" className="text-neutral-content hover:text-info-content">
+                                <img src={xLogo} alt="X (Twitter)" className="w-6 h-6" />
                             </a>
                             <a href={socialShareLinks.telegram} target="_blank" rel="noopener noreferrer" title="Share on Telegram" className="text-neutral-content hover:text-info-content">
-                                <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 7.5L10.3 14.7c-.2.2-.4.2-.6 0l-2.9-2.9c-.2-.2-.2-.4 0-.6l.7-.7c.2-.2.4-.2.6 0l2.3 2.3 5.4-5.4c.2-.2.4-.2.6 0l.7.7c.2.2.2.4 0 .6z"></path><path fillRule="evenodd" clipRule="evenodd" d="M18.75 3a.75.75 0 00-.515.228l-15 15a.75.75 0 00.515 1.272l1.664-.176a.75.75 0 00.74-.633L10 6l-1.5 5 8.75-5c.75-.4.75-.6.25-.9z" fill="currentColor"></path></svg>
+                                <img src={telegramLogo} alt="Telegram" className="w-6 h-6" />
                             </a>
                             <a href={socialShareLinks.whatsapp} target="_blank" rel="noopener noreferrer" title="Share on WhatsApp" className="text-neutral-content hover:text-success-content">
-                                <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6"><path d="M12.001 2c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10-4.477-10-10-10zm.914 15.656c-1.398.812-3.081 1.25-4.73 1.25-.091 0-.173-.008-.255-.015a.499.499 0 01-.482-.553l.426-2.557a.499.499 0 01.312-.416l2.164-1.082a.499.499 0 01.554.126l.89.89a.5.5 0 00.556.126l2.348-1.251c.642-.341 1.054-.724 1.251-1.127.199-.404.286-.814.286-1.127 0-.398-.106-.757-.312-1.066-.208-.31-.485-.561-.836-.752-.352-.191-.76-.286-1.228-.286-.445 0-.825.074-1.144.221-.32.148-.59.351-.812.607-.222.256-.395.53-.518.825a.499.499 0 01-.482.355l-2.083.084a.499.499 0 01-.527-.473c-.08-.8-.08-1.637.113-2.485.195-.848.583-1.57 1.164-2.166.582-.597 1.3-1.01 2.15-1.246.852-.236 1.74-.355 2.66-.355 1.503 0 2.87.359 4.102 1.077 1.233.718 2.227 1.705 2.986 2.961.758 1.256 1.137 2.666 1.137 4.234 0 1.597-.406 3.01-1.218 4.234-.812 1.224-1.859 2.164-3.14 2.812-1.282.648-2.673.972-4.174.972-.511 0-.992-.047-1.442-.142z"/></svg>
+                                <img src={whatsappLogo} alt="WhatsApp" className="w-6 h-6" />
+                            </a>
+                            <a href={socialShareLinks.facebook} target="_blank" rel="noopener noreferrer" title="Share on Facebook" className="text-neutral-content hover:text-info-content">
+                                <img src={facebookLogo} alt="Facebook" className="w-6 h-6" />
                             </a>
                         </div>
                     </div>
@@ -158,4 +167,3 @@ export const OrderSwapPageQRCode = ({ order, onBackToOrderDetails }: OrderSwapPa
 };
 
 export default OrderSwapPageQRCode;
-

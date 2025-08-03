@@ -25,6 +25,13 @@ const toSerializableTokenDetails = (tokenInfo: TokenInfoDto): SerializableTokenD
   chainId: tokenInfo.chainId,
 });
 
+
+
+
+export const encodeJsonToBase64 = (jsonObj: any): string =>{
+  const jsonString = JSON.stringify(jsonObj);
+  return btoa(unescape(encodeURIComponent(jsonString)));
+}
 /**
  * Converts an OrderData (from useCreateOrderForm) into a SerializedOrderData suitable for storage.
  * This simplifies the TokenInfoDto to only essential fields.
