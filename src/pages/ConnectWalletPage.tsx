@@ -8,8 +8,8 @@ const ConnectWalletPage = () => {
 
   return (
     <div className="max-w-md mx-auto">
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">Connect Your Wallet</h2>
-      <p className="text-gray-700 dark:text-gray-300 mb-8 text-center">
+      <h2 className="text-2xl font-bold text-base-content mb-4 text-center">Connect Your Wallet</h2>
+      <p className="text-neutral-content mb-8 text-center">
         Connect your wallet to get started with Blockless Swap
       </p>
       <div className="tabs tabs-boxed grid grid-cols-3 gap-2 mb-4">

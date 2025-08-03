@@ -22,13 +22,7 @@ export class BaseApiService {
     protected http: AxiosInstance;
 
     constructor(baseURL: string = "", private options: ServiceOptions = {}) {
-        // if(!baseURL.match(/http/)){
-        //     if(isDevelopment){
-        //         baseURL="https://api.1inch.dev"+baseURL;
-        //     } else {
-        //         baseURL="/api"+baseURL;
-        //     }
-        // }
+
         baseURL="/api"+baseURL;
 
         const config:CreateAxiosDefaults = {

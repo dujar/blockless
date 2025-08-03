@@ -29,17 +29,17 @@ export const WalletDeeplinkQRs = ({ blockchainName, tokenSymbol, amount, recipie
   // Basic check for common injected wallets (MetaMask, Coinbase Wallet, Rabby)
   // This is a best-effort detection for "installed" wallets on desktop.
   // For mobile, it largely relies on the OS handling deeplinks if the app is installed.
-  const isWalletDetected = useMemo(() => {
+  useMemo(() => {
     if (!chain || !token || applicableWallets.length === 0) return false;
 
     // Check for injected providers for EVM chains
     if (chain.isEVM && window.ethereum) {
-      if (window.ethereum.isMetaMask || window.ethereum.isCoinbaseWallet || window.ethereum.ethereum?.isRabby) {
+      if (window.ethereum.isMetaMask || window.ethereum.isCoinbaseWallet || (window.ethereum as { isRabby?: boolean }).isRabby) {
         return true;
       }
     }
     // Check for Phantom on Solana (basic detection)
-    if (chain.name === 'Solana' && (window as any).phantom?.solana) {
+    if (chain.name === 'Solana' && (window as { phantom?: { solana?: unknown } }).phantom?.solana) {
       return true;
     }
     
@@ -104,7 +104,7 @@ export const WalletDeeplinkQRs = ({ blockchainName, tokenSymbol, amount, recipie
 
   // Render clickable wallet tiles
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-32 py-4">
+    <div className="flex flex-wrap gap-4 justify-center">
       {applicableWallets.map((wallet) => (
         <QrCodeDisplayCard
           key={wallet.name}

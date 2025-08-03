@@ -17,6 +17,7 @@ export interface SerializableOrderChainConfig extends Omit<MerchantChainConfig, 
     // Embed minimal token info for rehydration
     info: SerializableTokenDetails;
   }[];
+  chainId: number;
 }
 
 // Full order data that gets serialized and deserialized
@@ -33,8 +34,10 @@ export interface RehydratedOrderData {
   chains: {
     name: string;
     address: string;
+    chainId: number;
     tokens: { symbol: string; amount: string; info: TokenInfoDto }[];
   }[];
-  crossChainUrl: string; // This will be regenerated on the client side
+  crossChainUrl: string;
+  orderSwapUrl: string;
 }
 

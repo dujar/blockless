@@ -16,6 +16,6 @@ export const WalletTile = ({ wallet, onClick }: WalletTileProps) => (
     <div className="p-2 bg-white rounded-lg border border-gray-200 dark:border-gray-600">
       <QRCode value={wallet.deeplink} size={128} logoImage={wallet.logo} logoWidth={32} logoHeight={32} />
     </div>
-    <p className="mt-2 text-sm font-medium text-gray-800 dark:text-gray-200">{wallet.name}</p>
+    <p className="mt-2 text-sm font-medium text-base-content">{wallet.name}</p>
   </div>
 );

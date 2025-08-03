@@ -1,13 +1,9 @@
-import { QRCode } from 'react-qrcode-logo';
-import type { Wallet } from '../../../data/wallets';
 import blocklessLogo from '../../../assets/blockless.svg'; // Import blockless logo for fallback
 import { useState } from 'react'; // Import useState
 import { QrCodeDisplayCard } from '../../../components/qr-code-display-card'; // Import the new component
 
-type WalletWithDeeplink = Wallet & { deeplink: string };
-
 interface FullScreenQRCodeProps {
-  wallet: WalletWithDeeplink;
+  wallet: { deeplink: string; name: string; logo: string; };
   blockchainName: string;
   tokenSymbol: string;
   amount: string;
@@ -52,15 +48,15 @@ export const FullScreenQRCode = ({ wallet, blockchainName, tokenSymbol, amount, 
             className="fixed inset-0 bg-gray-800 bg-opacity-75 flex flex-col items-center justify-center z-50 cursor-pointer p-4"
             onClick={onClose}
         >
-            <div className="bg-white dark:bg-primary-950 rounded-lg shadow-lg p-6 w-full max-w-[90vw]" onClick={e => e.stopPropagation()}>
+            <div className="bg-base-100 rounded-lg shadow-lg p-6" onClick={e => e.stopPropagation()}>
                 <div className="text-center mb-6">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                    <h3 className="text-xl font-bold text-base-content mb-2">
                         Pay {amount} {tokenSymbol}
                     </h3>
-                    <p className="text-gray-700 dark:text-gray-300">
+                    <p className="text-neutral-content">
                         from {formatCurrency(fiatAmount, fiatCurrency)}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                    <p className="text-sm text-neutral-content mt-2">
                         Scan with {wallet.name}
                     </p>
                 </div>
@@ -75,11 +71,12 @@ export const FullScreenQRCode = ({ wallet, blockchainName, tokenSymbol, amount, 
                         title="" // Title is handled by parent, not for the QR card itself
                         subtitle="" // Subtitle is handled by parent
                         detail="" // Detail is handled by parent
-                        isClickable={false} // Not clickable in fullscreen mode
+                        isClickable={true} // Not clickable in fullscreen mode
+                        onClick={() => window.open(wallet.deeplink, '_blank')}
                     />
                 </div>
 
-                <div className="text-center space-y-2 text-gray-800 dark:text-gray-300 text-sm">
+                <div className="text-center space-y-2 text-neutral-content text-sm">
                     <p className="break-all font-mono">
                         Blockchain: <span className="font-semibold">{blockchainName}</span>
                     </p>
@@ -89,14 +86,14 @@ export const FullScreenQRCode = ({ wallet, blockchainName, tokenSymbol, amount, 
                 </div>
                 
                 {/* Wallet-specific Deeplink Section */}
-                <div className="mt-4 p-3 bg-gray-100 dark:bg-primary-900 rounded-lg group w-full">
-                    <div className="flex justify-between items-center text-sm font-medium text-gray-800 dark:text-gray-300 mb-1">
+                <div className="mt-4 p-3 bg-base-300 dark:bg-primary-900 rounded-lg group w-full">
+                    <div className="flex justify-between items-center text-sm font-medium text-base-content mb-1">
                         <span>{wallet.name} Deeplink</span>
                         <div className="flex items-center space-x-2">
                             <button
                                 type="button"
                                 onClick={() => copyToClipboard(wallet.deeplink, setCopiedDeeplink)}
-                                className="p-1 rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-primary-800 transition"
+                                className="p-1 rounded-md text-neutral-content hover:bg-base-300 transition"
                                 title="Copy deeplink"
                             >
                                 {copiedDeeplink ? (
@@ -106,26 +103,26 @@ export const FullScreenQRCode = ({ wallet, blockchainName, tokenSymbol, amount, 
                                 )}
                             </button>
                             <a href={wallet.deeplink} target="_blank" rel="noopener noreferrer"
-                                className="p-1 rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-primary-800 transition"
+                                className="p-1 rounded-md text-neutral-content hover:bg-base-300 transition"
                                 title="Open deeplink"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
                             </a>
                         </div>
                     </div>
-                    <div className="text-xs font-mono break-all text-gray-700 dark:text-gray-200 bg-gray-200 dark:bg-primary-800/50 p-2 rounded">
+                    <div className="max-w-sm text-sm font-sans break-all text-base-content bg-base-200 p-3 rounded-lg shadow-inner">
                         <a href={wallet.deeplink} target="_blank" rel="noopener noreferrer" className="hover:underline">
                             {wallet.deeplink}
                         </a>
                     </div>
                     <div className="flex justify-center items-center space-x-4 mt-3">
-                        <a href={socialDeeplinkShareLinks.twitter} target="_blank" rel="noopener noreferrer" title="Share on Twitter" className="text-gray-600 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400">
+                        <a href={socialDeeplinkShareLinks.twitter} target="_blank" rel="noopener noreferrer" title="Share on Twitter" className="text-neutral-content hover:text-info-content">
                             <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.21-.669-3.924 4.727H2.25l8.14-9.29L2.25 2.25h3.308l5.21 6.69z"></path></svg>
                         </a>
-                        <a href={socialDeeplinkShareLinks.telegram} target="_blank" rel="noopener noreferrer" title="Share on Telegram" className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500">
+                        <a href={socialDeeplinkShareLinks.telegram} target="_blank" rel="noopener noreferrer" title="Share on Telegram" className="text-neutral-content hover:text-info-content">
                             <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 7.5L10.3 14.7c-.2.2-.4.2-.6 0l-2.9-2.9c-.2-.2-.2-.4 0-.6l.7-.7c.2-.2.4-.2.6 0l2.3 2.3 5.4-5.4c.2-.2.4-.2.6 0l.7.7c.2.2.2.4 0 .6z"></path><path fillRule="evenodd" clipRule="evenodd" d="M18.75 3a.75.75 0 00-.515.228l-15 15a.75.75 0 00.515 1.272l1.664-.176a.75.75 0 00.74-.633L10 6l-1.5 5 8.75-5c.75-.4.75-.6.25-.9z" fill="currentColor"></path></svg>
                         </a>
-                        <a href={socialDeeplinkShareLinks.whatsapp} target="_blank" rel="noopener noreferrer" title="Share on WhatsApp" className="text-gray-600 hover:text-green-600 dark:text-gray-400 dark:hover:text-gray-500">
+                        <a href={socialDeeplinkShareLinks.whatsapp} target="_blank" rel="noopener noreferrer" title="Share on WhatsApp" className="text-neutral-content hover:text-success-content">
                             <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6"><path d="M12.001 2c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10-4.477-10-10-10zm.914 15.656c-1.398.812-3.081 1.25-4.73 1.25-.091 0-.173-.008-.255-.015a.499.499 0 01-.482-.553l.426-2.557a.499.499 0 01.312-.416l2.164-1.082a.499.499 0 01.554.126l.89.89a.5.5 0 00.556.126l2.348-1.251c.642-.341 1.054-.724 1.251-1.127.199-.404.286-.814.286-1.127 0-.398-.106-.757-.312-1.066-.208-.31-.485-.561-.836-.752-.352-.191-.76-.286-1.228-.286-.445 0-.825.074-1.144.221-.32.148-.59.351-.812.607-.222.256-.395.53-.518.825a.499.499 0 01-.482.355l-2.083.084a.499.499 0 01-.527-.473c-.08-.8-.08-1.637.113-2.485.195-.848.583-1.57 1.164-2.166.582-.597 1.3-1.01 2.15-1.246.852-.236 1.74-.355 2.66-.355 1.503 0 2.87.359 4.102 1.077 1.233.718 2.227 1.705 2.986 2.961.758 1.256 1.137 2.666 1.137 4.234 0 1.597-.406 3.01-1.218 4.234-.812 1.224-1.859 2.164-3.14 2.812-1.282.648-2.673.972-4.174.972-.511 0-.992-.047-1.442-.142z"/></svg>
                         </a>
                     </div>
@@ -134,7 +131,7 @@ export const FullScreenQRCode = ({ wallet, blockchainName, tokenSymbol, amount, 
 
             <button
                 onClick={onClose}
-                className="mt-6 px-4 py-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-400"
+                className="mt-6 px-4 py-2 text-neutral-content hover:text-base-content"
             >
                 ← Close
             </button>

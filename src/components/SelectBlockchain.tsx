@@ -41,12 +41,12 @@ export const SelectBlockchain = ({ onSelect, onBack, onDisconnect, selectedChain
 
   return (
     <div className="py-4">
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Select Blockchain</h2>
+      <h2 className="text-2xl font-bold text-base-content mb-6">Select Blockchain</h2>
       
-      {isLoading && <p className="text-gray-500 dark:text-gray-400">Loading supported blockchains...</p>}
+      {isLoading && <p className="text-neutral-content">Loading supported blockchains...</p>}
       {error && <p className="text-red-500 dark:text-red-400">Error loading supported blockchains. Please try again later.</p>}
       {!isLoading && !error && availableChains.length === 0 && (
-        <p className="text-gray-500 dark:text-gray-400">No supported blockchains found.</p>
+        <p className="text-neutral-content">No supported blockchains found.</p>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -64,7 +64,7 @@ export const SelectBlockchain = ({ onSelect, onBack, onDisconnect, selectedChain
               }`}
             >
               {imgErrorMap[key] || !chainLogo ? (
-                <span className="flex items-center justify-center w-10 h-10 mr-3 rounded-full bg-gray-200 dark:bg-primary-800 font-bold text-sm text-gray-700 dark:text-gray-300">
+                <span className="flex items-center justify-center w-10 h-10 mr-3 rounded-full bg-gray-200 dark:bg-primary-800 font-bold text-sm text-base-content">
                   {chain.name.charAt(0)}
                 </span>
               ) : (
@@ -75,7 +75,7 @@ export const SelectBlockchain = ({ onSelect, onBack, onDisconnect, selectedChain
                   onError={() => handleImageError(chain.chainId, chain.name)}
                 />
               )}
-              <span className="font-medium text-gray-900 dark:text-white">{chain.name}</span>
+              <span className="font-medium text-base-content">{chain.name}</span>
             </div>
           );
         })}
@@ -83,7 +83,7 @@ export const SelectBlockchain = ({ onSelect, onBack, onDisconnect, selectedChain
       <div className="mt-6 flex justify-between">
         <button
           onClick={onBack}
-          className="px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg transition"
+          className="px-4 py-2 text-neutral-content hover:bg-base-300 dark:hover:bg-primary-800 rounded-lg transition"
         >
           ← Back
         </button>

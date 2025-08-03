@@ -100,7 +100,7 @@ const TokenItem = ({ token, chainName, isChecked, onTokenChange, isSelectable }:
                     className="h-6 w-6 mr-2 rounded-full flex-shrink-0" 
                     onError={handleError} 
                 />
-                <span className="text-sm font-medium text-gray-800 dark:text-gray-200 truncate">{token.symbol}</span>
+                <span className="text-sm font-medium text-base-content truncate">{token.symbol}</span>
                 {riskInfo.level > 1 && <span className={`ml-2 text-xs font-semibold ${riskInfo.color}`}>({riskInfo.label})</span>}
             </label>
         </div>
@@ -123,7 +123,7 @@ const SelectedTokenChip = ({ token, chainName, onTokenRemove}: {
     };
 
     return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 dark:bg-primary-900/30 text-gray-800 dark:text-gray-200`}>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 dark:bg-primary-900/30 text-base-content`}>
             <img 
                 src={imgSrc} 
                 alt={token.name} 
@@ -133,7 +133,7 @@ const SelectedTokenChip = ({ token, chainName, onTokenRemove}: {
             {token.symbol}
             <button
                 type="button"
-                className="ml-2 -mr-0.5 h-4 w-4 rounded-full inline-flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                className="ml-2 -mr-0.5 h-4 w-4 rounded-full inline-flex items-center justify-center text-neutral-content hover:text-base-content"
                 onClick={() => onTokenRemove(chainName, token.symbol, false)}
             >
                 <span className="sr-only">Remove {token.symbol}</span>
@@ -254,12 +254,12 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
             <label className={`block text-sm font-medium mb-2 ${theme.label}`}>
                 Accepted Tokens on {chainName}
             </label>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+            <p className="text-xs text-neutral-content mb-3">
                 Only native blockchain tokens and common stablecoins are currently supported for selection.
             </p>
 
             {selectedTokenDetails.length > 0 && (
-                <div className="mb-4 flex flex-wrap gap-2 p-3 bg-gray-100 dark:bg-primary-900/50 rounded-lg">
+                <div className="mb-4 flex flex-wrap gap-2 p-3 bg-base-300 dark:bg-primary-900/50 rounded-lg">
                     {selectedTokenDetails.map(token => (
                         <SelectedTokenChip 
                             // Use a more robust key to prevent issues with duplicate symbols across different token types (e.g., native ETH vs. ERC20 ETH)
@@ -274,12 +274,12 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
 
             <div className="relative mb-2">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                     <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                     <svg className="w-4 h-4 text-neutral-content" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                 </div>
                 <input
                     type="text"
                     placeholder="Search for a token..."
-                    className={`w-full p-2 pl-10 border rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white ${theme.border}`}
+                    className={`w-full p-2 pl-10 border rounded-lg bg-base-200 text-base-content ${theme.border}`}
                     value={searchTerm}
                     onChange={e => setSearchTerm(e.target.value)}
                     onFocus={() => setIsSearchFocused(true)}
@@ -288,12 +288,12 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
             </div>
 
             <div className="space-y-2 max-h-72 overflow-y-auto pr-2">
-                {(isLoading || isSearching) && <div className={`text-sm ${theme.label}`}>Loading tokens...</div>}
+                {(isLoading || isSearching) && <div className={`text-sm text-neutral-content`}>Loading tokens...</div>}
                 {error && <div className="text-sm text-red-500">Failed to load tokens.</div>}
                 
                 {sortedCategories.map(category => (
                     <div key={category}>
-                        <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-gray-400 px-2 py-1">
+                        <h4 className="text-xs font-bold uppercase text-neutral-content px-2 py-1">
                             {category} ({categorizedTokens[category].length})
                         </h4>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-2">
@@ -313,7 +313,7 @@ const TokenSelector = ({ chainId, chainName, selectedTokens, onTokenChange, them
                 ))}
 
                 {tokensToDisplay.length === 0 && !isLoading && !isSearching && !error && (
-                    <div className="text-center text-gray-500 dark:text-gray-400 p-4">
+                    <div className="text-center text-neutral-content p-4">
                         No native or stable tokens found matching your search.
                     </div>
                 )}
@@ -385,7 +385,7 @@ export const ChainConfigCard = ({
                 value={currentChainConfig.address}
                 onChange={e => onAddressChange(chainInfo.name, e.target.value)}
                 placeholder="0x..."
-                className={`w-full p-2 pr-24 border rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white ${addressValidity === false ? 'border-red-500' : theme.border}`}
+                className={`w-full p-2 pr-24 border rounded-lg bg-base-200 text-gray-900 dark:text-white ${addressValidity === false ? 'border-red-500' : theme.border}`}
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 space-x-1">
                   {addressValidity === true && <span className="text-green-500">✓</span>}

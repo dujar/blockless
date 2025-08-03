@@ -1,21 +1,14 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useChainContext } from '../context/CrossChainContext';
-import type { BlockchainData } from '../../../data/blockchains';
 import { BlockchainTokenPaymentOption } from '../components/BlockchainTokenPaymentOption';
 
 export const OrderSelectionStep: React.FC = () => {
   const { chain, setChain, chainResponse,orders } = useChainContext();
-  let chains = chainResponse.data;
+  const chains = chainResponse.data;
 
-  const isValidChain = (chain: BlockchainData) => {
-    return chains?.some(c => c.id == chain.id);
-  };
+  
 
-  const handleChainSelect = useCallback((chainData: BlockchainData) => {
-    if (isValidChain(chainData) && chainData.chainId !== undefined) {
-      setChain(chainData);
-    }
-  }, [setChain, chains]);
+  
 
   useEffect(() => {
     // If no chain is selected, set the first supported chain

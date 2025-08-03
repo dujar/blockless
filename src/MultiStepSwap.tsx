@@ -3,7 +3,7 @@ import { useAccount, useDisconnect } from 'wagmi';
 import { Link } from 'react-router-dom'; // Import Link
 import type { SwapParams } from './SwapParamSafe';
 import WalletDeeplinkQRs from './features/wallet-deeplink/WalletDeeplinkQRs';
-import { ConnectWallet } from './components/ConnectWallet'; // Import ConnectWallet
+
 import { SelectBlockchain } from './components/SelectBlockchain'; // Import SelectBlockchain
 import { SelectToken } from './components/SelectToken'; // Import SelectToken
 import {  type TokenInfo } from './data/tokens'; // Import tokenData
@@ -51,8 +51,8 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
 
   if (showQRs && sourceChain && sourceToken && destinationInfo) {
     return (
-      <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-lg shadow-dynamic p-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Complete Payment</h2>
+      <div className="max-w-2xl mx-auto bg-base-100 rounded-2xl shadow-lg shadow-dynamic p-8">
+        <h2 className="text-2xl font-bold text-base-content mb-6">Complete Payment</h2>
         <WalletDeeplinkQRs
           blockchainName={sourceChain}
           tokenSymbol={sourceToken.symbol}
@@ -62,18 +62,18 @@ const MultiStepSwap = ({ swapParams }: MultiStepSwapProps) => {
           fiatCurrency="USD" // Default to USD
           isTransferType="other"
         />
-        <button onClick={() => setShowQRs(false)} className="mt-4 text-gray-500 hover:underline">← Back</button>
+        <button onClick={() => setShowQRs(false)} className="mt-4 text-neutral-content hover:underline">← Back</button>
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8">
+    <div className="max-w-2xl mx-auto bg-base-100 rounded-2xl shadow-lg p-8">
       {step < 4 && (
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Swap to Pay</h2>
+          <h2 className="text-2xl font-bold text-base-content">Swap to Pay</h2>
           {/* Link back to create order page */}
-          <Link to="/create-order" className="text-sm text-gray-500 hover:underline">Cancel</Link>
+          <Link to="/create-order" className="text-sm text-neutral-content hover:underline">Cancel</Link>
         </div>
       )}
 

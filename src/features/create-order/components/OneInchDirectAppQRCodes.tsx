@@ -1,16 +1,34 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import OneInchLogo from '../../../assets/1inch.svg';
-import blocklessLogo from '../../../assets/blockless.svg';
-import { getBlockchainLogo, getTokenLogoURI, formatTokenAmountWithSymbol } from '../../../utils/token-helpers';
+import { getTokenLogoURI, formatTokenAmountWithSymbol } from '../../../utils/token-helpers';
 import { QrCodeDisplayCard } from '../../../components/qr-code-display-card';
 import type { OrderData } from '../hooks/useCreateOrderForm';
 import { getChainDetailsByChainId } from '../../../data/blockchains';
+import { FullScreenQRCode } from '../../wallet-deeplink/components/FullScreenQRCode';
 
 interface OneInchDirectAppQRCodesProps {
     order: OrderData;
 }
 
 const OneInchDirectAppQRCodes: React.FC<OneInchDirectAppQRCodesProps> = ({ order }) => {
+    const [fullScreenQR, setFullScreenQR] = useState<{
+        value: string;
+        chainName: string;
+        tokenSymbol: string;
+        tokenAmount: string;
+        tokenInfo: {
+            address: string;
+            chainId: number;
+            decimals: number;
+            logoURI: string;
+            name: string;
+            symbol: string;
+            tags: string[];
+        };
+        recipientAddress: string;
+    } | null>(null);
+        
+
     // Generate individual 1inch app links for each payable token
     const oneInchPaymentQRs = useMemo(() => {
         const qrs = [];
@@ -20,18 +38,7 @@ const OneInchDirectAppQRCodes: React.FC<OneInchDirectAppQRCodesProps> = ({ order
 
             for (const token of chainConfig.tokens) {
                 if (parseFloat(token.amount) > 0) {
-                    // Construct a direct 1inch app swap URL.
-                    // This is a simplified interpretation of 1inch deep linking.
-                    // A real-world implementation might require more precise parameters
-                    // like `fromTokenAddress`, `toTokenAddress`, `fromChainId`, `toChainId`,
-                    // or using 1inch's specific swap deeplink format if available.
-                    // For the purpose of this exercise, we'll use a `dst` parameter
-                    // similar to our internal one but for app.1inch.io,
-                    // assuming 1inch can parse it or a direct swap from 'any' token on customer's side
-                    // to this specific token/recipient.
-                    // Example from prompt: `https://app.1inch.io/swap?dst=137:WBTC`
-                    // Extended for amount and recipient:
-                    const oneInchAppUrl = `https://app.1inch.io/swap?dst=${token.info.chainId}:${token.info.address}:${token.amount}:${chainConfig.address}`;
+                    const oneInchAppUrl = `https://app.1inch.io/swap?dst=${token.amount}:${token.symbol}`;
                     
                     qrs.push({
                         value: oneInchAppUrl,
@@ -39,6 +46,7 @@ const OneInchDirectAppQRCodes: React.FC<OneInchDirectAppQRCodesProps> = ({ order
                         tokenSymbol: token.symbol,
                         tokenAmount: token.amount,
                         tokenInfo: token.info,
+                        recipientAddress: chainConfig.address,
                     });
                 }
             }
@@ -46,9 +54,24 @@ const OneInchDirectAppQRCodes: React.FC<OneInchDirectAppQRCodesProps> = ({ order
         return qrs;
     }, [order]);
 
+    if (fullScreenQR) {
+        return (
+            <FullScreenQRCode
+                wallet={{ deeplink: fullScreenQR.value, name: '1inch Wallet', logo: OneInchLogo }}
+                blockchainName={fullScreenQR.chainName}
+                tokenSymbol={fullScreenQR.tokenSymbol}
+                amount={fullScreenQR.tokenAmount}
+                recipientAddress={fullScreenQR.recipientAddress}
+                fiatAmount={order.fiatAmount}
+                fiatCurrency={order.fiatCurrency}
+                onClose={() => setFullScreenQR(null)}
+            />
+        );
+    }
+
     if (oneInchPaymentQRs.length === 0) {
         return (
-            <div className="text-center text-gray-500 dark:text-gray-400 p-4">
+            <div className="text-center text-neutral-content p-4">
                 No active payment methods configured for direct 1inch app swaps.
             </div>
         );
@@ -56,12 +79,11 @@ const OneInchDirectAppQRCodes: React.FC<OneInchDirectAppQRCodesProps> = ({ order
 
     return (
         <div className="space-y-6">
-            <p className="text-gray-700 dark:text-gray-400 mb-4">
+            <p className="text-neutral-content mb-4">
                 Scan one of these QR codes to open the 1inch app on your device and initiate a payment using a direct cross-chain swap.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {oneInchPaymentQRs.map((qr) => {
-                    const blockchainLogo = getBlockchainLogo(qr.chainName);
                     const tokenLogo = qr.tokenInfo.logoURI || getTokenLogoURI(qr.tokenInfo.address, qr.tokenInfo.symbol, qr.chainName);
 
                     return (
@@ -78,6 +100,7 @@ const OneInchDirectAppQRCodes: React.FC<OneInchDirectAppQRCodesProps> = ({ order
                             detail="Direct 1inch App Link"
                             errorCorrectionLevel="H"
                             isClickable={true}
+                            onClick={() => setFullScreenQR(qr)}
                             tooltipText={`Payment: ${qr.tokenAmount} ${qr.tokenSymbol} on ${qr.chainName}\nRedirects to 1inch app for swap.`}
                         />
                     );
@@ -91,3 +114,4 @@ const OneInchDirectAppQRCodes: React.FC<OneInchDirectAppQRCodesProps> = ({ order
 };
 
 export default OneInchDirectAppQRCodes;
+

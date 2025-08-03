@@ -96,11 +96,11 @@ export const SelectToken = ({
 
   return (
     <div className="py-4">
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Select Token</h2>
+      <h2 className="text-2xl font-bold text-base-content mb-6">Select Token</h2>
       
       {/* Amount Input */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-base-content mb-2">
           Amount to Pay
         </label>
         <input
@@ -108,7 +108,7 @@ export const SelectToken = ({
           value={amount}
           onChange={(e) => onAmountChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="w-full p-3 border border-gray-300 dark:border-gray-800 rounded-lg bg-white dark:bg-primary-800 text-xl font-semibold text-gray-900 dark:text-white placeholder:text-gray-400"
+          className="w-full p-3 border border-gray-300 dark:border-gray-800 rounded-lg bg-base-100 text-xl font-semibold text-gray-900 dark:text-white placeholder:text-neutral-content"
           placeholder="0.0"
           step="any"
         />
@@ -119,13 +119,13 @@ export const SelectToken = ({
       
       {/* Token Selection */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-base-content mb-2">
           Select Token to Pay With
         </label>
-        {isLoading && <p className="text-gray-500 dark:text-gray-400">Loading tokens...</p>}
+        {isLoading && <p className="text-neutral-content">Loading tokens...</p>}
         {error && <p className="text-red-500 dark:text-red-400">Error loading tokens.</p>}
         {!isLoading && !error && processedTokens.length === 0 && (
-          <p className="text-gray-500 dark:text-gray-400">No supported tokens found for this chain.</p>
+          <p className="text-neutral-content">No supported tokens found for this chain.</p>
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-72 overflow-y-auto pr-2">
           {processedTokens
@@ -146,8 +146,8 @@ export const SelectToken = ({
                   onError={() => handleImageError(token.symbol)}
                 />
                 <div>
-                  <div className="font-medium text-gray-900 dark:text-gray-200">{token.symbol}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{token.name}</div>
+                  <div className="font-medium text-base-content">{token.symbol}</div>
+                  <div className="text-xs text-neutral-content truncate">{token.name}</div>
                 </div>
               </div>
             ))}
@@ -157,11 +157,11 @@ export const SelectToken = ({
       {/* Target Address (if provided) */}
       {destinationAddress && (
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-800 dark:text-gray-300 mb-2">
+          <label className="block text-sm font-medium text-base-content">
             Recipient Address
           </label>
-          <div className="p-3 bg-gray-100 dark:bg-primary-800 rounded-lg">
-            <div className="text-sm break-all text-gray-900 dark:text-white font-mono">
+          <div className="p-3 bg-base-300 dark:bg-primary-800 rounded-lg">
+            <div className="text-sm break-all text-base-content font-mono">
               {destinationAddress}
             </div>
           </div>
@@ -172,7 +172,7 @@ export const SelectToken = ({
       <div className="flex justify-between mt-6">
         <button
           onClick={onBack}
-          className="px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-primary-800 rounded-lg transition"
+          className="px-4 py-2 text-neutral-content hover:bg-base-300 dark:hover:bg-primary-800 rounded-lg transition"
         >
           ← Back
         </button>

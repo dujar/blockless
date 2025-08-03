@@ -17,7 +17,7 @@ export function BlockchainTokenPaymentOption({ order }: BlockchainTokenPaymentOp
   const { data: makerToken, isLoading: isLoadingMakerToken, error: makerTokenError } = useTokenDetails(srcChainId, makerAsset);
 
   // Fetch USD price for the primary token
-  const { data: makerTokenUsdPrice, isLoading: isLoadingMakerTokenPrice, error: makerTokenPriceError } = useTokenPrice(srcChainId, makerAsset);
+  const { data: makerTokenUsdPrice, isLoading: isLoadingMakerTokenPrice } = useTokenPrice(srcChainId, makerAsset);
 
   // Determine native token details
   // Note: nativeTokenAddress is typically for wrapped native tokens,
@@ -71,7 +71,7 @@ export function BlockchainTokenPaymentOption({ order }: BlockchainTokenPaymentOp
   };
 
   const renderLoading = () => (
-    <div className="flex items-center space-x-2 text-gray-500 dark:text-gray-400 animate-pulse">
+    <div className="flex items-center space-x-2 text-neutral-content animate-pulse">
       <div className="w-6 h-6 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
       <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-24"></div>
       <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-16"></div>
@@ -85,8 +85,8 @@ export function BlockchainTokenPaymentOption({ order }: BlockchainTokenPaymentOp
   return (
     <div className="flex flex-col gap-4">
       {/* Primary Token Payment Option (Token to be sent by the maker) */}
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600">
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-2">You will pay with</h3>
+      <div className="p-4 border rounded-lg bg-base-100 border-gray-200 dark:border-gray-600">
+        <h3 className="font-semibold text-base-content mb-2">You will pay with</h3>
         {isLoadingMakerToken || isLoadingMakerTokenPrice ? (
           renderLoading()
         ) : makerTokenError ? (
@@ -97,24 +97,24 @@ export function BlockchainTokenPaymentOption({ order }: BlockchainTokenPaymentOp
               <img src={makerToken.logoURI} alt={`${makerToken.symbol} Logo`} className="w-8 h-8 rounded-full object-contain" />
             )}
             <div>
-              <p className="text-lg font-medium text-gray-800 dark:text-gray-100">
+              <p className="text-lg font-medium text-base-content">
                 {formatAmount(makingAmount, makerToken.decimals)} {makerToken.symbol}
               </p>
               {makerTokenUsdPrice && (
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-sm text-neutral-content">
                   ~ ${Number(makerTokenUsdPrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD
                 </p>
               )}
             </div>
           </div>
         ) : (
-          <p className="text-gray-500 dark:text-gray-400">Payment token details not available.</p>
+          <p className="text-neutral-content">Payment token details not available.</p>
         )}
       </div>
 
       {/* Native Blockchain Token (for gas fees or alternative payment) */}
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600">
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Native Blockchain Token (for Gas)</h3>
+      <div className="p-4 border rounded-lg bg-base-100 border-gray-200 dark:border-gray-600">
+        <h3 className="font-semibold text-base-content mb-2">Native Blockchain Token (for Gas)</h3>
         {isLoadingNativeTokenPrice ? (
           renderLoading()
         ) : nativeTokenPriceError ? (
@@ -125,21 +125,21 @@ export function BlockchainTokenPaymentOption({ order }: BlockchainTokenPaymentOp
               <img src={nativeTokenInfo.logo} alt={`${nativeTokenInfo.tokenSymbol} Logo`} className="w-8 h-8 rounded-full object-contain" />
             )}
             <div>
-              <p className="text-lg font-medium text-gray-800 dark:text-gray-100">
+              <p className="text-lg font-medium text-base-content">
                 {nativeTokenInfo.tokenSymbol} ({srcChain.name})
               </p>
               {nativeTokenUsdPrice && (
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-sm text-neutral-content">
                   ~ ${Number(nativeTokenUsdPrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD
                 </p>
               )}
               {!nativeTokenUsdPrice && (
-                <p className="text-sm text-gray-500 dark:text-gray-400">Price not available.</p>
+                <p className="text-sm text-neutral-content">Price not available.</p>
               )}
             </div>
           </div>
         ) : (
-          <p className="text-gray-500 dark:text-gray-400">Native token details not available for this chain.</p>
+          <p className="text-neutral-content">Native token details not available for this chain.</p>
         )}
       </div>
     </div>

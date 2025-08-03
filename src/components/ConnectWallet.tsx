@@ -11,8 +11,8 @@ export const ConnectWallet = ({ blockchain }: ConnectWalletProps) => {
 
   return (
     <div className="text-center py-8">
-      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Connect to {blockchain.name}</h3>
-      <p className="text-gray-700 dark:text-gray-300 mb-8">
+      <h3 className="text-xl font-bold text-base-content mb-4">Connect to {blockchain.name}</h3>
+      <p className="text-base-content mb-8">
         Connect your wallet to get started with Blockless Swap on {blockchain.name}
       </p>
       <button

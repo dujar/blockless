@@ -4,7 +4,7 @@ import AppBar from './AppBar';
 import { ThemeProvider } from './context/ThemeProvider';
 
 const AlphaBanner = () => (
-  <div className="bg-gray-700 text-gray-300 text-center p-2 text-sm font-mono flex items-center justify-center">
+  <div className="bg-neutral-700 text-neutral-300 text-center p-2 text-sm font-mono flex items-center justify-center">
     <span className="mr-2">💻</span> This application is currently in Alpha mode. Expect bugs and rapid changes.
   </div>
 );
@@ -15,7 +15,8 @@ import CrossSwapPage from './pages/CrossSwapPage';
 import SplashScreen from './SplashScreen';
 import ConnectWalletPage from './pages/ConnectWalletPage';
 import BlockchainThemesPage from './pages/BlockchainThemesPage';
-import OrderSwapPage from './features/order-swap/page'; // Import the new OrderSwapPage
+import OrderSwapPage from './features/order-swap/page';
+import QRCodePage from './pages/QRCodePage'; // Import the new OrderSwapPage
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -31,6 +32,9 @@ function App() {
     return <SplashScreen />;
   }
 
+  // Determine if in development mode for conditional routing
+  const isDevMode = import.meta.env.DEV;
+
   return (
     <ThemeProvider>
       <div className="min-h-screen">
@@ -42,10 +46,17 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/create-order" element={<CreateOrderPage />} />
-              <Route path="/swap" element={<CrossSwapPage />} />
               <Route path="/connect-wallet" element={<ConnectWalletPage />} />
-              <Route path="/blockchain-themes" element={<BlockchainThemesPage />} />
               <Route path="/order" element={<OrderSwapPage />} /> {/* New route for Order Swap */}
+              <Route path="/qr-codes" element={<QRCodePage />} />
+
+              {/* Development-only routes */}
+              {isDevMode && (
+                <>
+                  <Route path="/swap" element={<CrossSwapPage />} />
+                  <Route path="/blockchain-themes" element={<BlockchainThemesPage />} />
+                </>
+              )}
             </Routes>
           </div>
         </main>
@@ -55,4 +66,3 @@ function App() {
 }
 
 export default App;
-

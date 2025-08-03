@@ -1,266 +1,512 @@
 @import "tailwindcss";
-@import "styles/themes.css";
-/* You can add your custom CSS here */
+@plugin "daisyui";
 
-/* Hide spinner arrows for number input fields */
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+@plugin "daisyui/theme" {
+  name: "light";
+  default: false;
+  prefersdark: false;
+  color-scheme: "dark";
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(98% 0 0);
+  --color-base-300: oklch(95% 0 0);
+  --color-base-content: oklch(21% 0.006 285.885);
+  --color-primary: oklch(70% 0.213 47.604);
+  --color-primary-content: oklch(93% 0.034 272.788);
+  --color-secondary: oklch(62% 0.214 259.815);
+  --color-secondary-content: oklch(94% 0.028 342.258);
+  --color-accent: oklch(77% 0.152 181.912);
+  --color-accent-content: oklch(38% 0.063 188.416);
+  --color-neutral: oklch(14% 0.005 285.823);
+  --color-neutral-content: oklch(92% 0.004 286.32);
+  --color-info: oklch(74% 0.16 232.661);
+  --color-info-content: oklch(29% 0.066 243.157);
+  --color-success: oklch(76% 0.177 163.223);
+  --color-success-content: oklch(37% 0.077 168.94);
+  --color-warning: oklch(82% 0.189 84.429);
+  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-error: oklch(71% 0.194 13.428);
+  --color-error-content: oklch(27% 0.105 12.094);
+  --radius-selector: 2rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.3125rem;
+  --size-field: 0.3125rem;
+  --border: 1.5px;
+  --depth: 1;
+  --noise: 1;
 }
-input[type='number'] {
-  -moz-appearance: textfield; /* Firefox */
-}
+@plugin "daisyui/theme" {
+  name: "ethereum-light";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
 
-html, body, #root {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
+  --color-base-100: oklch(99% 0.005 260);  
+  --color-base-200: oklch(95% 0.01 260);    /* Light gray */
+  --color-base-300: oklch(88% 0.015 260);  
+  --color-base-content: oklch(20% 0.04 260); 
 
-/* Custom scrollbar for better aesthetics */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
+  --color-primary: oklch(60% 0.22 280);     
+  --color-primary-content: oklch(98% 0.01 280);
 
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
+  --color-secondary: oklch(75% 0.25 190);  
+  --color-secondary-content: oklch(15% 0.03 190);
 
-::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
-}
+  /* ... other colors from original ... */
 
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
+@plugin "daisyui/theme" {
+  name: "ethereum-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
 
-/* For Firefox */
-html {
-    scrollbar-width: thin;
-    scrollbar-color: #888 #f1f1f1;
-}
+  --color-base-100: oklch(12% 0.02 270);    
+  --color-base-content: oklch(92% 0.03 270); 
 
-/* Custom styles for wagmi modal */
-.wagmi-connect-modal-container {
-    z-index: 1000; /* Ensure it's above other content */
-}
+  /* ... other dark mode colors ... */
 
-.wagmi-connect-modal-overlay {
-    background-color: rgba(0, 0, 0, 0.7);
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
 }
+@plugin "daisyui/theme" {
+  name: "avalanche-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
 
-.wagmi-connect-modal-content {
-    background-color: #fff;
-    color: #000;
-}
+  --color-base-100: oklch(99% 0.005 280);   
+  --color-base-200: oklch(95% 0.01 280);    
+  --color-base-300: oklch(90% 0.015 280);   
+  --color-base-content: oklch(20% 0.04 280); 
 
-.dark .wagmi-connect-modal-content {
-    background-color: #1a202c;
-    color: #fff;
-}
+  --color-primary: oklch(62% 0.28 25);       
+  --color-primary-content: oklch(98% 0.01 25);
 
-/* Custom styles for react-toastify */
-.Toastify__toast-container {
-    z-index: 9999;
-}
+  /* ... other colors ... */
 
-.Toastify__toast--success {
-    background-color: #22c55e;
-    color: #fff;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
+@plugin "daisyui/theme" {
+  name: "avalanche-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
 
-.Toastify__toast--error {
-    background-color: #ef4444;
-    color: #fff;
-}
+  --color-base-100: oklch(10% 0.02 280);    
+  --color-base-content: oklch(94% 0.03 280); 
 
-.Toastify__toast--info {
-    background-color: #3b82f6;
-    color: #fff;
-}
+  /* ... dark mode colors ... */
 
-.Toastify__toast--warning {
-    background-color: #f59e0b;
-    color: #fff;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
 }
+@plugin "daisyui/theme" {
+  name: "optimism-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
 
-/* Custom styles for react-tooltip */
-.react-tooltip {
-    z-index: 9999;
-    font-size: 0.75rem;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.375rem;
-    opacity: 1 !important; /* Override default opacity */
-}
+  --color-base-100: oklch(99% 0.008 30);   
+  --color-base-200: oklch(95% 0.015 30);   
+  --color-base-300: oklch(90% 0.02 30);    
+  --color-base-content: oklch(18% 0.04 30); 
 
-.react-tooltip.dark-tooltip {
-    background-color: #1a202c;
-    color: #fff;
-}
+  --color-primary: oklch(65% 0.26 20);      
+  --color-primary-content: oklch(98% 0.01 20);
 
-.react-tooltip.light-tooltip {
-    background-color: #fff;
-    color: #1a202c;
-    border: 1px solid #e2e8f0;
-}
+  --color-secondary: oklch(70% 0.2 190);   
+  --color-secondary-content: oklch(15% 0.03 190);
 
-/* Custom styles for react-select */
-.react-select-container .react-select__control {
-    @apply bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white;
-}
+  /* ... accent, neutral, other color settings ... */
 
-.react-select-container .react-select__menu {
-    @apply bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
+@plugin "daisyui/theme" {
+  name: "optimism-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
 
-.react-select-container .react-select__option {
-    @apply text-gray-900 dark:text-white;
-}
+  --color-base-100: oklch(10% 0.025 30);    
+  --color-base-200: oklch(18% 0.03 30);     
+  --color-base-300: oklch(24% 0.04 30);     
+  --color-base-content: oklch(94% 0.03 30);  
 
-.react-select-container .react-select__option--is-focused {
-    @apply bg-gray-100 dark:bg-gray-700;
-}
+  /* ... other dark mode colors ... */
 
-.react-select-container .react-select__option--is-selected {
-    @apply bg-gray-500 text-white;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
 }
+@plugin "daisyui/theme" {
+  name: "base-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
 
-.react-select-container .react-select__single-value {
-    @apply text-gray-900 dark:text-white;
-}
+  --color-base-100: oklch(98% 0.025 240);   
+  --color-base-200: oklch(94% 0.035 240);   
+  --color-base-300: oklch(88% 0.05 240);   
+  --color-base-content: oklch(18% 0.06 240); 
 
-.react-select-container .react-select__placeholder {
-    @apply text-gray-500 dark:text-gray-400;
-}
+  --color-primary: oklch(65% 0.23 235);      
+  --color-primary-content: oklch(98% 0.01 235);
 
-.react-select-container .react-select__indicator-separator {
-    @apply bg-gray-300 dark:bg-gray-700;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
+@plugin "daisyui/theme" {
+  name: "base-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
 
-.react-select-container .react-select__dropdown-indicator {
-    @apply text-gray-500 dark:text-gray-400;
-}
+  --color-base-100: oklch(10% 0.04 240);    
+  --color-base-content: oklch(94% 0.035 240);  
 
-.react-select-container .react-select__clear-indicator {
-    @apply text-gray-500 dark:text-gray-400;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
 }
+@plugin "daisyui/theme" {
+  name: "polygon-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
 
-/* Custom styles for react-datepicker */
-.react-datepicker-wrapper .react-datepicker__input-container input {
-    @apply w-full p-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700;
-}
+  --color-base-100: oklch(99% 0.008 300);   
+  --color-base-200: oklch(95% 0.015 300);   
+  --color-base-300: oklch(90% 0.02 300);    
+  --color-base-content: oklch(18% 0.04 300); 
 
-.react-datepicker {
-    @apply bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg shadow-lg;
-}
+  --color-primary: oklch(68% 0.22 295);      
+  --color-primary-content: oklch(98% 0.01 295);
 
-.react-datepicker__header {
-    @apply bg-gray-100 dark:bg-gray-700 border-b border-gray-300 dark:border-gray-700;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
+@plugin "daisyui/theme" {
+  name: "polygon-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
 
-.react-datepicker__current-month,
-.react-datepicker__day-name {
-    @apply text-gray-900 dark:text-white;
-}
+  --color-base-100: oklch(10% 0.025 300);    
+  --color-base-content: oklch(94% 0.035 300);  
 
-.react-datepicker__day {
-    @apply text-gray-900 dark:text-white;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
 }
+@plugin "daisyui/theme" {
+  name: "bnb-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
 
-.react-datepicker__day--selected,
-.react-datepicker__day--keyboard-selected {
-    @apply bg-gray-500 text-white;
-}
+  --color-base-100: oklch(97% 0.04 50);   
+  --color-base-200: oklch(94% 0.055 50);   
+  --color-base-300: oklch(91% 0.065 50);   
+  --color-base-content: oklch(18% 0.07 50); 
 
-.react-datepicker__day--outside-month {
-    @apply text-gray-500 dark:text-gray-400;
-}
+  --color-primary: oklch(78% 0.22 55);      
+  --color-primary-content: oklch(98% 0.01 55);
 
-.react-datepicker__navigation {
-    @apply text-gray-900 dark:text-white;
-}
+  --color-secondary: oklch(72% 0.19 60);   
+  --color-secondary-content: oklch(30% 0.04 60);
 
-.react-datepicker__navigation--previous,
-.react-datepicker__navigation--next {
-    @apply hover:bg-gray-200 dark:hover:bg-gray-600;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
+@plugin "daisyui/theme" {
+  name: "bnb-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
 
-/* Custom styles for react-tabs */
-.react-tabs__tab-list {
-    @apply border-b border-gray-200 dark:border-gray-700 mb-4;
-}
+  --color-base-100: oklch(10% 0.04 50);    
+  --color-base-200: oklch(20% 0.05 50);     
+  --color-base-300: oklch(28% 0.06 50);     
+  --color-base-content: oklch(93% 0.03 50);  
 
-.react-tabs__tab {
-    @apply px-4 py-2 -mb-px text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300;
-}
+  --color-primary: oklch(75% 0.25 40);      
+  --color-primary-content: oklch(10% 0.02 40);
 
-.react-tabs__tab--selected {
-    @apply text-gray-600 border-gray-600;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
 }
+@plugin "daisyui/theme" {
+  name: "gnosis-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
 
-.react-tabs__tab-panel {
-    @apply p-4;
-}
+  --color-base-100: oklch(98% 0.03 150);   
+  --color-base-200: oklch(95% 0.04 150);   
+  --color-base-300: oklch(90% 0.05 150);   
+  --color-base-content: oklch(40% 0.06 150); 
 
-/* Custom styles for react-qr-code */
-.react-qr-code__img {
-    @apply rounded-lg;
-}
+  --color-primary: oklch(70% 0.20 155);      
+  --color-primary-content: oklch(98% 0.01 155);
 
-/* Custom styles for react-hot-toast */
-.react-hot-toast-container {
-    z-index: 9999;
-}
+  --color-secondary: oklch(60% 0.18 170);   
+  --color-secondary-content: oklch(38% 0.05 170);
 
-.react-hot-toast-toast {
-    @apply bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-lg rounded-lg;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
+@plugin "daisyui/theme" {
+  name: "gnosis-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
 
-.react-hot-toast-toast--success {
-    @apply border-l-4 border-green-500;
-}
+  --color-base-100: oklch(10% 0.035 150);    
+  --color-base-200: oklch(20% 0.045 150);     
+  --color-base-300: oklch(30% 0.055 150);     
+  --color-base-content: oklch(92% 0.04 150);  
 
-.react-hot-toast-toast--error {
-    @apply border-l-4 border-red-500;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
 }
+@plugin "daisyui/theme" {
+  name: "linea-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
 
-.react-hot-toast-toast--info {
-    @apply border-l-4 border-blue-500;
-}
+  --color-base-100: oklch(99% 0.01 90);   
+  --color-base-200: oklch(96% 0.02 90); 
+  --color-base-300: oklch(91% 0.025 90);  
+  --color-base-content: oklch(20% 0.04 90); 
 
-.react-hot-toast-toast--warning {
-    @apply border-l-4 border-yellow-500;
-}
+  --color-primary: oklch(75% 0.18 90);   
+  --color-primary-content: oklch(98% 0.01 90);
 
-/* Custom styles for react-modal */
-.react-modal-overlay {
-    @apply fixed inset-0 bg-black opacity-50 flex items-center justify-center z-50;
-}
+  --color-secondary: oklch(65% 0.12 180);  
+  --color-secondary-content: oklch(80% 0.01 180);
 
-.react-modal-content {
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-lg w-full;
-}
+  /* ... other color definitions ... */
 
-.dark .react-modal-content {
-    @apply text-white;
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
+@plugin "daisyui/theme" {
+  name: "linea-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
 
-body {
-    @apply bg-base-200 text-base-content;
-}
+  --color-base-100: oklch(12% 0.02 85);    
+  --color-base-200: oklch(18% 0.025 85);    
+  --color-base-300: oklch(24% 0.03 85);    
+  --color-base-content: oklch(92% 0.03 85); 
 
-/* Glow effect for clickable QR cards */
-.glow-on-hover {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
+  /* ... dark mode colors ... */
 
-.glow-on-hover:hover {
-  box-shadow: 0 0 15px rgba(0, 123, 255, 0.5); /* Blue glow on hover */
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
 }
-.dark .glow-on-hover:hover {
-  box-shadow: 0 0 15px rgba(29, 78, 216, 0.7); /* Darker blue glow for dark mode */
+@plugin "daisyui/theme" {
+  name: "zksync-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: oklch(98% 0.015 10);   
+  --color-base-200: oklch(94% 0.025 10);   
+  --color-base-300: oklch(88% 0.035 10);   
+  --color-base-content: oklch(40% 0.055 10); 
+
+  --color-primary: oklch(70% 0.15 10);      
+  --color-primary-content: oklch(98% 0.01 10);
+
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+@plugin "daisyui/theme" {
+  name: "zksync-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: oklch(12% 0.035 5);    
+  --color-base-content: oklch(93% 0.045 5);  
+
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
+}
+@plugin "daisyui/theme" {
+  name: "arbitrum-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: oklch(99% 0.005 250);   
+  --color-base-200: oklch(95% 0.01 250);   
+  --color-base-300: oklch(90% 0.015 250);   
+  --color-base-content: oklch(20% 0.04 250); 
+
+  --color-primary: oklch(62% 0.24 260);      
+  --color-primary-content: oklch(98% 0.01 260);
+
+  --color-secondary: oklch(68% 0.22 280);   
+  --color-secondary-content: oklch(16% 0.03 280);
+
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+@plugin "daisyui/theme" {
+  name: "arbitrum-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: oklch(10% 0.025 250);    
+  --color-base-content: oklch(93% 0.035 250);  
+
+  /* Border radius & sizes */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 2;
+  --noise: 0.02;
 }

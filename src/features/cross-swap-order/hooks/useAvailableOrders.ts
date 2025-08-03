@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { QuoterService } from '../../../services/fusion-service';
-import { useChainContext } from '../context/CrossChainContext';
 import type { GetQuoteParams } from '../../../services/types';
 import { TokenService } from '../../../services/token-service';
 
@@ -8,7 +7,6 @@ import { TokenService } from '../../../services/token-service';
  * Hook to fetch available payment options for cross-chain swap
  */
 export function useAvailableOrders(quoteParams: GetQuoteParams) {
-  const { getChainById } = useChainContext();
 
   return useQuery({
     queryKey: ['availableOrders', quoteParams.srcChain, quoteParams.dstChain],
@@ -21,7 +19,7 @@ export function useAvailableOrders(quoteParams: GetQuoteParams) {
 
       // 3. Transform API response to payment options
       return supportedChains.map(chainId => {
-        const chain = getChainById(chainId);
+        
         // const isNativeToken = chain?.nativeCurrency.symbol === dstToken;
         
         return {

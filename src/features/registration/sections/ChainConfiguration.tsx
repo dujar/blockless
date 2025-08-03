@@ -26,11 +26,11 @@ export const ChainConfiguration = ({ form }: ChainConfigurationProps) => {
   };
   
   return (
-    <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg">
-      <h2 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">2. Configure Blockchains & Wallets</h2>
+    <div className="bg-base-100 p-6 rounded-2xl shadow-lg">
+      <h2 className="text-xl font-semibold mb-3 text-base-content">2. Configure Blockchains & Wallets</h2>
       {wallet.isConnected && (
         <div className="mb-4 flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-            <p className="text-sm text-green-800 dark:text-green-200">
+            <p className="text-sm text-success-content">
               Connected: {wallet.address?.slice(0, 6)}...{wallet.address?.slice(-4)} on {wallet.chain?.name}
             </p>
             <button onClick={() => wallet.disconnect()} className="text-sm text-red-500 hover:underline">Disconnect</button>

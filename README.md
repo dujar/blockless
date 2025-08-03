@@ -8,89 +8,111 @@ This project was built for the **Unite Defi** async hackathon (July 25 – Augus
 
 ## Overview
 
-`Blockless Swap` is a decentralized application designed to simplify cross-chain token swaps. It allows users to create pre-configured swap orders and share them as a simple link or QR code. The person receiving the link can then execute the swap seamlessly from their own wallet.
+**Blockless Swap** is a decentralized application that simplifies cross-chain token swaps by enabling users to create and share pre-configured swap orders via a single link. When opened, this link displays a clean interface with **all supported wallet deeplinks**, including **MetaMask, Trust Wallet, Coinbase Wallet, Rabby, and more**, allowing the recipient to choose their preferred wallet and execute the swap instantly — even across chains.
 
-The application leverages the power of **1inch Fusion+** for secure and efficient swaps and supports wallet-specific **deeplinks** for an even smoother mobile experience. The primary goal is to abstract away the complexity of swaps, making it easy to request payment or send instructions for a transaction across different blockchain networks.
+Powered by **1inch Fusion+** and the **1inch Cross-Chain SDK**, Blockless Swap abstracts away the complexity of multi-chain transactions, making it effortless to request payments or delegate swaps in any EVM-compatible token, regardless of the user’s current holdings or wallet.
+
+The goal? To make DeFi interactions as simple as clicking a link.
+
+---
 
 ## Live Demo
 
 **(A live demo will be available here)**
 
+---
+
 ## Key Features
 
--   **Intuitive Swap Order Creation**: Easily define your swap by selecting the blockchain, token, amount, and recipient address.
+- ✅ **Intuitive Swap Order Creation**  
+  Easily define your desired swap: source chain, token, amount, and recipient address — all in one form.
 
--   **Shareable Swap Links**: Generate a unique URL for your swap order that can be shared with anyone. When opened, it pre-fills the swap details for execution.
+- 🔗 **Shareable Order Link with Wallet Selection**  
+  Generate a single URL that, when opened, shows **all available wallet deeplinks**. Recipients can pick their wallet and proceed directly to approval — no app switching or manual input needed.
 
--   **Advanced QR Code Generation**:
-    -   **Generic Swap Link QR**: A standard QR code that opens the swap page with pre-filled parameters. Ideal for sharing publicly or when the receiver's wallet is unknown.
-    -   **Wallet Deeplink QRs**: Specialized QR codes for popular wallets like MetaMask, Trust Wallet, Coinbase Wallet, Rabby, and more. Scanning these with the respective wallet app initiates the transaction directly, streamlining the payment process.
+- 📲 **Smart Wallet Deeplink Support**  
+  The order page automatically detects and displays deeplinks for popular wallets:
+  - MetaMask
+  - Trust Wallet
+  - Coinbase Wallet
+  - Rabby
+  - SafePal
+  - TokenPocket
+  - And more  
+  Scanning or clicking the correct link opens the transaction in the user’s wallet app with full swap details pre-filled.
 
--   **Cross-Chain Capability**: Powered by the 1inch Network, the DApp is designed to support a wide range of EVM-compatible blockchains.
+- 🌐 **True Cross-Chain Swaps via 1inch**  
+  Leverages the **1inch Cross-Chain SDK** to enable seamless swaps across EVM-compatible networks (e.g., Ethereum → Arbitrum, Polygon → Base). No need for the recipient to hold the source token — the swap happens as part of the transaction.
 
--   **Seamless Wallet Integration**: Uses `wagmi` and `viem` to connect to various wallets, allowing users to auto-fill their recipient address or connect to execute a swap.
+- 🧩 **Powered by 1inch Fusion+**  
+  Ensures optimal pricing, MEV protection, and atomic execution of swaps, even across chains.
 
--   **Modern UI/UX**: A clean, responsive interface built with React and Tailwind CSS, featuring both light and dark modes to suit user preference.
+- 🖼️ **Dual QR Code Options**
+  - **Universal QR Code**: Opens the order page with all wallet options.
+  - **Wallet-Specific QR Codes**: Direct deeplink QRs for each wallet (e.g., scan with MetaMask → transaction opens instantly).
+
+- 🌙 **Modern UI with Dark Mode**  
+  Built with React, TypeScript, and Tailwind CSS for a responsive, accessible, and beautiful experience on any device.
+
+- 🔌 **Seamless Wallet Integration**  
+  Uses `wagmi` and `viem` for robust wallet connectivity and address auto-fill during order creation.
+
+---
 
 ## How It Works
 
-The user flow is designed to be simple and split between two main actors: the creator of the order and the executor.
+The flow is designed for maximum simplicity across two roles: the **order creator** and the **executor**.
 
-1.  **Create**: On the landing page, a user fills out the form with the desired swap details (e.g., "I want someone to send 1.5 ETH on Ethereum to address `0x...`").
-2.  **Generate**: The user clicks "Generate" to create a unique swap order.
-3.  **Share**: The app presents two ways to share the order:
-    -   A **shareable link/QR code**: Anyone with this link can open the swap interface with all details pre-filled. This is perfect for paying someone in a token they might not currently hold.
-    -   **Wallet deeplink QR codes**: These are specific to mobile wallets. If the person executing the swap uses MetaMask on their phone, they can scan the MetaMask QR code to open the transaction confirmation screen directly in their app.
-4.  **Execute**: The recipient scans the QR code or opens the link, connects their own wallet, and confirms the transaction to complete the swap.
+### 1. **Create the Order**
+- The user selects:
+  - Source blockchain
+  - Input token and amount
+  - Recipient address (can auto-fill from connected wallet)
+- The app uses 1inch APIs to validate and configure the swap.
+
+### 2. **Generate & Share**
+- Click “Generate Order” to create a unique, shareable link (e.g., `https://blocklessswap.app/order/abc123`)
+- The app generates:
+  - A **universal link** that opens a wallet selection interface
+  - A **QR code** for easy mobile sharing
+  - Optional: individual **wallet-specific QR codes** for direct deeplinking
+
+### 3. **Execute the Swap**
+- Recipient opens the link on mobile or desktop
+- Sees a clean page listing **all compatible wallet deeplinks**
+- Taps their wallet (e.g., "Open in MetaMask")
+- Wallet opens with the **cross-chain swap pre-filled**
+- User confirms the transaction — done!
+
+> No need to visit a DApp, connect a wallet, or manually enter swap details.
+
+---
 
 ## Tech Stack
 
--   **Frontend**: React, TypeScript, Vite
--   **Styling**: Tailwind CSS
--   **Web3 Integration**:
-    -   `wagmi` & `viem`: For wallet connections and blockchain interactions.
-    -   `@1inch/cross-chain-sdk`: The core engine for fetching swap data and executing trades via 1inch Fusion+.
--   **API Proxy**: The Vercel configuration (`vercel.json`) includes a rewrite to proxy requests to the 1inch API, avoiding potential CORS issues.
--   **Deployment**: Ready for deployment on Vercel.
+- **Frontend**: React, TypeScript, Vite
+- **Styling**: Tailwind CSS (with dark mode support)
+- **Web3 Libraries**:
+  - `wagmi` & `viem`: Wallet connections and on-chain interactions
+  - `@1inch/cross-chain-sdk`: Core engine for cross-chain quote fetching and transaction building
+- **API Proxy**: Vercel rewrites (`vercel.json`) proxy 1inch API requests to avoid CORS issues
+- **QR Generation**: `qrcode.react` for dynamic QR code rendering
+- **Deployment**: Optimized for Vercel (serverless functions + static hosting)
+
+---
 
 ## Getting Started
 
-Follow these instructions to set up and run the project locally.
-
 ### Prerequisites
 
--   Node.js (v18 or later recommended)
--   `pnpm` package manager (you can use `npm` or `yarn` as well, but this project uses a `pnpm-lock.yaml` file)
+- Node.js (v18 or higher)
+- `pnpm` (recommended; project includes `pnpm-lock.yaml`)
+
+> You can use `npm` or `yarn`, but `pnpm` ensures lockfile consistency.
 
 ### Installation
 
-1.  Clone the repository:
-    ```bash
-    git clone https://github.com/your-repo/swap-dapp.git
-    cd swap-dapp
-    ```
-
-2.  Install dependencies:
-    ```bash
-    pnpm install
-    ```
-
-### Running the Development Server
-
-To start the local development server:
-
 ```bash
-pnpm dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) (or the port specified by Vite) in your browser.
-
-### Building for Production
-
-To create a production-ready build:
-
-```bash
-pnpm build
-```
-
-This command builds the frontend application and prepares any serverless functions. The output is generated in the `dist/` directory, ready for deployment.
+git clone https://github.com/your-repo/swap-dapp.git
+cd swap-dapp
+pnpm install

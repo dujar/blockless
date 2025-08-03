@@ -1,4 +1,4 @@
-import { ChainProvider } from '../features/cross-swap-order/context/CrossChainContext';
+import { ChainProvider } from '../features/cross-swap-order/components/ChainProvider';
 import { OrderSelectionStep } from '../features/cross-swap-order/sections/OrderSelectionStep';
 
 export default function CrossSwapPage() {
@@ -12,7 +12,7 @@ export default function CrossSwapPage() {
 function SwapFlow() {
   return (
     <div className="container mx-auto p-6">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-6">
+      <div className="bg-base-100 rounded-lg shadow p-6 mb-6">
         <h1 className="text-xl font-bold mb-4">Cross-Chain Swap</h1>
         <OrderSelectionStep />
       </div>

@@ -92,7 +92,7 @@ export const useRegistrationForm = () => {
         if (prev.some(c => c.name === chainName)) {
           return prev;
         }
-        return [...prev, { name: chainName, address: '', tokens: [] }];
+        return [...prev, { name: chainName, address: '', tokens: [], chainId: blockchainData.find(b => b.name === chainName)?.chainId || 0 }];
       } else {
         const newChains = prev.filter(c => c.name !== chainName);
         setAddressValidity(v => {

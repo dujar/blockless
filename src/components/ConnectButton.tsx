@@ -10,7 +10,7 @@ export const ConnectButton = () => {
     return (
       <div className="flex items-center">
         <div className="mr-4">
-          <p className="text-sm font-medium text-gray-900 dark:text-white">
+          <p className="text-sm font-medium text-base-content">
             {address}
           </p>
         </div>

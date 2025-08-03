@@ -43,9 +43,9 @@ const ChainItem = ({ chain, isSelected, isDisabled, onToggle }: { chain: Blockch
                     {chain.name.charAt(0)}
                 </span>
             )}
-            <span className="text-gray-800 dark:text-gray-200 font-medium">
+            <span className="text-base-content font-medium">
                 {chain.name}
-                {isDisabled && <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">(Configured)</span>}
+                {isDisabled && <span className="ml-2 text-xs text-neutral-content">(Configured)</span>}
             </span>
         </div>
     );
@@ -79,14 +79,14 @@ export const ChainSelector = ({ supportedChains, configuredChainNames, onAddChai
     
     return (
         <div className="mt-8 border-t border-gray-200 dark:border-gray-800 pt-8">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Select Supported Networks</h3>
+            <h3 className="text-lg font-semibold text-base-content mb-4">Select Supported Networks</h3>
             <div className="p-4 bg-gray-50 dark:bg-primary-900/50 rounded-lg">
                 <input
                     type="text"
                     placeholder="Search blockchains..."
                     value={searchTerm}
                     onChange={e => setSearchTerm(e.target.value)}
-                    className="w-full p-2 border border-gray-300 dark:border-gray-800 rounded-lg bg-white dark:bg-primary-800 text-gray-900 dark:text-white"
+                    className="w-full p-2 border border-gray-300 dark:border-gray-800 rounded-lg bg-base-200 text-gray-900 dark:text-white"
                 />
 
                 <div className="mt-4 max-h-80 overflow-y-auto space-y-2 pr-2">
@@ -100,17 +100,17 @@ export const ChainSelector = ({ supportedChains, configuredChainNames, onAddChai
                         />
                     ))}
                     {filteredAndSortableChains.length === 0 && searchTerm.length > 0 && (
-                        <div className="text-center text-gray-500 dark:text-gray-400">No matching blockchains found.</div>
+                        <div className="text-center text-neutral-content">No matching blockchains found.</div>
                     )}
                     {filteredAndSortableChains.length === 0 && searchTerm.length === 0 && (
                         // This message only appears if there are no eligible chains to add at all
-                        <div className="text-center text-gray-500 dark:text-gray-400">All supported blockchains are already configured.</div>
+                        <div className="text-center text-neutral-content">All supported blockchains are already configured.</div>
                     )}
                 </div>
 
                 {selectedChains.length > 0 && (
                     <div className="mt-4 flex justify-between items-center">
-                        <span className="text-sm text-gray-600 dark:text-gray-400">{selectedChains.length} chain(s) selected</span>
+                        <span className="text-sm text-neutral-content">{selectedChains.length} chain(s) selected</span>
                         <button
                             onClick={handleAdd}
                             className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-medium transition"

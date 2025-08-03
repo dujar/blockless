@@ -3,21 +3,21 @@ import { ThemeContext } from './ThemeContext';
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-  const [blockchainTheme, setBlockchainTheme] = useState(localStorage.getItem('blockchainTheme') || 'ethereum');
+
+  const setBlockchainTheme = (blockchainTheme: string) => {
+    setTheme(blockchainTheme);
+  };
 
   useEffect(() => {
-    const combinedTheme = `${blockchainTheme}-${theme}`;
-    document.documentElement.setAttribute('data-theme', combinedTheme);
+    document.documentElement.setAttribute('data-theme',theme);
     localStorage.setItem('theme', theme);
-    localStorage.setItem('blockchainTheme', blockchainTheme);
-  }, [theme, blockchainTheme]);
+  }, [theme]);
 
   const value = useMemo(() => ({
     theme,
     setTheme,
-    blockchainTheme,
     setBlockchainTheme,
-  }), [theme, blockchainTheme]);
+  }), [theme]);
 
   return (
     <ThemeContext.Provider value={value}>

@@ -221,7 +221,7 @@ export const blockchainData: BlockchainData[] = [
     "isEVM": true,
     "walletFormat": "0x",
     "theme": {
-      "bg": "bg-gray-100 dark:bg-primary-950",
+      "bg": "bg-base-300 dark:bg-primary-950",
       "border": "border-gray-300 dark:border-gray-900",
       "text": "text-gray-900 dark:text-gray-100",
       "label": "text-gray-800 dark:text-gray-200",
@@ -255,7 +255,7 @@ export const blockchainData: BlockchainData[] = [
     "isEVM": true,
     "walletFormat": "0x",
     "theme": {
-      "bg": "bg-gray-100 dark:bg-primary-950",
+      "bg": "bg-base-300 dark:bg-primary-950",
       "border": "border-gray-300 dark:border-gray-900",
       "text": "text-gray-900 dark:text-gray-100",
       "label": "text-gray-800 dark:text-gray-200",

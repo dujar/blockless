@@ -33,6 +33,7 @@ export const serializeOrderData = (orderData: RehydratedOrderData): SerializedOr
     chains: orderData.chains.map(chain => ({
       name: chain.name,
       address: chain.address,
+      chainId: chain.chainId,
       tokens: chain.tokens.map(token => ({
         symbol: token.symbol,
         amount: token.amount,
@@ -151,7 +152,7 @@ export const rehydrateOrderData = (serializedData: SerializedOrderData): Rehydra
 
     return {
       ...chain,
-      chainId: blockchainData.find(b => b.name === chain.name)?.chainId!,
+      chainId: blockchainData.find(b => b.name === chain.name)?.chainId || 0,
       tokens: rehydratedTokens,
     };
   });
@@ -180,6 +181,7 @@ export const rehydrateOrderData = (serializedData: SerializedOrderData): Rehydra
     fiatCurrency: serializedData.fiatCurrency,
     chains: rehydratedChains,
     crossChainUrl,
+    orderSwapUrl: crossChainUrl,
   };
 };
 
