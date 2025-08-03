@@ -23,7 +23,7 @@ const FiatAmountInputSection = ({ form }: FiatAmountInputProps) => {
     };
 
     return (
-        <div className="bg-base-100 p-8 rounded-2xl shadow-lg shadow-dynamic">
+        <div className="bg-base-100 p-4 sm:p-8 rounded-2xl shadow-lg shadow-dynamic">
             <h1 className="text-3xl font-bold text-base-content mb-6">Create a New Order</h1>
             <p className="text-lg text-neutral-content mb-6">
                 Enter the desired amount in your preferred fiat currency.

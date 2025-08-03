@@ -66,7 +66,7 @@ export default function OrderSwapPage() {
     return (
         <>
         <div className="flex justify-center">
-            <div className="max-w-4xl w-full bg-base-100 p-8 rounded-2xl shadow-lg shadow-dynamic">
+            <div className="max-w-4xl w-full bg-base-100 p-4 sm:p-8 rounded-2xl shadow-lg shadow-dynamic">
             <div className="text-center mb-6">
                 <h1 className="text-3xl font-bold text-base-content">
                     Payment Request: {formatCurrency(fiatAmount, fiatCurrency)}
@@ -189,4 +189,3 @@ export default function OrderSwapPage() {
         </>
     );
 }
-

@@ -14,16 +14,16 @@ const LandingPage = () => {
         Blockless Swap is your gateway to accepting cryptocurrency payments from anyone, anywhere, on any chain.
         Turn your wallet into a universal payment processor.
       </p>
-      <div className="mt-8 flex justify-center gap-4">
+      <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 px-4 sm:px-0">
         <Link
           to="/register"
-          className="bg-primary-500 hover:bg-primary-600 text-white px-8 py-3 rounded-lg font-medium text-lg transition shadow-dynamic hover:shadow-lg"
+          className="w-full max-w-sm sm:w-auto text-center bg-primary-500 hover:bg-primary-600 text-white px-8 py-3 rounded-lg font-medium text-lg transition shadow-dynamic hover:shadow-lg"
         >
           Get Started for Free
         </Link>
         <Link
           to="/create-order"
-          className="bg-base-200 hover:bg-base-300 text-base-content px-8 py-3 rounded-lg font-medium text-lg transition"
+          className="w-full max-w-sm sm:w-auto text-center bg-base-200 hover:bg-base-300 text-base-content px-8 py-3 rounded-lg font-medium text-lg transition"
         >
           Create an Order
         </Link>

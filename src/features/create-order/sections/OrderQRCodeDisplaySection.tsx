@@ -35,7 +35,7 @@ const OrderQRCodeDisplaySection = ({ form }: OrderQRCodeDisplayProps) => {
     const crossChainSwapCount = payableChains.reduce((acc, chain) => acc + chain.tokens.filter(token => parseFloat(token.amount) > 0).length, 0);
 
     return (
-        <div className="bg-base-100 p-8 rounded-2xl shadow-lg shadow-dynamic">
+        <div className="bg-base-100 p-4 sm:p-8 rounded-2xl shadow-lg shadow-dynamic">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold text-base-content">Order: {formatCurrency(order.fiatAmount, order.fiatCurrency)}</h1>
                 <button onClick={() => { setOrder(null); setFiatAmountInput(''); setStep(1); }} className="text-neutral-content hover:underline">New Order</button>
@@ -147,4 +147,3 @@ const OrderQRCodeDisplaySection = ({ form }: OrderQRCodeDisplayProps) => {
 };
 
 export default OrderQRCodeDisplaySection;
-

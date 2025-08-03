@@ -33,7 +33,7 @@ const OrderDetailsSection = ({ form }: OrderDetailsProps) => {
     if (!order) return null;
 
     return (
-        <div className="bg-base-100 p-8 rounded-2xl shadow-lg shadow-dynamic">
+        <div className="bg-base-100 p-4 sm:p-8 rounded-2xl shadow-lg shadow-dynamic">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold text-base-content">
                     Order: {formatCurrency(order.fiatAmount, order.fiatCurrency)}

@@ -4,8 +4,8 @@ import AppBar from './AppBar';
 import { ThemeProvider } from './context/ThemeProvider';
 
 const AlphaBanner = () => (
-  <div className="bg-neutral-700 text-neutral-300 text-center p-2 text-sm font-mono flex items-center justify-center">
-    <span className="mr-2">💻</span> This application is currently in Alpha mode. Expect bugs and rapid changes.
+  <div className="bg-neutral-700 text-neutral-300 text-center p-2 text-xs sm:text-sm font-mono flex flex-wrap items-center justify-center">
+    <span className="mr-2">💻</span> <span>This application is currently in Alpha mode. Expect bugs and rapid changes.</span>
   </div>
 );
 import LandingPage from './pages/LandingPage';

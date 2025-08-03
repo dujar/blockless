@@ -71,7 +71,7 @@ The flow is designed for maximum simplicity across two roles: the **order creato
 - The app uses 1inch APIs to validate and configure the swap.
 
 ### 2. **Generate & Share**
-- Click “Generate Order” to create a unique, shareable link (e.g., `https://blocklessswap.app/order/abc123`)
+- Click “Generate Order” to create a unique, shareable link (e.g., `https://blocklessswap.app/order?id=abc123`)
 - The app generates:
   - A **universal link** that opens a wallet selection interface
   - A **QR code** for easy mobile sharing
@@ -94,8 +94,7 @@ The flow is designed for maximum simplicity across two roles: the **order creato
 - **Styling**: Tailwind CSS (with dark mode support)
 - **Web3 Libraries**:
   - `wagmi` & `viem`: Wallet connections and on-chain interactions
-  - `@1inch/cross-chain-sdk`: Core engine for cross-chain quote fetching and transaction building
-- **API Proxy**: Vercel rewrites (`vercel.json`) proxy 1inch API requests to avoid CORS issues
+- **API Proxy**: Vercel rewrites (`vercel.json`) proxy 1inch API requests to avoid CORS issues to 1inch apis
 - **QR Generation**: `qrcode.react` for dynamic QR code rendering
 - **Deployment**: Optimized for Vercel (serverless functions + static hosting)
 
@@ -116,3 +115,18 @@ The flow is designed for maximum simplicity across two roles: the **order creato
 git clone https://github.com/your-repo/swap-dapp.git
 cd swap-dapp
 pnpm install
+```
+
+
+### project message:
+
+Here's what our team is working on so far:
+
+**Name**: blockless pay
+**Description**: A link to pay anyone in any token, any chain. Just share a URL
+                
+**Github**: https://github.com/dujar/blockless 
+**Idea**: Cross-chain payments aren’t entirely broken, but they are fragmented, risky, and not user-friendly — making crypto inconvenient for mainstream, everyday payments
+**Blockers**: time
+
+Public URL: https://ethglobal.com/showcase/blockless-wvy54 

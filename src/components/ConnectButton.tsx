@@ -8,25 +8,25 @@ export const ConnectButton = () => {
 
   if (isConnected) {
     return (
-      <div className="flex items-center">
-        <div className="mr-4">
-          <p className="text-sm font-medium text-base-content">
-            {address}
-          </p>
-        </div>
-        <button
-          onClick={() => disconnect()}
-          className="btn btn-ghost"
-        >
-          Disconnect
-        </button>
+      <div className="dropdown dropdown-end">
+        <label tabIndex={0} className="btn btn-ghost rounded-btn">
+          <span className="hidden sm:inline">{address?.slice(0, 6)}...{address?.slice(-4)}</span>
+          <span className="sm:hidden text-xs">Account</span>
+        </label>
+        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li>
+            <button onClick={() => disconnect()}>
+              Disconnect
+            </button>
+          </li>
+        </ul>
       </div>
     );
   }
 
   return (
-    <NavLink to="/connect-wallet" className="btn btn-ghost">
-      Connect Wallet
+    <NavLink to="/connect-wallet" className="btn btn-primary btn-sm sm:btn-md">
+      Connect
     </NavLink>
   );
 };

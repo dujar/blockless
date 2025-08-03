@@ -12,7 +12,7 @@ const ConnectWalletPage = () => {
       <p className="text-neutral-content mb-8 text-center">
         Connect your wallet to get started with Blockless Swap
       </p>
-      <div className="tabs tabs-boxed grid grid-cols-3 gap-2 mb-4">
+      <div className="tabs tabs-boxed grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
         {blockchainData.map((blockchain: BlockchainData) => (
           <a
             key={blockchain.id}

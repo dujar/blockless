@@ -56,7 +56,7 @@ export const FullScreenQRCode = ({ wallet, blockchainName, tokenSymbol, amount, 
             className="fixed inset-0 bg-gray-800 bg-opacity-75 flex flex-col items-center justify-center z-50 cursor-pointer p-4"
             onClick={onClose}
         >
-            <div className="bg-base-100 rounded-lg shadow-lg p-6" onClick={e => e.stopPropagation()}>
+            <div className="bg-base-100 rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-md" onClick={e => e.stopPropagation()}>
                 <div className="text-center mb-6">
                     <h3 className="text-xl font-bold text-base-content mb-2">
                         Pay {amount} {tokenSymbol}
