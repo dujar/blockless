@@ -8,6 +8,7 @@ import telegramLogo from '../../../assets/telegram.svg'; // Import Telegram logo
 import whatsappLogo from '../../../assets/whatsapp.png'; // Import WhatsApp logo
 import xLogo from '../../../assets/x.svg'; // Import X (Twitter) logo
 import facebookLogo from '../../../assets/facebook.png'; // Import Facebook logo
+import discordLogo from '../../../assets/discrod.svg'; // Import Discord logo
 
 interface OrderSwapPageQRCodeProps {
     order: OrderData;
@@ -73,6 +74,8 @@ export const OrderSwapPageQRCode = ({ order, onBackToOrderDetails }: OrderSwapPa
         telegram: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`,
         whatsapp: `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`,
         facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`,
+        // Share to a specific Discord channel as per user instruction
+        discord: `https://discord.com/channels/554623348622098432/885830009930010625?message=${encodeURIComponent(shareText + ' ' + shareUrl)}`,
     };
 
     if (!shareUrl) {
@@ -152,6 +155,9 @@ export const OrderSwapPageQRCode = ({ order, onBackToOrderDetails }: OrderSwapPa
                             </a>
                             <a href={socialShareLinks.facebook} target="_blank" rel="noopener noreferrer" title="Share on Facebook" className="text-neutral-content hover:text-info-content">
                                 <img src={facebookLogo} alt="Facebook" className="w-6 h-6" />
+                            </a>
+                            <a href={socialShareLinks.discord} target="_blank" rel="noopener noreferrer" title="Share on Discord" className="text-neutral-content hover:text-info-content">
+                                <img src={discordLogo} alt="Discord" className="w-6 h-6" />
                             </a>
                         </div>
                     </div>
